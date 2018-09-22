@@ -1,0 +1,30 @@
+{
+  "name": "tutor-management",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon -e js,ejs index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acoshift/pikkanode.js.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/acoshift/pikkanode.js/issues"
+  },
+  "homepage": "https://github.com/acoshift/pikkanode.js#readme",
+  "dependencies": {
+    "@google-cloud/storage": "^1.7.0",
+    "@koa/cors": "^2.2.1",
+    "koa": "^2.5.1",
+    "koa-body": "^4.0.3",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.8.1",
+    "mysql2": "^1.5.3",
+    "uuid": "^3.2.1"
+  }
+}
