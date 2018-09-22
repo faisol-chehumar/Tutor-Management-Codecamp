@@ -1,0 +1,9 @@
+{
+    "db": {
+        "user": "root",
+        "password": "password",
+        "host": "35.240.237.24",
+        "post":3306,
+        "database": "tutor_management_db"
+    }
+}

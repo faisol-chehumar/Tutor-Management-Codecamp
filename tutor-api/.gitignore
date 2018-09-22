@@ -2,4 +2,3 @@ node_modules/
 *.log
 public/
 .DS_Store
-config.json
