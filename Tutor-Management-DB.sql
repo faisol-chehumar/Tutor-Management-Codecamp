@@ -38,6 +38,8 @@ CREATE TABLE staff_roles(
 );
 
 CREATE TABLE staff_avail_daytime (
+  PRIMARY KEY(staff_avail_daytime_id),
+  staff_avail_daytime_id INT NOT NULL AUTO_INCREMENT,
   staff_id INT NOT NULL,
   weekday_num SMALLINT(1) NOT NULL, # 0 - 6 is Sun - Sat
   time_code VARCHAR(2) NOT NULL, # MO = Morning, AF = Afternoon
