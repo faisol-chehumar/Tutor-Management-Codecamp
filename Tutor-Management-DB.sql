@@ -28,6 +28,8 @@ CREATE TABLE staff (
 );
 
 CREATE TABLE staff_roles(
+  PRIMARY KEY(staff_role_id),
+  staff_role_id INT NOT NULL AUTO_INCREMENT,
   staff_id INT NOT NULL,
   role_id INT NOT NULL,
   manday_rate INT NOT NULL,
@@ -67,6 +69,8 @@ CREATE TABLE courses (
 );
 
 CREATE TABLE staff_registration (
+  PRIMARY KEY(staff_registration_id),
+  staff_registration_id INT NOT NULL AUTO_INCREMENT,
   staff_id INT NOT NULL,
   course_id INT NOT NULL,
   role_id INT NOT NULL,
@@ -76,15 +80,17 @@ CREATE TABLE staff_registration (
 );
 
 CREATE TABLE courses_schedule (
+  PRIMARY KEY(courses_schedule_id),
+  courses_schedule_id INT NOT NULL AUTO_INCREMENT,
   course_id INT NOT NULL,
   weekday_num SMALLINT(1) NOT NULL, -- 0 - 6 is Sun - Sat
   time_code VARCHAR(2) NOT NULL, -- MO = Morning, AF = Afternoon
   FOREIGN KEY (course_id) REFERENCES courses(course_id)
 );
 
-CREATE TABLE clients (
-  PRIMARY KEY(client_id),
-  client_id INT NOT NULL,
+CREATE TABLE customers (
+  PRIMARY KEY(customer_id),
+  customer_id INT NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(60) NOT NULL,
   lastname VARCHAR(60) NOT NULL,
   emai VARCHAR(60) NOT NULL,
