@@ -1,5 +1,6 @@
 const role = require('./role')
-
+const location = require('./location')
 module.exports = {
-  role
+  role,
+  location
 }
