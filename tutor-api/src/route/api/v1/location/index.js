@@ -6,8 +6,8 @@ const router = new Router()
 
 router.get('/',findAll)
 router.get('/location',findLocation)
-module.exports = router.routes()
-
+router.post('/',insertLocation)
+module.exports = route
 
 async function findAll(ctx){
     const locationResult = await repo.location.findAll()
@@ -20,5 +20,10 @@ async function findLocation(ctx){
     ctx.body = {result : locationId }
 }
 
+async function insertLocation(ctx){
+    const {title,tel,contact,room_size,note,map_marker_id} = ctx.request.body
+    const addResult = await locations.insert(title,tel,contact,room_size,note,map_marker_id)
+    ctx.body = {result : addResult}
+}
 
 

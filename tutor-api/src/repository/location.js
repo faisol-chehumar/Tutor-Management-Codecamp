@@ -27,6 +27,8 @@ async function findAll() {
         console.log(err.message);
         return undefined;
     }
+
+    
 }
 module.exports ={
     getLocationId,
