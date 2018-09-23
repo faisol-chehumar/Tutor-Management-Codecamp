@@ -1,6 +1,7 @@
 const role = require('./role')
-const customer = require('./customer')
+const staff = require('./staff')
+
 module.exports = {
   role,
-  customer
+  staff
 }
