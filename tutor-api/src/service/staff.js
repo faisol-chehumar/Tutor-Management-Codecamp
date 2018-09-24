@@ -2,8 +2,7 @@ const { staff, staffRoles } = require('../repository')
 const AppError = require('../util/appError')
 
 async function list() {
-  const staffList = await staff.findAll()
-  const staffRoleList = await staffRoles.findAll()
+  const [ staffList, staffRoleList ] = await Promise.all([ staff.findAll(), staffRoles.findAll() ])
 
   if(staffList.length <= 0) {
     throw new AppError(`Staff not found` , 400)
