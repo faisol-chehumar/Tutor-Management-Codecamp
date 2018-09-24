@@ -4,7 +4,8 @@ const findAll = async () => {
 	const result = await pool.query(`
 		SELECT
 			staff_id AS staffId,
-			role_id AS roleId
+			role_id AS roleId,
+			manday_rate AS mandayRate
 		FROM
 			staff_roles;
 	`)

@@ -11,9 +11,10 @@ async function list() {
   staffList.forEach(staff => {
     staffRoleList.forEach(staffRole => {
       if(staff.staffId === staffRole.staffId) {
-        staff['role'] = staffRole.roleId
+        staff['role'] = {'roleId': staffRole.roleId, 'mandayRate': staffRole.mandayRate}
       }
     })
+    staff
   })
 
   return staffList
