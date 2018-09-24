@@ -1,26 +1,48 @@
-const repo = require('../repository')
-// const AppError = require('../util/appError')
+const { staff, staffRoles } = require('../repository')
+const AppError = require('../util/appError')
 
-const {staff, roles, staffRoles} = repo
+async function list() {
+  const [ staffList, staffRoleList ] = await Promise.all([ staff.findAll(), staffRoles.findAll() ])
 
-async function getStaffDetail () {
-  const staffList = await staff.get()
-  const rolesList = await roles.get()
-  const staffRolesList = await staffRoles.get()
-  
-  // console.log(staffList)
-  // console.log(rolesList)
-  // console.log(staffRolesList)
+  if(staffList.length <= 0) {
+    throw new AppError(`Staff not found` , 400)
+  }
 
-  staffList.map((staff) => {
-    return staffRolesList.filter((staffRole) => {
-      staff.staff_id === staffRole.staff_id
+  staffList.forEach(staff => {
+    staffRoleList.forEach(staffRole => {
+      if(staff.staffId === staffRole.staffId) {
+        staff['role'] = {'roleId': staffRole.roleId, 'mandayRate': staffRole.mandayRate}
+      }
     })
+    staff
   })
 
-  return {}
+  return staffList
+}
+
+async function create(firstname='', lastname='', email='', tel, mapMarkerId, role='', mandayRate='') {  
+  const isDuplicateEmail = (await staff.findByEmail(email)).length > 0
+  const requireField = `${firstname==='' ? 'firstname,' : ''}${lastname==='' ? 'lastname,' : ''}${email==='' ? 'email,' : ''}${role==='' ? 'role, ' : ''}${mandayRate==='' ? 'mandayRate' : ''}`
+
+  if(!firstname || !lastname || !email || !role || !mandayRate) {
+    throw new AppError(`Bad request, [${requireField}] required ` , 400)
+  }
+  
+  if(isDuplicateEmail) {
+    throw new AppError('Email is already use', 400)
+  }
+
+  const newStaff = await staff.insert(firstname, lastname, email, tel, mapMarkerId)
+  return await staffRoles.insert(newStaff.insertId, role, mandayRate)
+}
+
+async function remove() {
+  await staffRoles.remove()
+  return await staff.remove()
 }
 
 module.exports = {
-  getStaffDetail
+  list,
+  create,
+  remove
 }
