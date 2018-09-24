@@ -1,30 +1,103 @@
 const pool = require('../db')
 
-const get = async () => {
-  const result = await pool.query(`
-    SELECT * 
-    FROM staff
-    LEFT JOIN 
-      map_markers 
-    ON
-      staff.map_marker_id = map_markers.map_marker_id;
-  `)
+const findAll = async () => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        staff_id AS staffId,
+        firstname,
+        lastname,
+        email,
+        tel,
+        map_marker_id AS mapMarkerId
+      FROM
+        staff
+    `)
 
-	return result[0]
+    return result[0]
+
+  } catch (error) {
+    console.error(error)
+  }
 }
 
-const insert = async (firstname, lastname, email, tel, map_marker_id) => {
-	const result = await pool.query(`
-		insert into staff
-      (firstname, lastname, email, tel, map_marker_id)
-		values
-			(?, ?, ?, ?, ?)
-	`, [ firstname, lastname, email, tel, map_marker_id ])
+const findById = async (staffId) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        staff_id AS staffID,
+        firstname,
+        lastname,
+        email,
+        tel,
+        map_marker_id AS mapMarkerId
+      FROM
+        staff
+      WHERE
+        staff_id = (?)
+    `, [ staffId ])
 
-	return result
+    return result[0]
+
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const findByEmail = async (email) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        email
+      FROM
+        staff
+      WHERE
+        email = (?)
+    `, [ email ])
+
+    return result[0]
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+const insert = async (firstname, lastname, email, tel, mapMarkerId) => {
+  try {
+    const result = await pool.query(`
+      INSERT INTO staff (
+        firstname,
+        lastname,
+        email,
+        tel,
+        map_marker_id
+      ) VALUES (?, ?, ?, ?, ?)
+    `, [ firstname, lastname, email, tel, mapMarkerId ])
+
+    return result[0]
+
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const remove = async () => {
+  try {
+    const result = await pool.query(`
+    DELETE FROM staff
+	`)
+
+  return result[0]
+   
+  } catch (error) {
+    console.error()
+  }
 }
 
 module.exports = {
-  get,
-	insert
+  findAll,
+  findById,
+  findByEmail,
+  insert,
+  remove
 }

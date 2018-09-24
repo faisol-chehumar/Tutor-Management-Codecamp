@@ -12,9 +12,11 @@ async function getStaffDetail () {
   // console.log(rolesList)
   // console.log(staffRolesList)
 
-  for (const iterator of staffList) {
-    console.log(iterator)
-  }
+  staffList.map((staff) => {
+    return staffRolesList.filter((staffRole) => {
+      staff.staff_id === staffRole.staff_id
+    })
+  })
 
   return {}
 }

@@ -1,22 +1,40 @@
 const Router = require('koa-router')
-// const { staff } = require('../../../../repository')
-const { staff } = require('../../../../service')
+
+const { staffService } = require('../../../../service')
 
 const router = new Router()
 
-router.get('/', getStaff)
-// router.post('/', insertStaff)
+router
+  .get('/', getStaffList)
+  .post('/', createStaff)
+  // .put('/', updateStaffList)
+  .delete('/', removeStaffList)
 
-async function getStaff(ctx) {
-  const staffList =  await staff.getStaffDetail()
-  // console.log()
-  ctx.body = { result: staffList }
+async function getStaffList(ctx) {
+  const staffList =  await staffService.list()
+
+  if(!staffList) {
+    return ctx.throw()
+  }
+
+  ctx.body = staffList
 }
 
-// async function insertStaff(ctx) {
-//   const {firstname, lastname, email, tel, mapMarkerId} = ctx.request.body
-//   const addResult = await staff.insert(firstname, lastname, email, tel, mapMarkerId)
-//   ctx.body = { result: addResult }
-// }
+async function createStaff(ctx) {
+  const { firstname, lastname, email, tel, mapMarkerId, role, mandayRate } = ctx.request.body
+  const newStaff = await staffService.create(firstname, lastname, email, tel, mapMarkerId, role, mandayRate)
+
+  if(!newStaff) {
+    return ctx.throw()
+  }
+
+  ctx.status = 201
+  ctx.body = newStaff
+}
+
+async function removeStaffList(ctx) {
+  const removeResult =  await staffService.remove()
+  ctx.body = removeResult
+}
 
 module.exports = router.routes()

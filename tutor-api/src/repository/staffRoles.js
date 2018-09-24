@@ -1,40 +1,40 @@
 const pool = require('../db')
 
-const get = async () => {
-  try {
-    const result = await pool.query(`
-      SELECT staff_id, roles.title, manday_rate
-      FROM staff_roles
-      LEFT JOIN
-        roles ON staff_roles.role_id = roles.role_id
-    `)
-    
-    return result[0]
+const findAll = async () => {
+	const result = await pool.query(`
+		SELECT
+			staff_id AS staffId,
+			role_id AS roleId,
+			manday_rate AS mandayRate
+		FROM
+			staff_roles;
+	`)
 
-  } catch(error) {
-    console.error(error)
-    return error
-  }
+	return result[0]
 }
 
 const insert = async (staffId, roleId, mandayRate) => {
-  try {
-    const result = await pool.query(`
-      INSERT INTO staff_roles
-        (staff_id, role_id, manday_rate)
-      VALUES
-        (?, ?, ?);
-      `, [ staffId, roleId, mandayRate ])
+	const result = await pool.query(`
+		INSERT INTO staff_roles (
+			staff_id,
+			role_id,
+			manday_rate
+		) VALUES (?, ?, ?)
+	`, [ staffId, roleId, mandayRate ])
 
-    return result
-     
-  } catch(error) {
-    console.error(error)
-    return error
-  }
+	return result[0]
+}
+
+const remove = async () => {
+	const result = await pool.query(`
+    DELETE FROM staff_roles
+	`)
+
+	return result[0]
 }
 
 module.exports = {
-  get,
-	insert
+	findAll,
+	insert,
+  remove
 }

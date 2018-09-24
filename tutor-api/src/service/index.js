@@ -1,5 +1,5 @@
-const staff = require('./staff')
+const staffService = require('./staff')
 
 module.exports = {
-  staff
+  staffService
 }
