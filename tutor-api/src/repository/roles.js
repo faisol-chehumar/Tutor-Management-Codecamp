@@ -13,7 +13,7 @@ async function getRoleId(id) {
       return undefined;
     }
   }
-  async function findAll () {
+  async function get () {
     try{
         const [result] = await pool.query(`
         select *
@@ -27,5 +27,5 @@ async function getRoleId(id) {
   }
   module.exports = {
     getRoleId,
-    findAll
+    get
   }

@@ -1,7 +1,9 @@
-const role = require('./role')
+const roles = require('./roles')
 const staff = require('./staff')
+const staffRoles = require('./staffRoles')
 
 module.exports = {
-  role,
-  staff
+  roles,
+  staff,
+  staffRoles
 }
