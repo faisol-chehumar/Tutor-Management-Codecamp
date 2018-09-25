@@ -4,8 +4,8 @@ const AppError = require('../util/appError')
 async function list() {
   const [ staffList, staffRoleList ] = await Promise.all([ staff.findAll(), staffRoles.findAll() ])
 
-  if(staffList.length <= 0) {
-    throw new AppError(`Staff not found` , 400)
+  if(!staffList || !staffRoleList) {
+    throw new AppError(`Bad request` , 400)
   }
 
   staffList.forEach(staff => {
@@ -14,10 +14,9 @@ async function list() {
         staff['role'] = {'roleId': staffRole.roleId, 'mandayRate': staffRole.mandayRate}
       }
     })
-    staff
   })
 
-  return staffList
+  return [...staffList]
 }
 
 async function create(firstname='', lastname='', email='', tel, mapMarkerId, role='', mandayRate='') {  
@@ -38,7 +37,7 @@ async function create(firstname='', lastname='', email='', tel, mapMarkerId, rol
 
 async function remove() {
   await staffRoles.remove()
-  return await staff.remove()
+  await staff.remove()
 }
 
 module.exports = {

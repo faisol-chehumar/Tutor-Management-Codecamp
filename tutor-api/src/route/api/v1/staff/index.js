@@ -17,6 +17,10 @@ async function getStaffList(ctx) {
     return ctx.throw()
   }
 
+  if(staffList.length <= 0) {
+    return {}
+  }
+
   ctx.body = staffList
 }
 
