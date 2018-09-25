@@ -1,8 +1,19 @@
-const { staff, staffRoles } = require('../repository')
+const { staff, staffRoles, roles } = require('../repository')
 const AppError = require('../util/appError')
 
 async function list() {
-  const [ staffList, staffRoleList ] = await Promise.all([ staff.findAll(), staffRoles.findAll() ])
+  const [ staffList, staffRoleList, roleList ] = await Promise.all([ 
+    staff.findAll(),
+    staffRoles.findAll(),
+    roles.findAll()
+  ])
+
+  const roleMapped = {}
+  roleList.forEach(x => {
+    roleMapped[x.role_id] = x.title
+  })
+
+  console.log(roleMapped)
 
   if(staffList.length <= 0) {
     return {}
@@ -11,7 +22,11 @@ async function list() {
   staffList.forEach(staff => {
     staffRoleList.forEach(staffRole => {
       if(staff.staffId === staffRole.staffId) {
-        staff['role'] = {'roleId': staffRole.roleId, 'mandayRate': staffRole.mandayRate}
+        staff['role'] = {
+          'roleId': staffRole.roleId,
+          // 'title': roleList
+          'mandayRate': staffRole.mandayRate
+        }
       }
     })
     staff

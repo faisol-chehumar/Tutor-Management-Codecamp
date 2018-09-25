@@ -1,7 +1,7 @@
 const pool = require('../db')
 
 const findAll = async () => {
-	const result = await pool.query(`
+	const [result] = await pool.query(`
 		SELECT
 			staff_id AS staffId,
 			role_id AS roleId,
@@ -10,11 +10,11 @@ const findAll = async () => {
 			staff_roles;
 	`)
 
-	return result[0]
+	return result
 }
 
 const insert = async (staffId, roleId, mandayRate) => {
-	const result = await pool.query(`
+	const [result] = await pool.query(`
 		INSERT INTO staff_roles (
 			staff_id,
 			role_id,
@@ -22,15 +22,15 @@ const insert = async (staffId, roleId, mandayRate) => {
 		) VALUES (?, ?, ?)
 	`, [ staffId, roleId, mandayRate ])
 
-	return result[0]
+	return result
 }
 
 const remove = async () => {
-	const result = await pool.query(`
+	const [result] = await pool.query(`
     DELETE FROM staff_roles
 	`)
 
-	return result[0]
+	return result
 }
 
 module.exports = {

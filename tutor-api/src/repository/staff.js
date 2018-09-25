@@ -2,7 +2,7 @@ const pool = require('../db')
 
 const findAll = async () => {
   try {
-    const result = await pool.query(`
+    const [result] = await pool.query(`
       SELECT
         staff_id AS staffId,
         firstname,
@@ -14,7 +14,7 @@ const findAll = async () => {
         staff
     `)
 
-    return result[0]
+    return result
 
   } catch (error) {
     console.error(error)
@@ -23,7 +23,7 @@ const findAll = async () => {
 
 const findById = async (staffId) => {
   try {
-    const result = await pool.query(`
+    const [result] = await pool.query(`
       SELECT
         staff_id AS staffID,
         firstname,
@@ -37,7 +37,7 @@ const findById = async (staffId) => {
         staff_id = (?)
     `, [ staffId ])
 
-    return result[0]
+    return result
 
   } catch (error) {
     console.error(error)
@@ -46,7 +46,7 @@ const findById = async (staffId) => {
 
 const findByEmail = async (email) => {
   try {
-    const result = await pool.query(`
+    const [result] = await pool.query(`
       SELECT
         email
       FROM
@@ -55,7 +55,7 @@ const findByEmail = async (email) => {
         email = (?)
     `, [ email ])
 
-    return result[0]
+    return result
 
   } catch (error) {
     console.error(error);
@@ -64,7 +64,7 @@ const findByEmail = async (email) => {
 
 const insert = async (firstname, lastname, email, tel, mapMarkerId) => {
   try {
-    const result = await pool.query(`
+    const [result] = await pool.query(`
       INSERT INTO staff (
         firstname,
         lastname,
@@ -74,7 +74,7 @@ const insert = async (firstname, lastname, email, tel, mapMarkerId) => {
       ) VALUES (?, ?, ?, ?, ?)
     `, [ firstname, lastname, email, tel, mapMarkerId ])
 
-    return result[0]
+    return result
 
   } catch (error) {
     console.error(error)
@@ -83,11 +83,11 @@ const insert = async (firstname, lastname, email, tel, mapMarkerId) => {
 
 const remove = async () => {
   try {
-    const result = await pool.query(`
+    const [result] = await pool.query(`
     DELETE FROM staff
 	`)
 
-  return result[0]
+  return result
    
   } catch (error) {
     console.error()
