@@ -12,7 +12,8 @@ CREATE TABLE map_markers (
 );
 
 CREATE TABLE roles (
-  role_id INT PRIMARY KEY AUTO_INCREMENT,
+  PRIMARY KEY(role_id),
+  role_id INT AUTO_INCREMENT,
   title VARCHAR(255) NOT NULL
 );
 
