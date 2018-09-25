@@ -1,11 +1,11 @@
-CREATE SCHEMA IF NOT EXISTS tutor_management_db;
+#CREATE SCHEMA IF NOT EXISTS tutor_management_db;
 USE tutor_management_db;
 
 CREATE TABLE map_markers (
   PRIMARY KEY(map_marker_id),
   map_marker_id INT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(60) NOT NULL,
-  address VARCHAR(255) NOT NULL,
+  title VARCHAR(60),
+  address VARCHAR(255),
   lat FLOAT(10, 6) NOT NULL,
   lng FLOAT(10, 6) NOT NULL,
   marker_type VARCHAR(30)
@@ -47,10 +47,9 @@ CREATE TABLE staff_avail_daytime (
   FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
 );
 
-CREATE TABLE locations (
-  PRIMARY KEY(location_id),
-  location_id INT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(60) NOT NULL,
+CREATE TABLE courses_locations (
+  PRIMARY KEY(course_location_id),
+  course_location_id INT NOT NULL AUTO_INCREMENT,
   tel VARCHAR(50),
   contact VARCHAR(60),
   room_size INT,
@@ -66,11 +65,42 @@ CREATE TABLE courses (
   description TEXT,
   start_date DATETIME,
   end_date DATETIME,
-  location_id INT,
-  FOREIGN KEY (location_id) REFERENCES locations(location_id)
+  course_location_id INT,
+  FOREIGN KEY (course_location_id) REFERENCES courses_locations(course_location_id)
 );
 
-CREATE TABLE staff_registration (
+CREATE TABLE customers (
+  PRIMARY KEY(customer_id),
+  customer_id INT NOT NULL AUTO_INCREMENT,
+  firstname VARCHAR(60) NOT NULL,
+  lastname VARCHAR(60) NOT NULL,
+  email VARCHAR(60) NOT NULL,
+  actived_status INT(1) NOT NULL, -- 1 = active, 0 = inactive
+  child_age INT(2),
+  map_marker_id INT,
+  FOREIGN KEY (map_marker_id) REFERENCES map_markers(map_marker_id)
+);
+
+CREATE TABLE courses_enrolments (
+  PRIMARY KEY(course_enrolment_id),
+  course_enrolment_id INT NOT NULL AUTO_INCREMENT,
+  course_id INT NOT NULL,
+  customer_id INT NOT NULL,
+  FOREIGN KEY (course_id) REFERENCES courses(course_id),
+  FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+CREATE TABLE courses_schedule (
+  PRIMARY KEY(course_schedule_id),
+  course_schedule_id INT NOT NULL AUTO_INCREMENT,
+  course_id INT NOT NULL,
+  weekday_num SMALLINT(1) NOT NULL, -- 0 - 6 is Sun - Sat
+  time_code VARCHAR(2) NOT NULL, -- MO = Morning, AF = Afternoon
+  FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+
+
+CREATE TABLE staff_registrations (
   PRIMARY KEY(staff_registration_id),
   staff_registration_id INT NOT NULL AUTO_INCREMENT,
   staff_id INT NOT NULL,
@@ -81,26 +111,10 @@ CREATE TABLE staff_registration (
   FOREIGN KEY (role_id) REFERENCES roles(role_id)
 );
 
-CREATE TABLE courses_schedule (
-  PRIMARY KEY(courses_schedule_id),
-  courses_schedule_id INT NOT NULL AUTO_INCREMENT,
-  course_id INT NOT NULL,
-  weekday_num SMALLINT(1) NOT NULL, -- 0 - 6 is Sun - Sat
-  time_code VARCHAR(2) NOT NULL, -- MO = Morning, AF = Afternoon
-  FOREIGN KEY (course_id) REFERENCES courses(course_id)
-);
 
-CREATE TABLE customers (
-  PRIMARY KEY(customer_id),
-  customer_id INT NOT NULL AUTO_INCREMENT,
-  firstname VARCHAR(60) NOT NULL,
-  lastname VARCHAR(60) NOT NULL,
-  emai VARCHAR(60) NOT NULL,
-  map_marker_id INT,
-  actived_status INT(1) NOT NULL, -- 1 = active, 0 = inactive
-  child_age INT(3),
-  FOREIGN KEY (map_marker_id) REFERENCES map_markers(map_marker_id)
-);
+#SET FOREIGN_KEY_CHECKS = 0;
+#SET FOREIGN_KEY_CHECKS = 1;
+
 
 /* SHOW ALL TABLES */
-SHOW TABLES;
+#SHOW TABLES;
