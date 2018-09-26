@@ -14,21 +14,22 @@ async function list(id='') {
     return {}
   }
 
-  staffList.forEach(staff => {
-    staff['role'] = staffRoleList
-      .filter(staffRole => {
-        return staff.staffId === staffRole.staffId
-      })
-      .map(staffRole => {
-        return {
-          'id': staffRole.roleId,
-          'title': titleRoleMapped[staffRole.roleId],
-          'mandayRate': staffRole.mandayRate
-        }
-      })
+  return staffList.map(staff => {
+    return {
+      ...staff,
+      'role': staffRoleList
+        .filter(staffRole => {
+          return staff.staffId === staffRole.staffId
+        })
+        .map(staffRole => {
+          return {
+            'id': staffRole.roleId,
+            'title': titleRoleMapped[staffRole.roleId],
+            'mandayRate': staffRole.mandayRate
+          }
+        })
+    }
   })
-
-  return staffList
 }
 
 async function create(firstname='', lastname='', email='', tel, mapMarkerId, roleId='', mandayRate='') {  
