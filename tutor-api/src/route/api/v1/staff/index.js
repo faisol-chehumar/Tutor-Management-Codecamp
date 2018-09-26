@@ -6,6 +6,7 @@ const router = new Router()
 
 router
   .get('/', getStaffList)
+  .get('/:id', getStaffById)
   .post('/', createStaff)
   // .put('/', updateStaffList)
   .delete('/', removeStaffList)
@@ -22,6 +23,20 @@ async function getStaffList(ctx) {
   }
 
   ctx.body = staffList
+}
+
+async function getStaffById(ctx) {
+  const staffData = await staffService.list(ctx.params.id)
+  
+  if(!staffData) {
+    return ctx.throw()
+  }
+
+  if(staffData.length <= 0) {
+    return {}
+  }
+
+  ctx.body = staffData
 }
 
 async function createStaff(ctx) {

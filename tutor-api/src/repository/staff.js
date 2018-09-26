@@ -25,7 +25,7 @@ const findById = async (staffId) => {
   try {
     const [result] = await pool.query(`
       SELECT
-        staff_id AS staffID,
+        staff_id AS staffId,
         firstname,
         lastname,
         email,
