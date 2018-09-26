@@ -1,7 +1,7 @@
 const AppError = require('./appError')
-const object = require('./object')
+const helper = require('./helper')
 
 module.exports = {
   AppError,
-  object
+  helper
 }

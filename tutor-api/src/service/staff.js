@@ -1,5 +1,5 @@
 const { staff, staffRoles, roles } = require('../repository')
-const { AppError, object} = require('../util')
+const {AppError, helper} = require('../util/')
 
 async function list() {
   const [ staffList, staffRoleList, roleList ] = await Promise.all([ 
@@ -8,32 +8,28 @@ async function list() {
     roles.findAll()
   ])
 
-  // const roleMapped = {}
-  
-  // roleList.forEach(x => {
-  //   roleMapped[x.role_id] = x.title
-  // })
-  // console.log(roleList)
-  object.mappedValue(roleList, ['roleId', 'title'])
-  // console.log(roleMapped)
+  console.log(staffList)
+  const titleRoleMapped = helper.mappedValue(roleList, ['roleId', 'title'])
+  // console.log(titleRoleMapped)
 
   if(staffList.length <= 0) {
     return {}
   }
 
   staffList.forEach(staff => {
+    staff['role'] = []
     staffRoleList.forEach(staffRole => {
       if(staff.staffId === staffRole.staffId) {
-        staff['role'] = {
+        staff['role'].push({
           'roleId': staffRole.roleId,
-          // 'title': roleList
+          'title': titleRoleMapped[staffRole.roleId],
           'mandayRate': staffRole.mandayRate
-        }
+        })
       }
     })
   })
 
-  return [...staffList]
+  return staffList
 }
 
 async function create(firstname='', lastname='', email='', tel, mapMarkerId, roleId='', mandayRate='') {  
