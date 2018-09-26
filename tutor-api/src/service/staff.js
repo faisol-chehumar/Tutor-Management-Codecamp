@@ -23,13 +23,19 @@ async function list(id='') {
     return {}
   }
 
-  return staffList.map(staff => {
-    const {mapMarkerId, ...y} = {...staff}
-    
-    return mapMarkerId !== null ? {
-      ...y,
-      'mapMarker': mapMarker[mapMarkerId],
-      'role': staffRoleList
+  return staffList
+    .map(staff => {
+      const {mapMarkerId, ...y} = {...staff}
+      
+      return mapMarkerId !== null ? {
+        ...y,
+        'mapMarker': mapMarker[mapMarkerId]
+      } : {...y, mapMarker: null}
+    })
+    .map(staff => {
+      return {
+        ...staff,
+        'role': staffRoleList
         .filter(staffRole => {
           return staff.staffId === staffRole.staffId
         })
@@ -40,8 +46,8 @@ async function list(id='') {
             'mandayRate': staffRole.mandayRate
           }
         })
-    } : {...staff}
-  })
+      }
+    })
 }
 
 async function create(firstname='', lastname='', email='', tel, mapMarkerId, roleId='', mandayRate='') {  
