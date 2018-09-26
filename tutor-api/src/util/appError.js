@@ -1,4 +1,4 @@
-class AppError extends Error {
+module.exports = class AppError extends Error {
   constructor (message, status) {
     // Calling parent constructor of base Error class.
     super(message)
@@ -14,8 +14,4 @@ class AppError extends Error {
     // `500` is the default value if not specified.
     this.status = status || 500
   }
-}
-
-module.exports = {
-  AppError
 }

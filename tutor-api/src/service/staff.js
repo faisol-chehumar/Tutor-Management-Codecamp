@@ -8,9 +8,7 @@ async function list() {
     roles.findAll()
   ])
 
-  console.log(staffList)
   const titleRoleMapped = helper.mappedValue(roleList, ['roleId', 'title'])
-  // console.log(titleRoleMapped)
 
   if(staffList.length <= 0) {
     return {}
@@ -33,24 +31,14 @@ async function list() {
 }
 
 async function create(firstname='', lastname='', email='', tel, mapMarkerId, roleId='', mandayRate='') {  
-  const isDuplicateEmail = (await staff.findByEmail(email)).length > 0
-  const requireField = `${firstname==='' ? 'firstname,' : ''}${lastname==='' ? 'lastname,' : ''}${email==='' ? 'email,' : ''}${roleId==='' ? 'roleId, ' : ''}${mandayRate==='' ? 'mandayRate' : ''}`
+  const isNewStaffValid = await newStaffValidate(firstname, lastname, email, roleId, mandayRate)
 
-  if(!firstname || !lastname || !email || !roleId || !mandayRate) {
-    throw new AppError(`Bad request, [${requireField}] required ` , 400)
-  }
-  
-  if(isDuplicateEmail) {
-    throw new AppError('Email is already use', 400)
-  }
-
-  if(roleId >= 1 && roleId <= 2) {
+  if(isNewStaffValid) {
     const newStaff = await staff.insert(firstname, lastname, email, tel, mapMarkerId)
-    await staffRoles.insert(newStaff.insertId, roleId, mandayRate)
+    await setRole(newStaff.insertId, roleId, mandayRate)
     return newStaff.insertId
   }
-  
-  throw new AppError(`Bad request, RoleId should be 1 or 2 ` , 400)
+
 }
 
 async function remove() {
@@ -59,8 +47,51 @@ async function remove() {
   return
 }
 
+async function setRole(staffId, roleId, mandayRate) {
+  const staffRoleId = await staffRoles.insert(staffId, roleId, mandayRate)
+  return staffRoleId.insertId
+}
+
+async function newStaffValidate(firstname, lastname, email, roleId, mandayRate) {
+  const isValidParam = paramValidate(firstname, lastname, email, roleId, mandayRate)
+  const isValidRoleId = roleIdValidate(roleId)
+  const isValidEmail = await emailValidate(email)
+  console.log(isValidParam)
+  console.log(isValidRoleId)
+  console.log(isValidEmail)
+
+  return isValidParam && isValidRoleId && isValidEmail
+}
+
+function paramValidate(firstname, lastname, email, roleId, mandayRate) {
+  let requireParam = `${firstname==='' ? 'firstname,' : ''}${lastname==='' ? 'lastname,' : ''}${email==='' ? 'email,' : ''}${roleId==='' ? 'roleId, ' : ''}${mandayRate==='' ? 'mandayRate' : ''}`
+  const isValid = firstname && lastname && email && roleId && mandayRate
+  if(!isValid) {
+    throw new AppError(`Bad request, [${requireParam}] required ` , 400)
+  }
+  return isValid
+}
+
+function roleIdValidate(roleId) {
+  const isValid = roleId >= 1 && roleId <= 2
+  if(!isValid) {
+    throw new AppError(`Bad request, RoleId should be 1 or 2 ` , 400)
+  }
+  return isValid
+}
+
+async function emailValidate(email) {
+  const isDuplicate = (await staff.findByEmail(email)).length > 0
+  if(isDuplicate) {
+    throw new AppError('Email is already use', 400)
+  }
+  return true
+}
+
 module.exports = {
   list,
   create,
-  remove
+  remove,
+  setRole,
+  roleIdValidate
 }
