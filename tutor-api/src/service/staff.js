@@ -1,22 +1,34 @@
-const { staff, staffRoles, roles } = require('../repository')
+const { staff, staffRoles, roles, mapMarkers } = require('../repository')
 const {AppError, helper} = require('../util/')
 
 async function list(id='') {
-  const [ staffList, staffRoleList, roleList ] = await Promise.all([ 
+  const [ staffList, staffRoleList, roleList, mapMarkersList ] = await Promise.all([ 
     id !== '' ? staff.findById(id) : staff.findAll() ,
     staffRoles.findAll(),
-    roles.findAll()
+    roles.findAll(),
+    mapMarkers.findAll()
   ])
 
-  const titleRoleMapped = helper.mappedValue(roleList, ['roleId', 'title'])
+  const mapMarker = {}
+
+  mapMarkersList.map(x => {
+    mapMarker[x.mapMarkerId] = {
+      ...x
+    }
+  })
+
+  const roleTitle = helper.mappedValue(roleList, ['roleId', 'title'])
 
   if(staffList.length <= 0) {
     return {}
   }
 
   return staffList.map(staff => {
-    return {
-      ...staff,
+    const {mapMarkerId, ...y} = {...staff}
+    
+    return mapMarkerId !== null ? {
+      ...y,
+      'mapMarker': mapMarker[mapMarkerId],
       'role': staffRoleList
         .filter(staffRole => {
           return staff.staffId === staffRole.staffId
@@ -24,11 +36,11 @@ async function list(id='') {
         .map(staffRole => {
           return {
             'id': staffRole.roleId,
-            'title': titleRoleMapped[staffRole.roleId],
+            'title': roleTitle[staffRole.roleId],
             'mandayRate': staffRole.mandayRate
           }
         })
-    }
+    } : {...staff}
   })
 }
 
