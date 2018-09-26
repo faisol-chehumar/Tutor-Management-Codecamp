@@ -12,7 +12,7 @@ router
 
 async function getStaffList(ctx) {
   const staffList =  await staffService.list()
-
+  
   if(!staffList) {
     return ctx.throw()
   }
@@ -26,19 +26,21 @@ async function getStaffList(ctx) {
 
 async function createStaff(ctx) {
   const { firstname, lastname, email, tel, mapMarkerId, role, mandayRate } = ctx.request.body
-  const newStaff = await staffService.create(firstname, lastname, email, tel, mapMarkerId, role, mandayRate)
+  const newStaffId = await staffService.create(firstname, lastname, email, tel, mapMarkerId, role, mandayRate)
 
-  if(!newStaff) {
+  if(!newStaffId) {
     return ctx.throw()
   }
 
   ctx.status = 201
-  ctx.body = newStaff
+  ctx.body = {
+    newStaffId
+  }
 }
 
 async function removeStaffList(ctx) {
-  const removeResult =  await staffService.remove()
-  ctx.body = removeResult
+  await staffService.remove()
+  ctx.status = 204
 }
 
 module.exports = router.routes()

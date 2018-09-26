@@ -1,17 +1,34 @@
-const { staff, staffRoles } = require('../repository')
-const AppError = require('../util/appError')
+const { staff, staffRoles, roles } = require('../repository')
+const { AppError, object} = require('../util')
 
 async function list() {
-  const [ staffList, staffRoleList ] = await Promise.all([ staff.findAll(), staffRoles.findAll() ])
+  const [ staffList, staffRoleList, roleList ] = await Promise.all([ 
+    staff.findAll(),
+    staffRoles.findAll(),
+    roles.findAll()
+  ])
 
-  if(!staffList || !staffRoleList) {
-    throw new AppError(`Bad request` , 400)
+  // const roleMapped = {}
+  
+  // roleList.forEach(x => {
+  //   roleMapped[x.role_id] = x.title
+  // })
+  // console.log(roleList)
+  object.mappedValue(roleList, ['roleId', 'title'])
+  // console.log(roleMapped)
+
+  if(staffList.length <= 0) {
+    return {}
   }
 
   staffList.forEach(staff => {
     staffRoleList.forEach(staffRole => {
       if(staff.staffId === staffRole.staffId) {
-        staff['role'] = {'roleId': staffRole.roleId, 'mandayRate': staffRole.mandayRate}
+        staff['role'] = {
+          'roleId': staffRole.roleId,
+          // 'title': roleList
+          'mandayRate': staffRole.mandayRate
+        }
       }
     })
   })
@@ -19,11 +36,11 @@ async function list() {
   return [...staffList]
 }
 
-async function create(firstname='', lastname='', email='', tel, mapMarkerId, role='', mandayRate='') {  
+async function create(firstname='', lastname='', email='', tel, mapMarkerId, roleId='', mandayRate='') {  
   const isDuplicateEmail = (await staff.findByEmail(email)).length > 0
-  const requireField = `${firstname==='' ? 'firstname,' : ''}${lastname==='' ? 'lastname,' : ''}${email==='' ? 'email,' : ''}${role==='' ? 'role, ' : ''}${mandayRate==='' ? 'mandayRate' : ''}`
+  const requireField = `${firstname==='' ? 'firstname,' : ''}${lastname==='' ? 'lastname,' : ''}${email==='' ? 'email,' : ''}${roleId==='' ? 'roleId, ' : ''}${mandayRate==='' ? 'mandayRate' : ''}`
 
-  if(!firstname || !lastname || !email || !role || !mandayRate) {
+  if(!firstname || !lastname || !email || !roleId || !mandayRate) {
     throw new AppError(`Bad request, [${requireField}] required ` , 400)
   }
   
@@ -31,13 +48,19 @@ async function create(firstname='', lastname='', email='', tel, mapMarkerId, rol
     throw new AppError('Email is already use', 400)
   }
 
-  const newStaff = await staff.insert(firstname, lastname, email, tel, mapMarkerId)
-  return await staffRoles.insert(newStaff.insertId, role, mandayRate)
+  if(roleId >= 1 && roleId <= 2) {
+    const newStaff = await staff.insert(firstname, lastname, email, tel, mapMarkerId)
+    await staffRoles.insert(newStaff.insertId, roleId, mandayRate)
+    return newStaff.insertId
+  }
+  
+  throw new AppError(`Bad request, RoleId should be 1 or 2 ` , 400)
 }
 
 async function remove() {
   await staffRoles.remove()
   await staff.remove()
+  return
 }
 
 module.exports = {
