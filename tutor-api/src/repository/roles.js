@@ -2,7 +2,7 @@ const pool = require('../db')
 
 async function findAll() {
   try {
-    const [result] = await pool.query(`
+    const [results] = await pool.query(`
       SELECT
         role_id AS roleId,
         title
@@ -10,7 +10,7 @@ async function findAll() {
         roles
     `)
     
-    return result
+    return results
   
   } catch(err) {
     console.log(err.message)
@@ -20,7 +20,7 @@ async function findAll() {
 
 async function findById(id) {
     try {
-      const [result] = await pool.query(`
+      const [results] = await pool.query(`
         SELECT
           role_id AS roleId
         FROM
@@ -29,7 +29,7 @@ async function findById(id) {
           role_id = ?
       `, [ id ])
       
-      return result[0] && result[0].role_id
+      return results[0] && results[0].role_id
     
     } catch(err) {
     console.log(err.message)

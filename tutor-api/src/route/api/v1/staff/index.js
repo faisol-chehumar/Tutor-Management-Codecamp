@@ -5,13 +5,13 @@ const { staffService } = require('../../../../service')
 const router = new Router()
 
 router
-  .get('/', getStaffList)
+  .get('/', getAllStaff)
   .get('/:id', getStaffById)
-  .post('/', createStaff)
+  .post('/', addStaff)
   // .put('/', updateStaffList)
-  .delete('/', removeStaffList)
+  .delete('/', deleteAllStaff)
 
-async function getStaffList(ctx) {
+async function getAllStaff(ctx) {
   const staffList =  await staffService.list()
   
   if(!staffList) {
@@ -39,7 +39,7 @@ async function getStaffById(ctx) {
   ctx.body = staffData
 }
 
-async function createStaff(ctx) {
+async function addStaff(ctx) {
   const { firstname, lastname, email, tel, mapMarkerId, role, mandayRate } = ctx.request.body
   const newStaffId = await staffService.create(firstname, lastname, email, tel, mapMarkerId, role, mandayRate)
 
@@ -53,7 +53,7 @@ async function createStaff(ctx) {
   }
 }
 
-async function removeStaffList(ctx) {
+async function deleteAllStaff(ctx) {
   await staffService.remove()
   ctx.status = 204
 }

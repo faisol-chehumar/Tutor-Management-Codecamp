@@ -2,7 +2,7 @@ const pool = require('../db')
 
 const findAll = async () => {
   try {
-    const [result] = await pool.query(`
+    const [results] = await pool.query(`
       SELECT
         map_marker_id AS mapMarkerId,
         title,
@@ -14,7 +14,7 @@ const findAll = async () => {
         map_markers;
     `)
 
-    return result
+    return results
     
   } catch (error) {
     console.error(error)
