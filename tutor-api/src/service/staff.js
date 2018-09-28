@@ -1,14 +1,15 @@
 const { staff, staffRoles, roles, mapMarkers } = require('../repository')
 const {AppError, helper} = require('../util/')
 
-async function list(id='') {
+async function list(id) {
   const [ staffList, staffRoleList, roleList, mapMarkersList ] = await Promise.all([ 
-    id !== '' ? staff.findById(id) : staff.findAll() ,
+    id ? staff.get({id}) : staff.get(),
     staffRoles.findAll(),
     roles.findAll(),
     mapMarkers.findAll()
   ])
 
+  // console.log(staffList)
   const mapMarker = {}
 
   mapMarkersList.map(x => {
