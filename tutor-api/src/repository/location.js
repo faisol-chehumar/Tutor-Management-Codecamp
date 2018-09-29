@@ -26,7 +26,7 @@ const get = async () => {
     }
     catch (err) {
         console.log("ttt")
-        console.log(err.message);
+        console.log(err.message)
         return undefined;
     }
 }
@@ -42,7 +42,7 @@ const insert = async (tel, contact, room_size, note, map_marker_id) => {
         return result
     }
     catch (err) {
-        console.log(err.message);
+        console.log(err.message)
         return undefined;
     }
 }
