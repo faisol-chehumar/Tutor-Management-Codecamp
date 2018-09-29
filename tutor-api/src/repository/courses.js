@@ -2,7 +2,7 @@ const pool = require('../db')
 
 const get = async () =>{
     try {
-        const result = poo.query(`
+        const result = pool.query(`
         SELECT *
         FROM courses
         `)
