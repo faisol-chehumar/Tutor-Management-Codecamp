@@ -6,12 +6,20 @@ const router = new Router()
 
 router.get('/',getLocation)
 router.post('/',insertLocation)
+router.get('/:id',getLocationId)
 module.exports = router.routes()
 
 async function getLocation(ctx){   
     console.log('sdsd')
     const locationResult = await repo.location.get()
     ctx.body = {result : locationResult}
+}
+
+async function getLocationId(ctx){   
+    console.log('test')
+    console.log('ctx.param>>', ctx.params.id)
+    const locationId = await repo.location.getLocationId(ctx.params.id)
+    ctx.body = {result : locationId}
 }
 
 // async function findLocation(ctx){

@@ -31,14 +31,30 @@ const get = async () => {
     }
 }
 
-const insert = async (tel, contact, room_size, note, map_marker_id) => {
+const getLocationId = async (courseLocationId) => {
+    try {
+        const result = await pool.query(`
+        SELECT course_location_id,tel,contact,room_size,note,map_marker_id
+        FROM courses_locations
+        WHERE course_location_id = ?
+        `, [courseLocationId])
+        // console.log(courseLocationId)
+        return result[0]
+    }
+    catch (err) {
+        console.log(err.message)
+        return undefined;
+    }
+}
+
+const insert = async (tel, contact, roomSize, note, mapMarkerId) => {
     try {
         const result = await pool.query(`
             INSERT INTO courses_locations
             (tel,contact,room_size,note,map_marker_id)
             VALUES
             (?,?,?,?,?)
-            `[tel, contact, room_size, note, map_marker_id])
+            `[tel, contact, roomSize, note, mapMarkerId])
         return result
     }
     catch (err) {
@@ -48,6 +64,7 @@ const insert = async (tel, contact, room_size, note, map_marker_id) => {
 }
 module.exports = {
     get,
+    getLocationId,
     insert
 
 }

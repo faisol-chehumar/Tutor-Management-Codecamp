@@ -13,13 +13,13 @@ const get = async () => {
 	return result[0]
 }
 
-const insert = async (firstname, lastname, email, tel, map_marker_id) => {
+const insert = async (firstname, lastname, email, tel, mapMarkerId) => {
 	const result = await pool.query(`
 		insert into staff
       (firstname, lastname, email, tel, map_marker_id)
 		values
 			(?, ?, ?, ?, ?)
-	`, [ firstname, lastname, email, tel, map_marker_id ])
+	`, [ firstname, lastname, email, tel, mapMarkerId ])
 
 	return result
 }
