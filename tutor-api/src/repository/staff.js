@@ -19,16 +19,16 @@ const get = async () => {
   }
 }
 
-const insert = async (firstname, lastname, email, tel, map_marker_id) => {
+const insert = async (firstname, lastname, email, tel, mapMarkerId) => {
   try {
     const result = await pool.query(`
-      INSERT INTO staff
+      insert into staff
         (firstname, lastname, email, tel, map_marker_id)
-      VALUES
-        (?, ?, ?, ?, ?);
-      `, [ firstname, lastname, email, tel, map_marker_id ])
+      values
+        (?, ?, ?, ?, ?)
+    `, [ firstname, lastname, email, tel, mapMarkerId ])
 
-    return result
+      return result
      
   } catch(error) {
     console.error(error)
