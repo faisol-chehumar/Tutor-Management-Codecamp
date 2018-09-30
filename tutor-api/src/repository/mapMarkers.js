@@ -21,6 +21,26 @@ const get = async () => {
   }
 }
 
+const insert = async ({title=null, address=null, lat=null, lng=null, markerType=null}={}) => {
+  try {
+    const [results] = await pool.query(`
+      INSERT INTO map_markers (
+        title,
+        address,
+        lat,
+        lng,
+        marker_type
+      ) VALUES (?, ?, ?, ?, ?, ?)
+    `, [ title, address, lat, lng, markerType ])
+
+    return results
+    
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 module.exports = {
-  get
+  get,
+  insert
 }

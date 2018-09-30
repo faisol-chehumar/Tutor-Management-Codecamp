@@ -50,6 +50,7 @@ async function create(staffData) {
     throw new AppError('Email is already use', 400)
   }
   
+  // const mapMarkerId = await mapMarkers.insert(staffData)
   const result = await staff.insert(staffData)
   await staffRoles.insert({staffId: result.insertId,...staffData})
 
