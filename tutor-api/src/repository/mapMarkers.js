@@ -1,6 +1,6 @@
 const pool = require('../db')
 
-const findAll = async () => {
+const get = async () => {
   try {
     const [results] = await pool.query(`
       SELECT
@@ -22,5 +22,5 @@ const findAll = async () => {
 }
 
 module.exports = {
-  findAll
+  get
 }

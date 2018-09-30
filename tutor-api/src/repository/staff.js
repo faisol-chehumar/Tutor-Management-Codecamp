@@ -1,12 +1,10 @@
 const pool = require('../db')
 
 const get = async ({
-  id = null,
-  email = null,
-  offset = 0,
-  limit = 18446744073709551615
-}={}) => {
-  const condition = [id, email, offset, limit].filter(elm => elm !== null)
+  offset = null,
+  limit = null
+  }={}) => {
+  const condition = [offset, limit].filter(elm => elm !== null)
   const query = `
     SELECT
       staff_id AS staffId,
@@ -18,17 +16,9 @@ const get = async ({
     FROM
       staff
   `
-  const whereId = `WHERE staff_id = ?`
-  const whereEmail = `WHERE email = ?`
-  const limitOffset = `LIMIT ?, ?`
-
   let queryCondition = query
-  if(id !== null) {queryCondition += whereId}
-  if(email !== null) {queryCondition += whereEmail}
-  queryCondition += limitOffset
-
-  console.log(queryCondition)
-  console.log(condition)
+  
+  if(limit !== null) {queryCondition += `LIMIT ${limit}`} // Can't use prepare statement
   
   try {
     const [results] = await pool.query(
@@ -42,69 +32,83 @@ const get = async ({
   }
 }
 
-const findAll = async () => {
-  try {
-    const [results] = await pool.query(`
-      SELECT
-        staff_id AS staffId,
-        firstname,
-        lastname,
-        email,
-        tel,
-        map_marker_id AS mapMarkerId
-      FROM
-        staff
-    `)
+// const getById = async ({
+//   id = null,
+//   offset = null,
+//   limit = null
+//   }={}) => {
+//   const condition = [id, offset, limit].filter(elm => elm !== null)
+//   const query = `
+//     SELECT
+//       staff_id AS staffId,
+//       firstname,
+//       lastname,
+//       email,
+//       tel,
+//       map_marker_id AS mapMarkerId
+//     FROM
+//       staff
+//   `
+//   const whereId = `WHERE staff_id = ?`
 
-    return results
+//   let queryCondition = query
+//   if(id !== null) {queryCondition += whereId}
+//   if(limit !== null) {queryCondition += `LIMIT ${limit}`} // Can't use prepare statement
+  
+//   try {
+//     const [results] = await pool.query(
+//       queryCondition
+//     , condition)
 
-  } catch (error) {
-    console.error(error)
-  }
-}
+//     return results
 
-const findById = async (staffId) => {
-  try {
-    const [results] = await pool.query(`
-      SELECT
-        staff_id AS staffId,
-        firstname,
-        lastname,
-        email,
-        tel,
-        map_marker_id AS mapMarkerId
-      FROM
-        staff
-      WHERE
-        staff_id = (?)
-    `, [ staffId ])
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
-    return results
+// const getByEmail = async ({
+//   email = null,
+//   offset = null,
+//   limit = null
+//   }={}) => {
+//   const condition = [email, offset, limit].filter(elm => elm !== null)
+//   const query = `
+//     SELECT
+//       staff_id AS staffId,
+//       firstname,
+//       lastname,
+//       email,
+//       tel,
+//       map_marker_id AS mapMarkerId
+//     FROM
+//       staff
+//   `
+//   const whereEmail = `WHERE email = ?`
 
-  } catch (error) {
-    console.error(error)
-  }
-}
+//   let queryCondition = query
+//   if(email !== null) {queryCondition += whereEmail}
+//   if(limit !== null) {queryCondition += `LIMIT ${limit}`} // Can't use prepare statement
+  
+//   try {
+//     const [results] = await pool.query(
+//       queryCondition
+//     , condition)
 
-const findByEmail = async (email) => {
-  try {
-    const [results] = await pool.query(`
-      SELECT
-        email
-      FROM
-        staff
-      WHERE
-        email = (?)
-    `, [ email ])
+//     return results
 
-    return results
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
-  } catch (error) {
-    console.error(error);
-  }
-}
+const insert = async ({
+  firstname=null,
+  lastname=null,
+  email=null,
+  tel=null,
+  mapMarkerId=null}={}) => {
 
-const insert = async (firstname, lastname, email, tel, mapMarkerId) => {
   try {
     const [results] = await pool.query(`
       INSERT INTO staff (
@@ -123,24 +127,27 @@ const insert = async (firstname, lastname, email, tel, mapMarkerId) => {
   }
 }
 
-const remove = async () => {
-  try {
-    const [results] = await pool.query(`
-    DELETE FROM staff
-	`)
+const remove = async ({id=null}={}) => {	
+	let queryCondition = 'DELETE FROM staff'
+	if(id) {
+		queryCondition += ` WHERE staff.staff_id = ${id}`
+  }
 
-  return results
-   
-  } catch (error) {
-    console.error()
+  try {
+    const [results] = await pool.query(
+      queryCondition
+    )
+  
+    return results 
+  } catch(error) {
+    console.error(error)  
   }
 }
 
 module.exports = {
   get,
-  findAll,
-  findById,
-  findByEmail,
+  // getById,
+  // getByEmail,
   insert,
   remove
 }

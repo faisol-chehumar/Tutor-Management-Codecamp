@@ -1,6 +1,6 @@
 const Router = require('koa-router')
-
 const { staffService } = require('../../../../service')
+const Joi = require('joi')
 
 const router = new Router()
 
@@ -8,41 +8,64 @@ router
   .get('/', getAllStaff)
   .get('/:id', getStaffById)
   .post('/', addStaff)
-  // .put('/', updateStaffList)
   .delete('/', deleteAllStaff)
+  .delete('/:id', deleteStaffById)
 
 async function getAllStaff(ctx) {
-  const staffList =  await staffService.list()
+  const results =  await staffService.list({
+    offset: ctx.query.offset, 
+    limit: ctx.query.limit
+  })
   
-  if(!staffList) {
+  if(!results) {
     return ctx.throw()
   }
 
-  if(staffList.length <= 0) {
-    return {}
+  if(results.length <= 0) {
+    ctx.status = 404
+    ctx.body = {error: 'Staff list not found'}
+    return
   }
 
-  ctx.body = staffList
+  ctx.body = results
 }
 
 async function getStaffById(ctx) {
-  const staffData = await staffService.list(ctx.params.id)
-  
-  if(!staffData) {
+  const result = (await staffService.list()).filter(staff => staff.staffId == ctx.params.id)
+
+  if(!result) {
     return ctx.throw()
   }
-
-  if(staffData.length <= 0) {
-    return {}
+  
+  if(result.length <= 0) {
+    ctx.status = 404
+    ctx.body = {error: 'Staff not found'}
+    return
   }
 
-  ctx.body = staffData
+  ctx.body = result
 }
 
 async function addStaff(ctx) {
-  const { firstname, lastname, email, tel, mapMarkerId, role, mandayRate } = ctx.request.body
-  const newStaffId = await staffService.create(firstname, lastname, email, tel, mapMarkerId, role, mandayRate)
-
+  const staffSchema = Joi.object().keys({
+    firstname: Joi.string().required(),
+    lastname: Joi.string().required(),
+    email: Joi.string().email().required(),
+    tel: Joi.required(),
+    mapMarkerId: Joi.required(),
+    roleId: Joi.number().min(1).max(2).required(),
+    mandayRate: Joi.required()
+  })
+  
+  try {
+    await staffSchema.validate(ctx.request.body)
+  } catch(error) {
+    ctx.status = 400
+    ctx.body = error
+  }
+  
+  const newStaffId = await staffService.create(ctx.request.body)
+    
   if(!newStaffId) {
     return ctx.throw()
   }
@@ -55,6 +78,11 @@ async function addStaff(ctx) {
 
 async function deleteAllStaff(ctx) {
   await staffService.remove()
+  ctx.status = 204
+}
+
+async function deleteStaffById(ctx) {
+  await staffService.remove({id: ctx.params.id})
   ctx.status = 204
 }
 
