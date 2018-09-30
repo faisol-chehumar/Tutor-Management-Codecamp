@@ -20,7 +20,11 @@
   "dependencies": {
     "@google-cloud/storage": "^1.7.0",
     "@koa/cors": "^2.2.1",
+<<<<<<< HEAD
     "bcrypt": "^3.0.1",
+=======
+    "joi": "^13.6.0",
+>>>>>>> staff-api
     "koa": "^2.5.1",
     "koa-body": "^4.0.3",
     "koa-router": "^7.4.0",

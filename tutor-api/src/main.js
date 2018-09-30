@@ -1,7 +1,6 @@
 
 const Koa = require('koa')
 const koaBody = require('koa-body')
-const session = require('koa-session')
 const cors = require('@koa/cors')
 
 const app = new Koa()

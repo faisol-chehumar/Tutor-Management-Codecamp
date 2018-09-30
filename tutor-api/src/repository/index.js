@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const role = require('./role')
 
 const staff = require('./staff')
@@ -11,4 +12,16 @@ module.exports = {
   location,
   course
 
+=======
+const roles = require('./roles')
+const staff = require('./staff')
+const staffRoles = require('./staffRoles')
+const mapMarkers = require('./mapMarkers')
+
+module.exports = {
+  roles,
+  staff,
+  staffRoles,
+  mapMarkers
+>>>>>>> staff-api
 }
