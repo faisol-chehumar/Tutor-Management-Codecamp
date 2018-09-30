@@ -1,5 +1,4 @@
 const Router = require('koa-router')
-const auth = require('../../../../service/auth')
 const repo = require('../../../../repository')
 
 const router = new Router()
