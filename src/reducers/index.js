@@ -10,7 +10,7 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_STAFF:
-      return { ...state, staffs: state.staffs.push(action.payload) }
+      return { ...state, staffs: [...state.staffs, action.payload] }
     default:
       return state
   }
