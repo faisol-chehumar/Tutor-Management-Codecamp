@@ -1,17 +1,40 @@
 import React, { Component } from 'react'
-import Navbar from './components/Navbar/Navbar'
-// import logo from './logo.svg';
 import './App.css'
-import { DatePicker } from 'antd'
-// import 'antd/lib/date-picker/style/css'
+import { Layout, Icon } from 'antd'
+import SideMenu from './components/SideMenu/SideMenu'
+
+const { Header, Content } = Layout
 
 class App extends Component {
+  state = {
+    collapsed: false,
+  }
+
+  toggle = () => {
+    this.setState({
+      collapsed: !this.state.collapsed
+    })
+  }
+
   render() {
+    const { collapsed } = this.state
+
     return (
-      <div className="App">
-        <Navbar />
-        <DatePicker />
-      </div>
+        <Layout className="App">
+          <SideMenu collapsed={collapsed} />
+          <Layout>
+            <Header style={{ background: '#fff', padding: 0 }}>
+              <Icon
+                className="trigger"
+                type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+                onClick={this.toggle}
+              />
+            </Header>
+            <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+              Content
+            </Content>
+          </Layout>
+        </Layout>
     )
   }
 }
