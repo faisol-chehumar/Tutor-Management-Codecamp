@@ -18,7 +18,7 @@ const SideMenu = props => (
     collapsed={props.collapsed}
   >
     <div className="logo" />
-    <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+    <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']}>
       {
         menuList.map(({link, icon, title}, index) => (
             <Menu.Item key={index}>
