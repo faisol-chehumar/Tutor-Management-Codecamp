@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
+import $ from 'jquery'
+import 'fullcalendar'
+import 'fullcalendar/dist/fullcalendar.css'
 
-export class FullCalendar extends Component {
+export default class FullCalendarWrapper extends Component {
   componentDidMount(){
-    this.initDatepicker();
+    this.initDatepicker()
   }
   
   initDatepicker(){
-    $(this.refs.datepicker).datepicker();
+    $('#calendar').fullCalendar({
+      // put your options and callbacks here
+    })
   }
   
   render(){
     return (
-      <div>
-        <h3>Choose date!</h3>
-        <input type='text'  ref='datepicker' />
-      </div>    
+      <div id="calendar"></div>    
     )
   }
 }
