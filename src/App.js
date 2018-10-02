@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import { Layout, Icon } from 'antd'
+import Main from './pages/Main'
 import SideMenu from './components/SideMenu/SideMenu'
 
 const { Header, Content } = Layout
@@ -31,7 +32,7 @@ class App extends Component {
               />
             </Header>
             <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
-              Content
+              <Main />
             </Content>
           </Layout>
         </Layout>
