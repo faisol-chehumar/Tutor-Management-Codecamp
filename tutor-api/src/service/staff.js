@@ -1,32 +1,16 @@
-const { staff, staffRoles, roles, mapMarkers } = require('../repository')
+const { staff, staffRoles, roles } = require('../repository')
 const {AppError, helper} = require('../util/')
 
 async function list(options) {
-  const [ staffList, staffRoleList, roleList, mapMarkersList ] = await Promise.all([ 
+  const [ staffList, staffRoleList, roleList ] = await Promise.all([ 
     staff.get(options),
     staffRoles.get(),
-    roles.get(),
-    mapMarkers.get()
+    roles.get()
   ])
 
   const roleTitle = helper.mappedValue(roleList, ['roleId', 'title'])
-  const mapMarker = {}
-  
-  mapMarkersList.forEach(x => {
-    mapMarker[x.mapMarkerId] = {
-      ...x
-    }
-  })
 
   return staffList
-    .map(staff => {
-      const {mapMarkerId, ...y} = {...staff}
-      
-      return mapMarkerId !== null ? {
-        ...y,
-        'mapMarker': mapMarker[mapMarkerId]
-      } : {...y, mapMarker: null}
-    })
     .map(staff => {
       return {
         ...staff,
@@ -57,10 +41,14 @@ async function create(staffData) {
   return result.insertId
 }
 
-async function remove(option) {
-  await staffRoles.remove(option)
-  await staff.remove(option)
-  return
+async function remove(id) {
+  const result = await staff.getById(id)
+
+  if(result.length <= 0) {
+    throw new AppError('Staff not found', 404)
+  }
+  await staffRoles.remove(id)
+  await staff.remove(id)
 }
 
 async function isDuplicate(email) {

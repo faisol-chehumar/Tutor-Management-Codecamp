@@ -8,7 +8,7 @@ const menuList = [
   { link: '/', title: 'Dashboard', icon: 'appstore' },
   { link: '/courses', title:'Courses', icon: 'audit' },
   { link: '/staff', title: 'Staff', icon: 'team' },
-  { link: '/customers', title: 'Customers', icon: 'user' },
+  { link: '/customers', title: 'Customers', icon: 'user' }
 ]
 
 const SideMenu = props => (

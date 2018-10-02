@@ -4,7 +4,6 @@ const get = async ({
   offset = null,
   limit = null
   }={}) => {
-  const condition = [offset, limit].filter(elm => elm !== null)
   const query = `
     SELECT
       staff_id AS staffId,
@@ -12,10 +11,15 @@ const get = async ({
       lastname,
       email,
       tel,
-      map_marker_id AS mapMarkerId
+      address_title AS addressTitle,
+      address,
+      lat,
+      lng,
+      marker_type AS markerType
     FROM
       staff
   `
+  const condition = [offset, limit].filter(elm => elm !== null)
   let queryCondition = query
   
   if(limit !== null) {queryCondition += `LIMIT ${limit}`} // Can't use prepare statement
@@ -32,40 +36,33 @@ const get = async ({
   }
 }
 
-// const getById = async ({
-//   id = null,
-//   offset = null,
-//   limit = null
-//   }={}) => {
-//   const condition = [id, offset, limit].filter(elm => elm !== null)
-//   const query = `
-//     SELECT
-//       staff_id AS staffId,
-//       firstname,
-//       lastname,
-//       email,
-//       tel,
-//       map_marker_id AS mapMarkerId
-//     FROM
-//       staff
-//   `
-//   const whereId = `WHERE staff_id = ?`
-
-//   let queryCondition = query
-//   if(id !== null) {queryCondition += whereId}
-//   if(limit !== null) {queryCondition += `LIMIT ${limit}`} // Can't use prepare statement
+const getById = async ({id=null}={}) => {
   
-//   try {
-//     const [results] = await pool.query(
-//       queryCondition
-//     , condition)
+  try {
+    const [results] = await pool.query(`
+      SELECT
+      staff_id AS staffId,
+      firstname,
+      lastname,
+      email,
+      tel,
+      address_title AS addressTitle,
+      address,
+      lat,
+      lng,
+      marker_type AS markerType
+      FROM
+        staff
+      WHERE staff_id = ?
+      `
+    , [id])
 
-//     return results
+    return results
 
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 // const getByEmail = async ({
 //   email = null,
@@ -107,7 +104,12 @@ const insert = async ({
   lastname=null,
   email=null,
   tel=null,
-  mapMarkerId=null}={}) => {
+  addressTitle=null,
+  address=null,
+  lat=null,
+  lng=null,
+  markerType=null
+}={}) => {
 
   try {
     const [results] = await pool.query(`
@@ -116,9 +118,13 @@ const insert = async ({
         lastname,
         email,
         tel,
-        map_marker_id
-      ) VALUES (?, ?, ?, ?, ?)
-    `, [ firstname, lastname, email, tel, mapMarkerId ])
+        address_title,
+        address,
+        lat,
+        lng,
+        marker_type
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [ firstname, lastname, email, tel, addressTitle, address, lat, lng, markerType ])
 
     return results
 
@@ -146,7 +152,7 @@ const remove = async ({id=null}={}) => {
 
 module.exports = {
   get,
-  // getById,
+  getById,
   // getByEmail,
   insert,
   remove

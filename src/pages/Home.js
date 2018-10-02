@@ -5,11 +5,11 @@ import { Row, Col, Card } from 'antd'
 const sumariesData = [
   {title: 'Courses', number: '120'},
   {title: 'Staff', number: '1000'},
-  {title: 'Customers', number: '5478'}
+  {title: 'Customers', number: '5478'},
+  {title: 'Locations', number: '5'}
 ]
 
-const Home = props => 
-(
+const Home = () => (
   <div>
     <Row gutter={16} style={{ marginBottom: 16 }}>
       {
