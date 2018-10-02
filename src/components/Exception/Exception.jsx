@@ -1,16 +1,23 @@
 import React from 'react'
-import { Layout } from 'antd'
+import PropTypes from 'prop-types'
 
-const Exception = props => {
-  return (
-    <div>
-      {
-        props.type === '404' ? 
-        <div>sdsd</div>
-        : 'What the Pug!'
-      }
-    </div>
-  )
+
+const Exception = props => (
+  <div>
+    {
+      props.type === '404'
+      ? <div>Error 404</div>
+      : 'What the Pug!'
+    }
+  </div>
+)
+
+Exception.defaultProps = {
+  type: '404'
+}
+
+Exception.propTypes = {
+  type: PropTypes.string
 }
 
 export default Exception

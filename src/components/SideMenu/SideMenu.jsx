@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Icon } from 'antd'
+
 const { Sider } = Layout
 
 const menuList = [
@@ -19,16 +20,15 @@ const SideMenu = props => (
     <div className="logo" />
     <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
       {
-        menuList.map((menu, index) => {
-          return (
+        menuList.map(({link, icon, title}, index) => (
             <Menu.Item key={index}>
-              <Link to={menu.link}>
-                <Icon type={menu.icon} theme="outlined" />
-                <span>{menu.title}</span>
+              <Link to={link}>
+                <Icon type={icon} theme="outlined" />
+                <span>{title}</span>
               </Link>
             </Menu.Item>
           )
-        })
+        )
       }
     </Menu>
   </Sider>
