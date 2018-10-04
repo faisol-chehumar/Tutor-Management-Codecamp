@@ -1,18 +1,11 @@
 import React, { Component } from 'react'
 import FullCalendar from '../components/FullCalendar/FullCalendar'
-import axios from 'axios'
 
 import { Row, Col, Card } from 'antd'
 import CountBox from '../components/CountBox/CountBox'
+import { fetchData } from '../utils/request'
 
-const fetchData = async (title) => {
-  try {
-    const result = await axios.get(`http://localhost:8000/api/v1/${title}/`)
-    return result.data
-  } catch(error) {
-    console.error(error)
-  }
-}
+
 
 export default class Home extends Component {
   state = {

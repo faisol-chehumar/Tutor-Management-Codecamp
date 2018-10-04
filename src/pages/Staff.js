@@ -1,5 +1,32 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { fetchStaff } from '../actions/staffActions'
 
-const Staff = () => <div>Staff list</div>
+class Staff extends Component {
+  componentDidMount() {
+    fetchStaff()
+  }
+  
+  render() {
+    return (
+      <div>
+        {/* {console.log(this.store)} */}
+      </div>
+    )
+  }
+}
 
-export default Staff
+const mapStateToProps = state => ({
+  staff: state.staff,
+  loading: state.loading,
+  error: state.error
+})
+
+const mapDispatchToProps = {
+  fetchStaff
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Staff)
