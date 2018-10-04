@@ -16,12 +16,18 @@ const fetchData = async (title) => {
 
 export default class Home extends Component {
   state = {
-    sumariesData: []
+    sumariesData: [
+      {title: 'Staff' , count: 0 },
+      {title: 'Locations', count: 0 }
+    ]
   }
 
   async componentDidMount() {
-    const staff = await fetchData('staff')
-    const locations = await fetchData('locations')
+    const [ staff, locations ] = await Promise.all([
+      fetchData('staff'),
+      fetchData('locations')
+    ])
+
     const sumariesData = [
       {title: 'Staff' , count: staff.length !== undefined ? staff.length : 0 },
       {title: 'Locations', count: locations.length !== undefined ? locations.length : 0 }
