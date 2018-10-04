@@ -1,10 +1,10 @@
 import React from 'react'
 
 const CountBox = ({title, count}) => (
-  [
-    <h2>{title}</h2>,
+  <div>
+    <h2>{title}</h2>
     <p>{count}</p>
-  ]
+  </div>
 )
 
 export default CountBox

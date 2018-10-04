@@ -30,19 +30,24 @@ export default class Home extends Component {
     await this.setState({sumariesData})
   }
 
+
   render() {
     const { sumariesData } = this.state
-    // console.log(sumariesData)
+    
     return (
       <div>
         <Row gutter={16} style={{ marginBottom: 16 }}>
           {
-            sumariesData.map((x, index) => (
-              <Col className="gutter-row" key={index} span={24/sumariesData.length}>
-                <Card key={x.id}>
+            sumariesData.map((data, index) => (
+              <Col
+                className="gutter-row"
+                span={24/sumariesData.length}
+                key={data.title}>
+                <Card >
                   <CountBox
-                    title={x.title}
-                    count={x.count}
+                    key={index}
+                    title={data.title}
+                    count={data.count}
                   />
                 </Card>
               </Col>
