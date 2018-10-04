@@ -8,12 +8,12 @@ import CountBox from '../components/CountBox/CountBox'
 const fetchData = async (title) => {
   try {
     const result = await axios.get(`http://localhost:8000/api/v1/${title}/`)
-    console.log(result.data)
     return result.data
   } catch(error) {
     console.error(error)
   }
 }
+
 export default class Home extends Component {
   state = {
     sumariesData: []
@@ -21,14 +21,18 @@ export default class Home extends Component {
 
   async componentDidMount() {
     const staff = await fetchData('staff')
-    const sumariesData = [{title: 'Staff' , count: staff.length}]
+    const locations = await fetchData('locations')
+    const sumariesData = [
+      {title: 'Staff' , count: staff.length !== undefined ? staff.length : 0 },
+      {title: 'Locations', count: locations.length !== undefined ? locations.length : 0 }
+    ]
 
     await this.setState({sumariesData})
   }
 
   render() {
     const { sumariesData } = this.state
-    console.log(sumariesData)
+    // console.log(sumariesData)
     return (
       <div>
         <Row gutter={16} style={{ marginBottom: 16 }}>
