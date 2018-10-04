@@ -3,7 +3,7 @@ import $ from 'jquery'
 import 'fullcalendar'
 import 'fullcalendar/dist/fullcalendar.css'
 
-export default class FullCalendarWrapper extends Component {
+export default class FullCalendar extends Component {
   events = [
     {
       title: 'All Day Event',
@@ -62,7 +62,7 @@ export default class FullCalendarWrapper extends Component {
   ]
   
   componentDidMount() {
-    console.log(this.events)
+    // console.log(this.events)
     this.$el = $(this.el)
     this.$el.fullCalendar({
       events: this.events,
