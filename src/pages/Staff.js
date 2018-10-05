@@ -30,7 +30,7 @@ class Staff extends Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <a href="javascript:;">Invite {record.lastName}</a>
+          <a href="javascript:;">Edit</a>
           <Divider type="vertical" />
           <a href="javascript:;">Delete</a>
         </span>
