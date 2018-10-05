@@ -10,21 +10,21 @@ const initialState = {
 const staffReducer = (state=initialState, action) => {
   switch (action.type) {
     case FETCH_STAFF_BEGIN:
-      console.log('Fetch begin')
+      // console.log('Fetch begin')
       return {
         ...state,
         loading: true,
         error: null
       }
     case FETCH_STAFF_SUCCESS:
-      console.log('Fetch Success')
-      console.log(action.payload.staff)
+      // console.log('Fetch Success')
+      // console.log(action.payload.staff)
       return {
         ...state,
         staff: action.payload.staff
       }
     case FETCH_STAFF_FAILURE:
-      console.log('Fetch failure')
+      // console.log('Fetch failure')
       return {
         ...state,
         loading: false,
@@ -32,7 +32,7 @@ const staffReducer = (state=initialState, action) => {
         staff: []
       }
     default:
-      console.log('default')
+      // console.log('default')
       return state
   }
 }

@@ -1,6 +1,5 @@
 import { FETCH_STAFF_BEGIN, FETCH_STAFF_SUCCESS, FETCH_STAFF_FAILURE  } from "../constants/action-types"
 import { fetchData } from '../utils/request'
-// import { store } from '../stores/'
 
 export const fetchStaffBegin = () => ({
   type: FETCH_STAFF_BEGIN
@@ -21,7 +20,7 @@ export const fetchStaff = () => {
     dispatch(fetchStaffBegin())
     return fetchData('staff')
       .then(result => {
-        console.log(result)
+        // console.log(result)
         dispatch(fetchStaffSuccess(result))
         return result
       })
