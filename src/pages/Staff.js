@@ -5,13 +5,29 @@ import { Table, Divider, Tag } from 'antd'
 import { Link } from 'react-router-dom'
 
 class Staff extends Component {
+  state = {
+    filteredInfo: null,
+    sortedInfo: null,
+  }
+
+  handleChange = (pagination, filters, sorter) => {
+    console.log('Various parameters', pagination, filters, sorter);
+    console.log(this.state.sortedInfo)
+    this.setState({
+      filteredInfo: filters,
+      sortedInfo: sorter,
+    })
+  }
+
   componentDidMount() {
     this.props.fetchStaff()
   }
   
   render() {
-    const { staffList } = this.props
-    console.log(staffList)
+    let { staffList, sortedInfo } = this.props
+    sortedInfo = sortedInfo || {}
+    
+    // console.log(staffList)
     const columns = [{
       title: 'Name',
       dataIndex: 'firstname',
@@ -21,6 +37,9 @@ class Staff extends Component {
       render: (record) => <div>{record.role.map(tag => <Tag color="blue" key={tag}>{(tag.title === 'tch' ? 'Teacher' : 'TA' )}</Tag>)}</div>
     }, {
       title: 'Email',
+      key: 'email',
+      sorter: (a, b) =>  a.email.localeCompare(b.email),
+      sortOrder: sortedInfo.columnKey === 'email' && sortedInfo.order,
       dataIndex: 'email',
     }, {
       title: 'Tel',
@@ -30,6 +49,8 @@ class Staff extends Component {
       key: 'action',
       render: (text, record) => (
         <span>
+          <a href="javascript:;">Invite</a>
+          <Divider type="vertical" />
           <a href="javascript:;">Edit</a>
           <Divider type="vertical" />
           <a href="javascript:;">Delete</a>
@@ -48,7 +69,7 @@ class Staff extends Component {
     }
 
     return (
-      <Table rowSelection={rowSelection} columns={columns} dataSource={staffList} />
+      <Table rowSelection={rowSelection} columns={columns} dataSource={staffList} onChange={this.handleChange}/>
     )
   }
 }
