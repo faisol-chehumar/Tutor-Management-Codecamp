@@ -7,9 +7,7 @@ const initialState = {
   error: null
 }
 
-const rootReducer = (state = initialState, action) => {
-  // console.log(state.staff)
-  console.log(action.type)
+const staffReducer = (state=initialState, action) => {
   switch (action.type) {
     case FETCH_STAFF_BEGIN:
       console.log('Fetch begin')
@@ -32,8 +30,9 @@ const rootReducer = (state = initialState, action) => {
         staff: []
       }
     default:
+      console.log('default')
       return state
   }
 }
 
-export default rootReducer
+export default staffReducer

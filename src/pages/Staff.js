@@ -10,16 +10,15 @@ class Staff extends Component {
   render() {
     return (
       <div>
-        {/* {console.log(this.store)} */}
+        {/* {this.props.staff.state.appTitle} */}
+        {console.log(this.props)}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  staff: state.staff,
-  loading: state.loading,
-  error: state.error
+  title: state.staff.appTitle
 })
 
 const mapDispatchToProps = {
