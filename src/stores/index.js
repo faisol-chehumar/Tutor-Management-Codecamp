@@ -1,7 +1,7 @@
-// import { createStore, combineReducers, applyMiddleware } from 'redux'
-// import rootReducer from '../reducers/'
-// import thunk  from 'redux-thunk'
-// // 
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import staffReducer from '../reducers/staffReducer'
+import thunk  from 'redux-thunk'
+
 // const logger = store => next => action => {
 //   console.group(action.type)
 //   console.log('current state', store.getState())
@@ -12,10 +12,10 @@
 //   return result
 // }
 
-// // const middlewares = [thunk, logger]
+// const middlewares = [thunk, logger]
 
 
-// export const store = createStore(
-//   combineReducers({state: rootReducer}),
-//   applyMiddleware(logger)
-// )
+export const store = createStore(
+  combineReducers({items: staffReducer}),
+  applyMiddleware(thunk)
+)

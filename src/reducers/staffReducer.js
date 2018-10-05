@@ -14,15 +14,17 @@ const staffReducer = (state=initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: null,
-        staff: [...state.staff, action.payload]
+        error: null
       }
     case FETCH_STAFF_SUCCESS:
+      console.log('Fetch Success')
+      console.log(action.payload.staff)
       return {
         ...state,
-        staff: [...state.staff, action.payload.staff]
+        staff: action.payload.staff
       }
     case FETCH_STAFF_FAILURE:
+      console.log('Fetch failure')
       return {
         ...state,
         loading: false,

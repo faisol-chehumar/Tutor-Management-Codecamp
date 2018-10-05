@@ -1,27 +1,32 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchStaff } from '../actions/staffActions'
+import { fetchStaffBegin, fetchStaff } from '../actions/staffActions'
 
 class Staff extends Component {
   componentDidMount() {
-    fetchStaff()
+    // this.props.fetchStaffBegin()
+    this.props.fetchStaff()
   }
   
   render() {
     return (
       <div>
-        {/* {this.props.staff.state.appTitle} */}
         {console.log(this.props)}
+        {this.props.loading}
+        {/* <button onClick={() => this.props.dispatch(fetchStaffBegin())}>reset</button> */}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  title: state.staff.appTitle
+  staff: state.items.staff,
+  loading: state.items.loading,
+  error: state.items.error
 })
 
 const mapDispatchToProps = {
+  fetchStaffBegin,
   fetchStaff
 }
 
