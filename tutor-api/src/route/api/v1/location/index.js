@@ -4,18 +4,18 @@ const repo = require('../../../../repository')
 const router = new Router()
 
 router.get('/',getLocation)
-router.post('/',insertLocation)
+router.post('/',addLocation)
 router.get('/:id',getLocationId)
 module.exports = router.routes()
 
 async function getLocation(ctx){   
-    console.log('sdsd')
+    console.log('getLocation--->')
     const locationResult = await repo.location.get()
     ctx.body = {result : locationResult}
 }
 
 async function getLocationId(ctx){   
-    console.log('test')
+    console.log('getLocationId--->')
     console.log('ctx.param>>', ctx.params.id)
     const locationId = await repo.location.getLocationId(ctx.params.id)
     ctx.body = {result : locationId}
@@ -27,9 +27,13 @@ async function getLocationId(ctx){
 //     ctx.body = {result : locationId }
 // }
 
-async function insertLocation(ctx){
-    const {title,tel,contact,room_size,note,map_marker_id} = ctx.request.body
-    const addResult = await repo.location.insert(title,tel,contact,room_size,note,map_marker_id)
+async function addLocation(ctx){
+    // console.log("addLocation---->",ctx.request.body)
+    // const {tel, contact, roomSize, note,addressTitle,address,lat,lng,MarkerType} = ctx.request.body
+    // const addResult = await repo.location.insert(tel, contact, roomSize, note,addressTitle,address,lat,lng,MarkerType)
+    const {tel,contact,room_size,note,address_title,address,lat,lng,marker_type} = ctx.request.body
+  console.log('insertLocation------>>>>')
+  const addResult = await repo.location.insert(tel, contact, room_size, note,address_title,address,lat,lng, marker_type)
     ctx.body = {result : addResult}
 }
 

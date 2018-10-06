@@ -16,11 +16,11 @@ const pool = require('../db')
 // }
 
 const get = async () => {
-    console.log('ssdsd')
+    console.log('GetQuery--->')
     try {
         const result = await pool.query(`
     SELECT * 
-    FROM courses_locations
+    FROM locations
      `)
         return result[0]
     }
@@ -31,13 +31,13 @@ const get = async () => {
     }
 }
 
-const getLocationId = async (courseLocationId) => {
+const getLocationId = async (locationId) => {
     try {
         const result = await pool.query(`
-        SELECT course_location_id,tel,contact,room_size,note,map_marker_id
-        FROM courses_locations
-        WHERE course_location_id = ?
-        `, [courseLocationId])
+        SELECT location_id,tel,contact,room_size,note,address_title,address,lat,lng,marker_type
+        FROM locations
+        WHERE location_id = ?
+        `, [locationId])
         // console.log(courseLocationId)
         return result[0]
     }
@@ -47,14 +47,16 @@ const getLocationId = async (courseLocationId) => {
     }
 }
 
-const insert = async (tel, contact, roomSize, note, mapMarkerId) => {
+const insert = async (tel, contact, roomsize, note,address_title,address,lat,lng,marker_type) => {
+    console.log("insertTable--->")
     try {
         const result = await pool.query(`
-            INSERT INTO courses_locations
-            (tel,contact,room_size,note,map_marker_id)
-            VALUES
-            (?,?,?,?,?)
-            `[tel, contact, roomSize, note, mapMarkerId])
+        INSERT INTO locations
+        (tel,contact,room_size,note,address_title,address,lat,lng,marker_type)
+        VALUES
+        (?,?,?,?,?,?,?,?,?)
+         `,[tel,contact,roomsize,note,address_title,address,lat,lng,marker_type])
+        //  [tel, contact, roomSize, note,addressTitle,address,lat,lng,MarkerType])
         return result
     }
     catch (err) {
