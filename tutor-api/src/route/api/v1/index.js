@@ -4,7 +4,7 @@ const router = new Router()
 
 
 router.use('/staff', require('./staff'))
-//router.use('/customer', require('./customer'))
+router.use('/customers', require('./customers'))
 router.use('/locations',require('./location'))
 router.use('/courses',require('./course'))
 

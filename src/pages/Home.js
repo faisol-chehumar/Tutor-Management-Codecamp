@@ -11,12 +11,12 @@ export default class Home extends Component {
   state = {
     sumariesData: [
       {title: 'Staff' , count: 0 },
-      {title: 'Locations', count: 0 }
+      // {title: 'Locations', count: 0 }
     ]
   }
 
   async componentDidMount() {
-    const [ staff, locations ] = await Promise.all([
+    const [ staff ] = await Promise.all([
       fetchData('staff'),
       // fetchData('locations')
     ])

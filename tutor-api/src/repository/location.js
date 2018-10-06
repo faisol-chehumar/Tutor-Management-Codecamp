@@ -20,7 +20,7 @@ const get = async () => {
     try {
         const result = await pool.query(`
     SELECT * 
-    FROM courses_locations
+    FROM locations
      `)
         return result[0]
     }

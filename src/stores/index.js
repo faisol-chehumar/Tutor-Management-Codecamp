@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import staffReducer from '../reducers/staffReducer'
+import rootReducer from '../reducers/rootReducer'
 import thunk  from 'redux-thunk'
 
 // const logger = store => next => action => {
@@ -16,6 +16,6 @@ import thunk  from 'redux-thunk'
 
 
 export const store = createStore(
-  combineReducers({items: staffReducer}),
+  combineReducers({items: rootReducer}),
   applyMiddleware(thunk)
 )

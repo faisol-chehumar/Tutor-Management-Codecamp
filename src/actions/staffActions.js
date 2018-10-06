@@ -15,12 +15,21 @@ export const fetchStaffError = error => ({
   payload: { error }
 })
 
-export const fetchStaff = () => {
+export const fetchStaff = (id=null) => {
+  console.log(id)
   return dispatch => {
     dispatch(fetchStaffBegin())
-    return fetchData('staff')
+    // console.log()
+    return id 
+    ? fetchData('staff/' + id)
       .then(result => {
-        // console.log(result)
+        // console.log(result.data)
+        dispatch(fetchStaffSuccess(result))
+        return result
+      })
+    : fetchData('staff')
+      .then(result => {
+        // console.log(result.data)
         dispatch(fetchStaffSuccess(result))
         return result
       })

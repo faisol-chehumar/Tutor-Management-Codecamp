@@ -1,13 +1,13 @@
 const pool = require('../db')
 
-const get = async () =>{
+const get = async () => {
     console.log("get courses")
     try {
-        const result = await pool.query(`
+        const [result] = await pool.query(`
         SELECT *
         FROM courses
         `)
-        return result[0]
+        return result
     }
     catch(err){
         console.log(err.message)
