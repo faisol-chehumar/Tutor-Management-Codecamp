@@ -20,3 +20,23 @@ export const fetchData = async (title) => {
     console.error(error)
   }
 }
+
+export const postData = async (title, payload) => {
+  // console.log(`http://localhost:8000/api/v1/${title}`)
+  console.log(payload)
+  try {
+    const result = await axios.post(`http://localhost:8000/api/v1/${title}`, {
+      firstname: payload.firstname,
+      lastname: payload.lastname,
+      email: payload.email,
+      lat: 12.1234567890,
+      lng: 12.1234567890,
+      roleId: 3,
+      mandayRate: 800,
+      imagePath: 'www.google.com'
+    })
+    return result
+  } catch(error) {
+    console.error(error)
+  }
+}
