@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const { courseService } = require('../../../../service')
+const { customerService } = require('../../../../service')
 const Joi = require('joi')
 
 const router = new Router()
@@ -8,59 +8,58 @@ router
 
 /**
  * @swagger
- * resourcePath: /courses
+ * resourcePath: /customers
  */
 /**
  * @swagger
- * path: /api/v1/courses/
+ * path: /api/v1/customers/
  * operations:
  *   -  httpMethod: GET
- *      summary: Get All course
- *      nickname: courses
+ *      summary: Get All customer
+ *      nickname: customers
  */
-  .get('/', getAllCourse)
+  .get('/', getAllCustomer)
   /**
  * @swagger
- * path: /api/v1/courses/{id}
+ * path: /api/v1/customers/{id}
  * operations:
  *   -  httpMethod: GET
- *      summary: Get course By id
- *      nickname: courses
+ *      summary: Get customers By id
+ *      nickname: customers
  *      consumes: 
  *        - text/html
  *      parameters:
  *        - in: path
  *          name: id
- *          description: course id
+ *          description: customer id
  *          paramType: path
  *          required: true
  *          dataType: string
  */
-  .get('/:id', getCourseById)
-  .post('/', addCourse)
-  // .delete('/', deleteAllCourse)
-
+  .get('/:id', getCustomerById)
+  .post('/', addCustomer)
+  // .delete('/', deleteAllCustomer)
   /**
  * @swagger
- * path: /api/v1/courses/{id}
+ * path: /api/v1/customers/{id}
  * operations:
  *   -  httpMethod: DELETE
- *      summary: delete course By id
- *      nickname: courses
+ *      summary: Delete customers By id
+ *      nickname: customers
  *      consumes: 
  *        - text/html
  *      parameters:
  *        - in: path
  *          name: id
- *          description: course id
+ *          description: customer id
  *          paramType: path
  *          required: true
  *          dataType: string
  */
-  .delete('/:id', deleteCourseById)
+  .delete('/:id', deleteCustomerById)
 
-async function getAllCourse(ctx) {
-  const results =  await courseService.list({
+async function getAllCustomer(ctx) {
+  const results =  await customerService.list({
     offset: ctx.query.offset, 
     limit: ctx.query.limit
   })
@@ -71,15 +70,15 @@ async function getAllCourse(ctx) {
 
   if(results.length <= 0) {
     ctx.status = 404
-    ctx.body = {error: 'Course list not found'}
+    ctx.body = {error: 'Customer list not found'}
     return
   }
 
   ctx.body = results
 }
 
-async function getCourseById(ctx) {
-  const result = (await courseService.list()).filter(Course => Course.CourseId == ctx.params.id)
+async function getCustomerById(ctx) {
+  const result = (await customerService.list()).filter(customer => customer.customerId == ctx.params.id)
 
   if(!result) {
     return ctx.throw()
@@ -87,15 +86,15 @@ async function getCourseById(ctx) {
   
   if(result.length <= 0) {
     ctx.status = 404
-    ctx.body = {error: 'Course not found'}
+    ctx.body = {error: 'Customer not found'}
     return
   }
 
   ctx.body = result
 }
 
-async function addCourse(ctx) {
-  const CourseSchema = Joi.object().keys({
+async function addCustomer(ctx) {
+  const CustomerSchema = Joi.object().keys({
     firstname: Joi.string().required(),
     lastname: Joi.string().required(),
     email: Joi.string().email().required(),
@@ -110,31 +109,31 @@ async function addCourse(ctx) {
   })
   
   try {
-    await CourseSchema.validate(ctx.request.body)
+    await CustomerSchema.validate(ctx.request.body)
   } catch(error) {
     ctx.status = 400
     ctx.body = error
   }
   
-  const newCourseId = await courseService.create(ctx.request.body)
+  const newCustomerId = await customerService.create(ctx.request.body)
     
-  if(!newCourseId) {
+  if(!newCustomerId) {
     return ctx.throw()
   }
 
   ctx.status = 201
   ctx.body = {
-    newCourseId
+    newCustomerId
   }
 }
 
-// async function deleteAllCourse(ctx) {
-//   await courseService.remove()
+// async function deleteAllCustomer(ctx) {
+//   await CustomerService.remove()
 //   ctx.status = 204
 // }
 
-async function deleteCourseById(ctx) {
-  await courseService.remove({id: ctx.params.id})
+async function deleteCustomerById(ctx) {
+  await customerService.remove({id: ctx.params.id})
   ctx.status = 204
 }
 

@@ -1,4 +1,3 @@
-
 const pool = require('../db')
 
 const get = async ({
@@ -8,18 +7,20 @@ const get = async ({
   const condition = [offset, limit].filter(elm => elm !== null)
   const query = `
     SELECT
-      staff_id AS staffId,
+      customer_id AS customerId,
       firstname,
       lastname,
       email,
       tel,
+      actived_status,
+      child_age,
       address_title AS addressTitle,
       address,
       lat,
       lng,
       marker_type AS markerType
     FROM
-      staff
+      customers
   `
   let queryCondition = query
   
@@ -45,16 +46,16 @@ const get = async ({
 //   const condition = [id, offset, limit].filter(elm => elm !== null)
 //   const query = `
 //     SELECT
-//       staff_id AS staffId,
+//       Customer_id AS CustomerId,
 //       firstname,
 //       lastname,
 //       email,
 //       tel,
 //       map_marker_id AS mapMarkerId
 //     FROM
-//       staff
+//       Customer
 //   `
-//   const whereId = `WHERE staff_id = ?`
+//   const whereId = `WHERE Customer_id = ?`
 
 //   let queryCondition = query
 //   if(id !== null) {queryCondition += whereId}
@@ -80,14 +81,14 @@ const get = async ({
 //   const condition = [email, offset, limit].filter(elm => elm !== null)
 //   const query = `
 //     SELECT
-//       staff_id AS staffId,
+//       Customer_id AS CustomerId,
 //       firstname,
 //       lastname,
 //       email,
 //       tel,
 //       map_marker_id AS mapMarkerId
 //     FROM
-//       staff
+//       Customer
 //   `
 //   const whereEmail = `WHERE email = ?`
 
@@ -112,26 +113,31 @@ const insert = async ({
   lastname=null,
   email=null,
   tel=null,
+  activedStatus=null,
+  childAge=null,
   addressTitle=null,
   address=null,
   lat=null,
   lng=null,
-  markerType=null}={}) => {
+  markerType=null
+}={}) => {
 
   try {
     const [results] = await pool.query(`
-      INSERT INTO staff (
+      INSERT INTO customers (
         firstname,
         lastname,
         email,
         tel,
+        actived_status,
+        child_age,
         address_title,
         address,
         lat,
         lng,
         marker_type
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, [ firstname, lastname, email, tel, addressTitle, address, lat, lng, markerType])
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [ firstname, lastname, email, tel, activedStatus, childAge, addressTitle,address,lat,lng,markerType])
 
     return results
 
@@ -141,9 +147,9 @@ const insert = async ({
 }
 
 const remove = async ({id=null}={}) => {	
-	let queryCondition = 'DELETE FROM staff'
+	let queryCondition = 'DELETE FROM customers'
 	if(id) {
-		queryCondition += ` WHERE staff.staff_id = ${id}`
+		queryCondition += ` WHERE customers.customer_id = ${id}`
   }
 
   try {

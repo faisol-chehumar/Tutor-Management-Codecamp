@@ -4,11 +4,41 @@ const Joi = require('joi')
 
 const router = new Router()
 
+/**
+ * @swagger
+ * resourcePath: /staff
+ */
+
 router
+/**
+ * @swagger
+ * path: /api/v1/staff/
+ * operations:
+ *   -  httpMethod: GET
+ *      summary: Get All Staff
+ *      nickname: staff
+ */
   .get('/', getAllStaff)
+/**
+ * @swagger
+ * path: /api/v1/staff/{id}
+ * operations:
+ *   -  httpMethod: GET
+ *      summary: Get Staff By id
+ *      nickname: staff
+ *      consumes: 
+ *        - text/html
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          description: Staff id
+ *          paramType: path
+ *          required: true
+ *          dataType: string
+ */
   .get('/:id', getStaffById)
   .post('/', addStaff)
-  .delete('/', deleteAllStaff)
+  // .delete('/', deleteAllStaff)
   .delete('/:id', deleteStaffById)
 
 async function getAllStaff(ctx) {
@@ -52,9 +82,13 @@ async function addStaff(ctx) {
     lastname: Joi.string().required(),
     email: Joi.string().email().required(),
     tel: Joi.required(),
-    mapMarkerId: Joi.required(),
     roleId: Joi.number().min(1).max(2).required(),
-    mandayRate: Joi.required()
+    mandayRate: Joi.required(),
+    addressTitle: Joi.required(),
+    address: Joi.required(),
+    lat: Joi.required(),
+    lng: Joi.Required(),
+    markerType: Joi.required()
   })
   
   try {
@@ -76,10 +110,10 @@ async function addStaff(ctx) {
   }
 }
 
-async function deleteAllStaff(ctx) {
-  await staffService.remove()
-  ctx.status = 204
-}
+// async function deleteAllStaff(ctx) {
+//   await staffService.remove()
+//   ctx.status = 204
+// }
 
 async function deleteStaffById(ctx) {
   await staffService.remove({id: ctx.params.id})
