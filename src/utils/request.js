@@ -31,7 +31,7 @@ export const postData = async (title, payload) => {
       email: payload.email,
       lat: 12.1234567890,
       lng: 12.1234567890,
-      roleId: 1,
+      roleId: 3,
       mandayRate: 800,
       imagePath: 'www.google.com'
     })
