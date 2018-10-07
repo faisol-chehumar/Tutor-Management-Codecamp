@@ -16,7 +16,7 @@ class SideMenu extends Component {
         { link: '/courses', title:'Courses', icon: 'audit' },
         { link: '/staff', title: 'Staff', icon: 'team' },
         { link: '/customers', title: 'Customers', icon: 'user' },
-        { link: '/locations', title: 'Locations', icon: 'user' }
+        { link: '/locations', title: 'Locations', icon: 'environment' }
       ]
     }
   } 
