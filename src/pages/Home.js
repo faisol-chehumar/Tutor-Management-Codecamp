@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import FullCalendar from '../components/FullCalendar/FullCalendar'
 
 import { Row, Col, Card } from 'antd'
 import CountBox from '../components/CountBox/CountBox'
 import { fetchData } from '../utils/request'
-
-
 
 export default class Home extends Component {
   state = {
@@ -26,10 +25,10 @@ export default class Home extends Component {
     ])
 
     const sumariesData = [
-      {title: 'Staff' , count: staff.length !== undefined ? staff.length : 0 },
-      {title: 'Courses', count: courses.length !== undefined ? courses.length : 0 },
-      {title: 'Locations', count: locations.length !== undefined ? locations.length : 0 },
-      {title: 'Customers', count: customers.length !== undefined ? customers.length : 0 }
+      {title: 'staff' , count: staff.length !== undefined ? staff.length : 0 },
+      {title: 'courses', count: courses.length !== undefined ? courses.length : 0 },
+      {title: 'locations', count: locations.length !== undefined ? locations.length : 0 },
+      {title: 'customers', count: customers.length !== undefined ? customers.length : 0 }
     ]
 
     await this.setState({sumariesData})
@@ -48,13 +47,15 @@ export default class Home extends Component {
                 className="gutter-row"
                 span={24/sumariesData.length}
                 key={data.title}>
-                <Card >
-                  <CountBox
-                    key={index}
-                    title={data.title}
-                    count={data.count}
-                  />
-                </Card>
+                <Link to={data.title}>
+                  <Card >
+                    <CountBox
+                      key={index}
+                      title={data.title}
+                      count={data.count}
+                    />
+                  </Card>
+                </Link>
               </Col>
             ))
           }

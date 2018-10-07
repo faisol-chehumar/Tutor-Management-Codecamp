@@ -1,43 +1,31 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { Layout, Menu, Icon } from 'antd'
+import { connect } from 'react-redux'
+import { getSideMenu } from '../../actions/sideMenuActions'
 
 const { Sider } = Layout
 
 class SideMenu extends Component {
+  // constructor(props) {
+  //   super(props)
+  //   this.props = {
+  //     currentSideMenu = getSideMenu(this.props.location.path)
+  //   }
+  // }
 
 
-  constructor (props) {
-    super(props)
-    this.state = {
-      defaultSelectKey: this.getDefaultMenu(),
-      menuList: [
-        { link: '/', title: 'Dashboard', icon: 'appstore' },
-        { link: '/courses', title:'Courses', icon: 'audit' },
-        { link: '/staff', title: 'Staff', icon: 'team' },
-        { link: '/customers', title: 'Customers', icon: 'user' }
-      ]
-    }
-  } 
-  
-  getDefaultMenu = () => {
-    if(this.props.location.pathname === '/') {
-      return 0
-    }
-    if(this.props.location.pathname === '/courses') {
-      return 1
-    }
-    if(this.props.location.pathname === '/staff') {
-      return 2
-    }
-    if(this.props.location.pathname === '/customers') {
-      return 3
-    }
+  componentWillMount() {
+    // console.log(this.props.location.pathname)
+    this.props.getSideMenu(this.props.location.pathname)
   }
 
   render() {
-    const { menuList, defaultSelectKey } = this.state
-
+    const { menuList, currentSideMenu } = this.props
+    // console.log(this.props)
+    // console.log(menuList)
+    // console.log(currentSideMenu)
+    // console.log('render')
     return (
       <Sider
         trigger={null}
@@ -45,7 +33,7 @@ class SideMenu extends Component {
         collapsed={this.props.collapsed}
       >
         <div className="logo" />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${defaultSelectKey}`]}>
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${currentSideMenu}`]}>
           {
             menuList.map(({link, icon, title}, index) => (
                 <Menu.Item key={index}>
@@ -63,4 +51,16 @@ class SideMenu extends Component {
   }
 }
 
-export default withRouter(SideMenu)
+const mapStateToProps = state => ({
+  menuList: state.items.menuList,
+  currentSideMenu: state.items.currentSideMenu
+})
+
+const mapDispatchToProps = {
+  getSideMenu
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(SideMenu))

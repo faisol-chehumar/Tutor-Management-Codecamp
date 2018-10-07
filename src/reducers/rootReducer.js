@@ -1,15 +1,33 @@
 import { FETCH_STAFF_BEGIN, FETCH_STAFF_SUCCESS, FETCH_STAFF_FAILURE,
-  FETCH_COURSES_BEGIN, FETCH_COURSES_SUCCESS, FETCH_COURSES_FAILURE } from '../constants/action-types'
+  FETCH_COURSES_BEGIN, FETCH_COURSES_SUCCESS, FETCH_COURSES_FAILURE,
+  GET_CURRENT_SIDE_MENU } from '../constants/action-types'
 
 const initialState = {
   staff: [],
   courses: [],
+  locations: [],
+  customers: [],
+  menuList: [
+    { link: '/', title: 'dashboard', icon: 'appstore' },
+    { link: '/staff', title: 'staff', icon: 'team' },
+    { link: '/courses', title:'courses', icon: 'audit' },
+    { link: '/locations', title:'locations', icon: 'audit' },
+    { link: '/customers', title: 'customers', icon: 'user' }
+  ],
+  currentSideMenu: '',
   loading: false,
   error: null
 }
 
 const rootReducer = (state=initialState, action) => {
   switch (action.type) {
+    case GET_CURRENT_SIDE_MENU:
+    console.log('Get current path')
+    console.log('action.payload.currentSideMenu:', action.payload.currentSideMenu)
+    return {
+      ...state,
+      currentSideMenu: action.payload.currentSideMenu
+    }
     case FETCH_STAFF_BEGIN:
       console.log('Fetch begin')
       return {
@@ -55,7 +73,7 @@ const rootReducer = (state=initialState, action) => {
         courses: []
       }
     default:
-      // console.log('default')
+      console.log('default')
       return state
   }
 }
