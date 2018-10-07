@@ -5,11 +5,12 @@ async function list(options) {
   const [ staffList, staffRoleList, roleList ] = await Promise.all([ 
     staff.get(options),
     staffRoles.get(),
-    roles.get(),
+    roles.get()
   ])
 
-  const roleTitle = helper.mappedValue(roleList, ['roleId', 'title'])
+  console.log(staffList)
 
+  const roleTitle = helper.mappedValue(roleList, ['roleId', 'title'])
 
   return staffList
     .map(staff => {
@@ -42,10 +43,14 @@ async function create(staffData) {
   return result.insertId
 }
 
-async function remove(option) {
-  await staffRoles.remove(option)
-  await staff.remove(option)
-  return
+async function remove(id) {
+  const result = await staff.getById(id)
+
+  if(result.length <= 0) {
+    throw new AppError('Staff not found', 404)
+  }
+  await staffRoles.remove(id)
+  await staff.remove(id)
 }
 
 async function isDuplicate(email) {

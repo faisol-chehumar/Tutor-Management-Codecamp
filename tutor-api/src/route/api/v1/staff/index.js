@@ -81,14 +81,14 @@ async function addStaff(ctx) {
     firstname: Joi.string().required(),
     lastname: Joi.string().required(),
     email: Joi.string().email().required(),
-    tel: Joi.required(),
+    tel: Joi.string(),
+    addressTitle: Joi.string(),
+    address: Joi.string(),
+    lat: Joi.number().required(),
+    lng: Joi.number().Required(),
+    markerType: Joi.string(),
     roleId: Joi.number().min(1).max(2).required(),
     mandayRate: Joi.required(),
-    addressTitle: Joi.required(),
-    address: Joi.required(),
-    lat: Joi.required(),
-    lng: Joi.Required(),
-    markerType: Joi.required()
   })
   
   try {
