@@ -13,7 +13,8 @@ const get = async () => {
             address,
             lat,
             lng,
-            marker_type AS makerType
+            marker_type AS makerType,
+            image_path AS imagePath
         FROM locations
      `)
         return result[0]
@@ -37,7 +38,8 @@ const getByLocationId = async (locationId) => {
             address,
             lat,
             lng,
-            marker_type AS makerType
+            marker_type AS makerType,
+            image_path AS imagePath
         FROM locations
         WHERE location_id = ?
         `, [locationId])
@@ -49,14 +51,23 @@ const getByLocationId = async (locationId) => {
     }
 }
 
-const insert = async (tel=null, contact=null, roomSize=null, note=null, addressTitle=null,address=null,lat=null,lng=null,markerType=null) => {
+const insert = async ({ tel = null,
+    contact = null,
+    roomSize = null,
+    note = null,
+    addressTitle = null,
+    address = null,
+    lat = null,
+    lng = null,
+    markerType = null,
+    imagePath = null } = {}) => {
     try {
         const result = await pool.query(`
             INSERT INTO courses_locations
-            (tel, contact, room_size, note, address_title, address, lat, lng, marker_type)
+            (tel, contact, room_size, note, address_title, address, lat, lng, marker_type,image_path)
             VALUES
-            (?,?,?,?,?,?,?,?,?)
-            `[tel, contact, roomSize, note, addressTitle,address,lat,lng,markerType])
+            (?,?,?,?,?,?,?,?,?,?)
+            `[tel, contact, roomSize, note, addressTitle, address, lat, lng, markerType, imagePath])
         return result
     }
     catch (err) {

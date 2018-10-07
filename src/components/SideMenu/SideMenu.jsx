@@ -15,7 +15,8 @@ class SideMenu extends Component {
         { link: '/', title: 'Dashboard', icon: 'appstore' },
         { link: '/courses', title:'Courses', icon: 'audit' },
         { link: '/staff', title: 'Staff', icon: 'team' },
-        { link: '/customers', title: 'Customers', icon: 'user' }
+        { link: '/customers', title: 'Customers', icon: 'user' },
+        { link: '/locations', title: 'Locations', icon: 'user' }
       ]
     }
   } 
@@ -32,6 +33,9 @@ class SideMenu extends Component {
     }
     if(this.props.location.pathname === '/customers') {
       return 3
+    }
+    if(this.props.location.pathname === '/locations') {
+      return 4
     }
   }
 
