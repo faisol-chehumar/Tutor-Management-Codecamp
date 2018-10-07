@@ -3,7 +3,6 @@ const { locationService } = require('../../../../service')
 const Joi = require('joi')
 
 const router = new Router()
-
 /**
  * @swagger
  * resourcePath: /locations
@@ -129,7 +128,6 @@ async function addlocations(ctx) {
 //   await locationService.remove()
 //   ctx.status = 204
 // }
-
 async function deletelocationsById(ctx) {
   await locationService.remove({id: ctx.params.id})
   ctx.status = 204
