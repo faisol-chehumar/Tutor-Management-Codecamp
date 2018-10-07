@@ -46,7 +46,7 @@ class Staff extends Component {
       render: (text, record) => (
         <div>
           <Link to={'staff/' + record.staffId}>
-            <Avatar style={{ marginRight: 5 }} size="large" src={record.staffImage} />
+            <Avatar style={{ marginRight: 5 }} size="large" src={record.imagePath} />
             {`${record.firstname} ${record.lastname}`}
           </Link>
         </div>
