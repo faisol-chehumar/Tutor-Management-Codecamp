@@ -1,16 +1,6 @@
 #CREATE SCHEMA IF NOT EXISTS tutor_management_db;
 USE tutor_management_db;
 
-CREATE TABLE map_markers (
-  PRIMARY KEY(map_marker_id),
-  map_marker_id INT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(60),
-  address VARCHAR(255),
-  lat FLOAT(10, 6) NOT NULL,
-  lng FLOAT(10, 6) NOT NULL,
-  marker_type VARCHAR(30)
-);
-
 CREATE TABLE roles (
   PRIMARY KEY(role_id),
   role_id INT AUTO_INCREMENT,
@@ -24,8 +14,11 @@ CREATE TABLE staff (
   lastname VARCHAR(60) NOT NULL,
   email  VARCHAR(60) NOT NULL,
   tel VARCHAR(50),
-  map_marker_id INT,
-  FOREIGN KEY (map_marker_id) REFERENCES map_markers(map_marker_id)
+  address_title VARCHAR(60),
+  address VARCHAR(255),
+  lat FLOAT(10, 6) NOT NULL,
+  lng FLOAT(10, 6) NOT NULL,
+  marker_type VARCHAR(30)
 );
 
 CREATE TABLE staff_roles(
@@ -48,26 +41,34 @@ CREATE TABLE staff_avail_daytime (
   FOREIGN KEY (staff_id) REFERENCES staff(staff_id)
 );
 
-CREATE TABLE courses_locations (
-  PRIMARY KEY(course_location_id),
-  course_location_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE locations (
+  PRIMARY KEY(location_id),
+  location_id INT NOT NULL AUTO_INCREMENT,
   tel VARCHAR(50),
   contact VARCHAR(60),
   room_size INT,
   note TEXT,
-  map_marker_id INT,
-  FOREIGN KEY (map_marker_id) REFERENCES map_markers(map_marker_id)
+  address_title VARCHAR(60),
+  address VARCHAR(255),
+  lat FLOAT(10, 6) NOT NULL,
+  lng FLOAT(10, 6) NOT NULL,
+  marker_type VARCHAR(30)
 );
 
 CREATE TABLE courses (
   PRIMARY KEY(course_id),
   course_id INT NOT NULL AUTO_INCREMENT,
+  location_id INT NOT NULL,
   title VARCHAR(60) NOT NULL,
   description TEXT,
   start_date DATETIME,
   end_date DATETIME,
-  course_location_id INT,
-  FOREIGN KEY (course_location_id) REFERENCES courses_locations(course_location_id)
+  address_title VARCHAR(60),
+  address VARCHAR(255),
+  lat FLOAT(10, 6) NOT NULL,
+  lng FLOAT(10, 6) NOT NULL,
+  marker_type VARCHAR(30),
+  FOREIGN KEY (location_id) REFERENCES locations(location_id)
 );
 
 CREATE TABLE customers (
@@ -76,10 +77,14 @@ CREATE TABLE customers (
   firstname VARCHAR(60) NOT NULL,
   lastname VARCHAR(60) NOT NULL,
   email VARCHAR(60) NOT NULL,
+  tel VARCHAR(50),
   actived_status INT(1) NOT NULL, -- 1 = active, 0 = inactive
   child_age INT(2),
-  map_marker_id INT,
-  FOREIGN KEY (map_marker_id) REFERENCES map_markers(map_marker_id)
+  address_title VARCHAR(60),
+  address VARCHAR(255),
+  lat FLOAT(10, 6) NOT NULL,
+  lng FLOAT(10, 6) NOT NULL,
+  marker_type VARCHAR(30)
 );
 
 CREATE TABLE courses_enrolments (

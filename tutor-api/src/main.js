@@ -2,8 +2,10 @@
 const Koa = require('koa')
 const koaBody = require('koa-body')
 const cors = require('@koa/cors')
-
-const app = new Koa()
+const swagger = require('swagger-koa')
+const serve = require('koa-static')
+const path = require('path')
+const app = new Koa(),port = 8000
 
 
 // throwAppError checks app error and return error message to client
@@ -26,9 +28,22 @@ const handleError = async (ctx, next) => {
 }
 
 app
+.use(swagger.init({
+  apiVersion: '1.0',
+  swaggerVersion: '1.0',
+  basePath: 'http://localhost:' + port,
+  swaggerURL: '/swagger',
+  swaggerJSON: '/api-docs.json',
+  swaggerUI: './public/swagger/',
+  apis: ['./src/route/api/v1/staff/index.js',
+         './src/route/api/v1/location/index.js',
+         './src/route/api/v1/customer/index.js',
+         './src/route/api/v1/course/index.js']
+}))
+  .use(serve(path.join(__dirname, 'public')))
   .use(cors({ credentials: true }))
   .use(koaBody({ multipart: true }))
   .use(handleError)
   .use(require('./route'))
 
-  .listen(8000)
+  .listen(port)

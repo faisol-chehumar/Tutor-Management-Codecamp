@@ -42,5 +42,5 @@ const remove = async ({id=null}={}) => {
 module.exports = {
 	get,
 	insert,
-  remove
+  	remove
 }
