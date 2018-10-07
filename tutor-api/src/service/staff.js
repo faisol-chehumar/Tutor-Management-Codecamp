@@ -8,6 +8,8 @@ async function list(options) {
     roles.get()
   ])
 
+  console.log(staffList)
+
   const roleTitle = helper.mappedValue(roleList, ['roleId', 'title'])
 
   return staffList

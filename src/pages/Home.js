@@ -11,19 +11,19 @@ export default class Home extends Component {
   state = {
     sumariesData: [
       {title: 'Staff' , count: 0 },
-      // {title: 'Locations', count: 0 }
+      {title: 'Locations', count: 0 }
     ]
   }
 
   async componentDidMount() {
-    const [ staff ] = await Promise.all([
+    const [ staff, courses ] = await Promise.all([
       fetchData('staff'),
-      // fetchData('locations')
+      fetchData('courses')
     ])
-
+    console.log(courses)
     const sumariesData = [
       {title: 'Staff' , count: staff.length !== undefined ? staff.length : 0 },
-      // {title: 'Locations', count: locations.length !== undefined ? locations.length : 0 }
+      {title: 'Courses', count: courses.length !== undefined ? courses.length : 0 }
     ]
 
     await this.setState({sumariesData})

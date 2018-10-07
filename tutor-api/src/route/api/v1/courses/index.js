@@ -4,19 +4,19 @@ const repo = require('../../../../repository')
 const router = new Router()
 
 router.get('/',getCourse)
-router.get('/:id',getCourseId)
+router.get('/:id',getCourseById)
 router.post('/',insertCourse)
 
 module.exports = router.routes()
 
 async function getCourse(ctx){
     const coursesResult = await repo.course.get()
-    ctx.body = {result : coursesResult}
+    ctx.body = coursesResult
 }
-async function getCourseId(ctx) {
-    console.log('ctx.params.getCourseId >>', ctx.params.id)
-    const coursesId = await repo.course.getCourseId(ctx.params.id)
-    ctx.body = {result : coursesId}
+async function getCourseById(ctx) {
+    console.log('ctx.params.getCourseById >>', ctx.params.id)
+    const coursesId = await repo.course.getCourseById(ctx.params.id)
+    ctx.body = coursesId
 }
 
 async function insertCourse(ctx){
