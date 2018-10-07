@@ -18,7 +18,8 @@ const get = async ({
       address,
       lat,
       lng,
-      marker_type AS markerType
+      marker_type AS markerType,
+      image_path AS imagePath
     FROM
       customers
   `
@@ -119,7 +120,8 @@ const insert = async ({
   address=null,
   lat=null,
   lng=null,
-  markerType=null
+  markerType=null,
+  imagePath=null
 }={}) => {
 
   try {
@@ -135,9 +137,10 @@ const insert = async ({
         address,
         lat,
         lng,
-        marker_type
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, [ firstname, lastname, email, tel, activedStatus, childAge, addressTitle,address,lat,lng,markerType])
+        marker_type,
+        image_path
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [ firstname, lastname, email, tel, activedStatus, childAge, addressTitle,address,lat,lng,markerType,imagePath])
 
     return results
 

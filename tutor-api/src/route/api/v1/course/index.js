@@ -106,7 +106,8 @@ async function addCourse(ctx) {
     address: Joi.required(),
     lat: Joi.required(),
     lng: Joi.Required(),
-    markerType: Joi.required()
+    markerType: Joi.required(),
+    imagePath: Joi.required()
   })
   
   try {

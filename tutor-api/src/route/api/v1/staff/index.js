@@ -89,6 +89,7 @@ async function addStaff(ctx) {
     markerType: Joi.string(),
     roleId: Joi.number().min(1).max(2).required(),
     mandayRate: Joi.required(),
+    imagePath: Joi.required()
   })
   
   try {

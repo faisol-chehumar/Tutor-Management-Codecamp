@@ -4,7 +4,7 @@ const pool = require('../db')
 const get = async ({
   offset = null,
   limit = null
-  }={}) => {
+} = {}) => {
   const query = `
     SELECT
       staff_id AS staffId,
@@ -16,19 +16,20 @@ const get = async ({
       address,
       lat,
       lng,
-      marker_type AS markerType
+      marker_type AS markerType,
+      image_path AS imagePath
     FROM
       staff
   `
   const condition = [offset, limit].filter(elm => elm !== null)
   let queryCondition = query
-  
-  if(limit !== null) {queryCondition += `LIMIT ${limit}`} // Can't use prepare statement
-  
+
+  if (limit !== null) { queryCondition += `LIMIT ${limit}` } // Can't use prepare statement
+
   try {
     const [results] = await pool.query(
       queryCondition
-    , condition)
+      , condition)
 
     return results
 
@@ -37,8 +38,8 @@ const get = async ({
   }
 }
 
-const getById = async ({id=null}={}) => {
-  
+const getById = async ({ id = null } = {}) => {
+
   try {
     const [results] = await pool.query(`
       SELECT
@@ -51,12 +52,13 @@ const getById = async ({id=null}={}) => {
       address,
       lat,
       lng,
-      marker_type AS markerType
+      marker_type AS markerType,
+      image_path AS imagePath
       FROM
         staff
       WHERE staff_id = ?
       `
-    , [id])
+      , [id])
 
     return results
 
@@ -87,7 +89,7 @@ const getById = async ({id=null}={}) => {
 //   let queryCondition = query
 //   if(email !== null) {queryCondition += whereEmail}
 //   if(limit !== null) {queryCondition += `LIMIT ${limit}`} // Can't use prepare statement
-  
+
 //   try {
 //     const [results] = await pool.query(
 //       queryCondition
@@ -101,16 +103,17 @@ const getById = async ({id=null}={}) => {
 // }
 
 const insert = async ({
-  firstname=null,
-  lastname=null,
-  email=null,
-  tel=null,
-  addressTitle=null,
-  address=null,
-  lat=null,
-  lng=null,
-  markerType=null
-}={}) => {
+  firstname = null,
+  lastname = null,
+  email = null,
+  tel = null,
+  addressTitle = null,
+  address = null,
+  lat = null,
+  lng = null,
+  markerType = null,
+  imagePath = null
+} = {}) => {
 
   try {
     const [results] = await pool.query(`
@@ -123,9 +126,10 @@ const insert = async ({
         address,
         lat,
         lng,
-        marker_type
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, [ firstname, lastname, email, tel, addressTitle, address, lat, lng, markerType ])
+        marker_type,
+        image_path
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [firstname, lastname, email, tel, addressTitle, address, lat, lng, markerType, imagePath])
 
     return results
 
@@ -134,20 +138,20 @@ const insert = async ({
   }
 }
 
-const remove = async ({id=null}={}) => {	
-	let queryCondition = 'DELETE FROM staff'
-	if(id) {
-		queryCondition += ` WHERE staff.staff_id = ${id}`
+const remove = async ({ id = null } = {}) => {
+  let queryCondition = 'DELETE FROM staff'
+  if (id) {
+    queryCondition += ` WHERE staff.staff_id = ${id}`
   }
 
   try {
     const [results] = await pool.query(
       queryCondition
     )
-  
-    return results 
-  } catch(error) {
-    console.error(error)  
+
+    return results
+  } catch (error) {
+    console.error(error)
   }
 }
 

@@ -5,6 +5,7 @@ import Course from './Course'
 import Staff from './Staff'
 import CreateStaff from './CreateStaff'
 import Customer from './Customer'
+import Location from './Location'
 import StaffDetail from './StaffDetail'
 import Exception from '../components/Exception/Exception'
 
@@ -18,6 +19,8 @@ const Main = () => (
     <Route path='/staff/:id' exact component={StaffDetail} />
     <Route path='/customers' exact component={Customer} />
     <Route path='/customers/:id' exact component={Customer} />
+    <Route path='/locations' exact component={Location} />
+    <Route path='/locations/:id' exact component={Location} />
     <Route render={() => <Exception type="404" />} />
   </Switch>
 )

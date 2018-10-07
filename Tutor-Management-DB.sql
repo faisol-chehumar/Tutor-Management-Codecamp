@@ -18,7 +18,8 @@ CREATE TABLE staff (
   address VARCHAR(255),
   lat FLOAT(10, 6) NOT NULL,
   lng FLOAT(10, 6) NOT NULL,
-  marker_type VARCHAR(30)
+  marker_type VARCHAR(30),
+  image_path VARCHAR(255)
 );
 
 CREATE TABLE staff_roles(
@@ -52,7 +53,8 @@ CREATE TABLE locations (
   address VARCHAR(255),
   lat FLOAT(10, 6) NOT NULL,
   lng FLOAT(10, 6) NOT NULL,
-  marker_type VARCHAR(30)
+  marker_type VARCHAR(30),
+  image_path VARCHAR(255)
 );
 
 CREATE TABLE courses (
@@ -68,6 +70,7 @@ CREATE TABLE courses (
   lat FLOAT(10, 6) NOT NULL,
   lng FLOAT(10, 6) NOT NULL,
   marker_type VARCHAR(30),
+  image_path VARCHAR(255),
   FOREIGN KEY (location_id) REFERENCES locations(location_id)
 );
 
@@ -84,7 +87,8 @@ CREATE TABLE customers (
   address VARCHAR(255),
   lat FLOAT(10, 6) NOT NULL,
   lng FLOAT(10, 6) NOT NULL,
-  marker_type VARCHAR(30)
+  marker_type VARCHAR(30),
+  image_path VARCHAR(255)
 );
 
 CREATE TABLE courses_enrolments (
