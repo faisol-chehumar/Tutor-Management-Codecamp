@@ -20,9 +20,10 @@ export const getSideMenu = (path=null) => {
     indexMenu = 4
   }
   console.log(indexMenu)
+  return indexMenu
 
-  return dispatch => {  
-    dispatch(getCurrentSideMenu(indexMenu)) 
-    return indexMenu
-  }
+  // return dispatch => {  
+  //   dispatch(getCurrentSideMenu(indexMenu)) 
+  //   return indexMenu
+  // }
 }

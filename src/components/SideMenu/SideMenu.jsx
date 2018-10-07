@@ -7,25 +7,17 @@ import { getSideMenu } from '../../actions/sideMenuActions'
 const { Sider } = Layout
 
 class SideMenu extends Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.props = {
-  //     currentSideMenu = getSideMenu(this.props.location.path)
-  //   }
-  // }
-
-
-  componentWillMount() {
-    // console.log(this.props.location.pathname)
-    this.props.getSideMenu(this.props.location.pathname)
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentSideMenu: getSideMenu(this.props.location.pathname)
+    }
   }
 
   render() {
-    const { menuList, currentSideMenu } = this.props
-    // console.log(this.props)
-    // console.log(menuList)
-    // console.log(currentSideMenu)
-    // console.log('render')
+    const { currentSideMenu } = this.state
+    const { menuList } = this.props
+
     return (
       <Sider
         trigger={null}
