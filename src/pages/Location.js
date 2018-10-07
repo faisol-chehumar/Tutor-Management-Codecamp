@@ -39,7 +39,9 @@ class Location extends Component {
       title: 'Address Name',
       dataIndex: 'addressTitle',
       key: 'addressTitle',
-      sorter: (a, b) => a.addressTitle.length - b.addressTitle.length,
+      sorter: (a, b) =>  {a = a.addressTitle || ''
+      b = b.addressTitle || ''
+      return a.localeCompare(b)},
       sortOrder: sortedInfo.columnKey === 'addressTitle' && sortedInfo.order,
       render: (text, record) => (
         <div>
