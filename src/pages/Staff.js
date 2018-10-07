@@ -96,7 +96,7 @@ class Staff extends Component {
           </Col>
           <Col span={12}>
             <ButtonGroup>
-              <Button icon="plus-circle">Add Staff</Button>
+              <Link to="staff/create"><Button icon="plus-circle">Add Staff</Button></Link>
               <Button icon="minus-circle">Send Email</Button>
               <Button icon="minus-circle">Delete All</Button>
             </ButtonGroup>
