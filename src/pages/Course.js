@@ -29,7 +29,7 @@ class Course extends Component {
           },
           pageSize: 3,
         }}
-        dataSource={coursesList.result}
+        dataSource={coursesList}
         renderItem={item => (
           <List.Item
             key={item.title}
