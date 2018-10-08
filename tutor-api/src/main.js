@@ -5,8 +5,8 @@ const cors = require('@koa/cors')
 const swagger = require('swagger-koa')
 const serve = require('koa-static')
 const path = require('path')
-const app = new Koa(),port = 8000
-
+const app = new Koa()
+const port = process.env.PORT ||8000
 
 // throwAppError checks app error and return error message to client
 app.context.throwAppError = function (err) {
@@ -45,5 +45,6 @@ app
   .use(koaBody({ multipart: true }))
   .use(handleError)
   .use(require('./route'))
-
-  .listen(port)
+  .listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
+  });
