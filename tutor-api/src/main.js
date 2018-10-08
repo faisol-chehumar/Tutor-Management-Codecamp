@@ -1,4 +1,3 @@
-
 const Koa = require('koa')
 const koaBody = require('koa-body')
 const cors = require('@koa/cors')
@@ -47,5 +46,4 @@ app
   .use(require('./route'))
 
   .listen(port)
-  console.log('test');
   
