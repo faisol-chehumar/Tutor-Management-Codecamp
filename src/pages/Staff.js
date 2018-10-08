@@ -95,17 +95,18 @@ class Staff extends Component {
     console.log(this.props.staffList)
     return (
       <div>
+        <h1>STAFF BOARD</h1>
         <Row>
-          <Col span={12}>
-            <span style={{ marginRight: 6 }}>Manday Rate: </span>
-            <Slider style={{ width: '50%' }} range defaultValue={[800, 3000]} min={mandayMin} max={mandayMax} />
-          </Col>
           <Col span={12}>
             <ButtonGroup>
               <Link to="staff/create"><Button icon="plus-circle">Add Staff</Button></Link>
               <Button icon="minus-circle">Send Email</Button>
               <Button icon="minus-circle">Delete All</Button>
             </ButtonGroup>
+          </Col>
+          <Col span={12}>
+            <span style={{ marginRight: 6 }}>Manday Rate: </span>
+            <Slider style={{ width: '50%' }} range defaultValue={[800, 3000]} min={mandayMin} max={mandayMax} />
           </Col>
         </Row>
         <Table

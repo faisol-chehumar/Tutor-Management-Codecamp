@@ -1,6 +1,7 @@
 import { FETCH_STAFF_BEGIN, FETCH_STAFF_SUCCESS, FETCH_STAFF_FAILURE,
   FETCH_COURSES_BEGIN, FETCH_COURSES_SUCCESS, FETCH_COURSES_FAILURE,
   FETCH_LOCATIONS_BEGIN, FETCH_LOCATIONS_SUCCESS, FETCH_LOCATIONS_FAILURE,
+  FETCH_CUSTOMERS_BEGIN, FETCH_CUSTOMERS_SUCCESS, FETCH_CUSTOMERS_FAILURE,
   GET_CURRENT_SIDE_MENU, FETCH_UPLOAD_IMAGES, FETCH_STAFF_DETAIL_SUCCESS } from '../constants/action-types'
 
 
@@ -110,6 +111,29 @@ const rootReducer = (state=initialState, action) => {
         loading: false,
         error: action.payload.error,
         locations: []
+      }
+
+      case FETCH_CUSTOMERS_BEGIN:
+      // console.log('Fetch begin')
+      return {
+        ...state,
+        loading: true,
+        error: null
+      }
+    case FETCH_CUSTOMERS_SUCCESS:
+      // console.log('Fetch Success')
+      // console.log(action.payload.customers)
+      return {
+        ...state,
+        customers: action.payload.customers
+      }
+    case FETCH_CUSTOMERS_FAILURE:
+      console.log('Fetch failure')
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error,
+        customers: []
       }
     default:
       // console.log('default')

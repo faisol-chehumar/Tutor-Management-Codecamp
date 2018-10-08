@@ -50,12 +50,12 @@ class StaffDetail extends Component {
               {s.role.map(r => (
                 <span key={uuidv1()}>
                   {r.title === 'tch'
-                  ? <p><b>Teacher:</b> ฿{r.mandayRate}</p>
+                  ? <p><b>Teacher:</b> ฿{r.mandayRate} Per/Hour</p>
                   : <p><b>TA:</b> ฿{r.mandayRate} Per/Hour</p>}
                 </span>
               ))}
               <p><b>Email: </b> {s.email}</p>
-              <p><b>Tel: </b> {s.tel}</p>
+              <p><b>Tel: </b> {s.tel === null && 'N/A'}</p>
               <address>
                 <p><b>Adress Title:</b> { s.addressTitle === null && 'N/A' }</p>
                 <p><b>Adress:</b> { s.address === null && 'N/A' }</p>

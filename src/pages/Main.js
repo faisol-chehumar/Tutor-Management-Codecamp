@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Home from './Home'
 import Course from './Course'
+import CreateCourse from './CreateCourse'
 import Staff from './Staff'
 import CreateStaff from './CreateStaff'
 import Customer from './Customer'
@@ -14,6 +15,7 @@ const Main = () => (
   <Switch>
     <Route path='/' exact component={Home} />
     <Route path='/courses' exact component={Course} />
+    <Route path='/courses/create' exact component={CreateCourse} />
     <Route path='/courses/:id' component={Course} />
     <Route path='/staff' exact component={Staff} />
     <Route path='/staff/create' exact component={CreateStaff} />

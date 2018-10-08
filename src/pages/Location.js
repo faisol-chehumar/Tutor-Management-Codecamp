@@ -83,6 +83,7 @@ class Location extends Component {
 
     return (
       <div>
+        <h1>LOCATIONS BOARD</h1>
         <Row>
           <Col span={12}>
             <ButtonGroup>
