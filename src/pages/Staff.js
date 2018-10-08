@@ -92,7 +92,7 @@ class Staff extends Component {
         name: record.name,
       })
     }
-
+    console.log(this.props.staffList)
     return (
       <div>
         <Row>

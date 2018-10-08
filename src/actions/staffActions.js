@@ -1,4 +1,4 @@
-import { FETCH_STAFF_BEGIN, FETCH_STAFF_SUCCESS, FETCH_STAFF_FAILURE  } from "../constants/action-types"
+import { FETCH_STAFF_BEGIN, FETCH_STAFF_SUCCESS, FETCH_STAFF_FAILURE, FETCH_STAFF_DETAIL_SUCCESS  } from "../constants/action-types"
 import { fetchData } from '../utils/request'
 
 export const fetchStaffBegin = () => ({
@@ -10,21 +10,27 @@ export const fetchStaffSuccess = staff => ({
   payload: { staff }
 })
 
+export const fetchStaffDetailSuccess = staff => ({
+  type: FETCH_STAFF_DETAIL_SUCCESS,
+  payload: { staff }
+})
+
 export const fetchStaffError = error => ({
   type: FETCH_STAFF_FAILURE,
   payload: { error }
 })
 
 export const fetchStaff = (id=null) => {
-  console.log(id)
+  // console.log(id)
   return dispatch => {
     dispatch(fetchStaffBegin())
     // console.log()
     return id 
     ? fetchData('staff/' + id)
       .then(result => {
-        // console.log(result.data)
-        dispatch(fetchStaffSuccess(result))
+        console.log('Fetch Id')
+        console.log(result)
+        dispatch(fetchStaffDetailSuccess(result))
         return result
       })
     : fetchData('staff')

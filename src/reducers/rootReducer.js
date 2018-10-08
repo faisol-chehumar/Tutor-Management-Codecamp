@@ -1,11 +1,12 @@
 import { FETCH_STAFF_BEGIN, FETCH_STAFF_SUCCESS, FETCH_STAFF_FAILURE,
   FETCH_COURSES_BEGIN, FETCH_COURSES_SUCCESS, FETCH_COURSES_FAILURE,
   FETCH_LOCATIONS_BEGIN, FETCH_LOCATIONS_SUCCESS, FETCH_LOCATIONS_FAILURE,
-  GET_CURRENT_SIDE_MENU, FETCH_UPLOAD_IMAGES } from '../constants/action-types'
+  GET_CURRENT_SIDE_MENU, FETCH_UPLOAD_IMAGES, FETCH_STAFF_DETAIL_SUCCESS } from '../constants/action-types'
 
 
 const initialState = {
   staff: [],
+  staffDetail: [],
   courses: [],
   locations: [],
   customers: [],
@@ -49,6 +50,13 @@ const rootReducer = (state=initialState, action) => {
       return {
         ...state,
         staff: action.payload.staff
+      }
+    case FETCH_STAFF_DETAIL_SUCCESS:
+      console.log('FETCH_STAFF_DETAIL_SUCCESS')
+      // console.log(action.payload.staff)
+      return {
+        ...state,
+        staffDetail: action.payload.staff
       }
     case FETCH_STAFF_FAILURE:
       console.log('Fetch failure')
