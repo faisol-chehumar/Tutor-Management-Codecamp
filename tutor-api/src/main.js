@@ -6,7 +6,7 @@ const swagger = require('swagger-koa')
 const serve = require('koa-static')
 const path = require('path')
 const app = new Koa()
-const port = process.env.PORT ||8000
+const port = 8000
 
 // throwAppError checks app error and return error message to client
 app.context.throwAppError = function (err) {
