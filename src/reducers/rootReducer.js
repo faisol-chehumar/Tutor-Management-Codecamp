@@ -1,7 +1,7 @@
 import { FETCH_STAFF_BEGIN, FETCH_STAFF_SUCCESS, FETCH_STAFF_FAILURE,
   FETCH_COURSES_BEGIN, FETCH_COURSES_SUCCESS, FETCH_COURSES_FAILURE,
   FETCH_LOCATIONS_BEGIN, FETCH_LOCATIONS_SUCCESS, FETCH_LOCATIONS_FAILURE,
-  GET_CURRENT_SIDE_MENU } from '../constants/action-types'
+  GET_CURRENT_SIDE_MENU, FETCH_UPLOAD_IMAGES } from '../constants/action-types'
 
 
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
   courses: [],
   locations: [],
   customers: [],
+  uploadedImagePath: '',
   menuList: [
     { link: '/', title: 'dashboard', icon: 'appstore' },
     { link: '/staff', title: 'staff', icon: 'team' },
@@ -21,13 +22,20 @@ const initialState = {
 
 const rootReducer = (state=initialState, action) => {
   switch (action.type) {
+    case FETCH_UPLOAD_IMAGES:
+      console.log('FETCH_UPLOAD_IMAGES')
+      console.log(action.payload.url)
+      return {
+        ...state,
+        uploadedImagePath: action.payload.url
+      }
     case GET_CURRENT_SIDE_MENU:
-    // console.log('Get current path')
-    // console.log('action.payload.currentSideMenu:', action.payload.currentSideMenu)
-    return {
-      ...state,
-      currentSideMenu: action.payload.currentSideMenu
-    }
+      // console.log('Get current path')
+      // console.log('action.payload.currentSideMenu:', action.payload.currentSideMenu)
+      return {
+        ...state,
+        currentSideMenu: action.payload.currentSideMenu
+      }
     case FETCH_STAFF_BEGIN:
       // console.log('Fetch begin')
       return {

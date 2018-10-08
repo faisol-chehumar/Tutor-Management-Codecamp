@@ -31,10 +31,21 @@ export const postData = async (title, payload) => {
       email: payload.email,
       lat: 12.1234567890,
       lng: 12.1234567890,
-      roleId: 3,
-      mandayRate: 800,
-      imagePath: 'www.google.com'
+      roleId: parseInt(payload.role),
+      mandayRate: payload.mandayRate,
+      imagePath: payload.imagePath,
+      availDayTime: payload.checkboxGroup
     })
+    return result
+  } catch(error) {
+    console.error(error)
+  }
+}
+
+export const deleteData = async (title, id) => {
+  // console.log(`http://localhost:8000/api/v1/${title}`)
+  try {
+    const result = await axios.delete(`http://localhost:8000/api/v1/${title}/${id}`)
     return result
   } catch(error) {
     console.error(error)

@@ -17,7 +17,7 @@ export default class Home extends Component {
   }
 
   async componentDidMount() {
-    const [ staff, courses, customers, locations ] = await Promise.all([
+    const [ staff, courses, locations, customers ] = await Promise.all([
       fetchData('staff'),
       fetchData('courses'),
       fetchData('locations'),

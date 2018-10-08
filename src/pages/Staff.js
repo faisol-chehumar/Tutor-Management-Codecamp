@@ -46,14 +46,20 @@ class Staff extends Component {
       render: (text, record) => (
         <div>
           <Link to={'staff/' + record.staffId}>
-            <Avatar style={{ marginRight: 5 }} size="large" src={record.staffImage} />
+            <Avatar
+              style={{ marginRight: 5 }}
+              size="large"
+              src={record.imagePath === null || record.imagePath === '' || record.imagePath === 'www.google.com'
+                ? 'https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png'
+                : record.imagePath}
+            />
             {`${record.firstname} ${record.lastname}`}
           </Link>
         </div>
       )
     }, {
       title: 'Role',
-      render: (record) => <div>{record.role.map(tag => <Tag color="blue" key={tag}>{(tag.title === 'tch' ? 'Teacher' : 'TA' )}</Tag>)}</div>
+      render: (record) => <div>{record.role.map(tag => <Tag color="blue" key={tag.title}>{(tag.title === 'tch' ? 'Teacher' : 'TA' )}</Tag>)}</div>
     }, {
       title: 'Email',
       dataIndex: 'email',
@@ -68,11 +74,11 @@ class Staff extends Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <a href="/">Invite</a>
+          <a href="" onClick={ e => console.log('Make send email feature!')}>Send Email</a>
           <Divider type="vertical" />
-          <a href="/">Edit</a>
+          <a href="" onClick={ e => console.log('Make edit feature!')}>Edit</a>
           <Divider type="vertical" />
-          <a href="/">Delete</a>
+          <a href="" onClick={ e => console.log('Make delete feature!')}>Delete</a>
         </span>
       )
     }]
