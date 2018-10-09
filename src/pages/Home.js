@@ -1,58 +1,55 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import FullCalendar from '../components/FullCalendar/FullCalendar'
-
 import { Row, Col, Card } from 'antd'
 import CountBox from '../components/CountBox/CountBox'
 import { fetchData } from '../utils/request'
 
-export default class Home extends Component {
-  state = {
-    sumariesData: [
-      {title: 'Staff' , count: 0 },
-      {title: 'Courses', count: 0 },
-      {title: 'Locations', count: 0 },
-      {title: 'Customers', count: 0 }
-    ]
-  }
-
+class Home extends Component {
   async componentDidMount() {
-    const [ staff, courses, locations, customers ] = await Promise.all([
-      fetchData('staff'),
-      fetchData('courses'),
-      fetchData('locations'),
-      fetchData('customers')
-    ])
+    console.log(this.props)
+    try {
+      const [ staff, courses, locations, customers ] = await Promise.all([
+        fetchData('staff'),
+        fetchData('courses'),
+        fetchData('locations'),
+        fetchData('customers')
+      ])
 
-    const sumariesData = [
-      {title: 'staff' , count: staff.length !== undefined ? staff.length : 0 },
-      {title: 'courses', count: courses.length !== undefined ? courses.length : 0 },
-      {title: 'locations', count: locations.length !== undefined ? locations.length : 0 },
-      {title: 'customers', count: customers.length !== undefined ? customers.length : 0 }
-    ]
+      // const menuList = [
+      //   { title: 'staff' , count: staff.length || 0 },
+      //   { title: 'courses', count: courses.length || 0 },
+      //   { title: 'locations', count: locations.length || 0 },
+      //   { title: 'customers', count: customers.length || 0 }
+      // ]
 
-    await this.setState({sumariesData})
+      // await this.setState({menuList})
+
+    } catch (error) {
+      alert('Error')
+    }
   }
-
 
   render() {
-    const { sumariesData } = this.state
+    const { menuList } = this.props
     
     return (
+      
       <div>
         <Row gutter={16} style={{ marginBottom: 16 }}>
           {
-            sumariesData.map((data, index) => (
+            menuList.map((title, index) => (
               <Col
                 className="gutter-row"
-                span={24/sumariesData.length}
-                key={data.title}>
-                <Link to={data.title}>
+                span={24/menuList.length}
+                key={title}>
+                <Link to={title}>
                   <Card >
                     <CountBox
                       key={index}
-                      title={data.title}
-                      count={data.count}
+                      title={title}
+                      count={this.props.title !== undefined ? this.props.title.length : 0}
                     />
                   </Card>
                 </Link>
@@ -71,3 +68,16 @@ export default class Home extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  menuList: state.items.menuList.filter(menu => menu.title !== 'dashboard').map(menu => menu.title),
+  staff: state.items.staff,
+  courses: state.items.courses,
+  locations: state.items.locations,
+  customers: state.items.customers
+})
+
+
+export default connect(
+  mapStateToProps
+)(Home)
