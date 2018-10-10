@@ -30,7 +30,7 @@ export const postData = async (title, payload) => {
       email: payload.email,
       lat: 12.1234567890,
       lng: 12.1234567890,
-      roleId: parseInt(payload.role),
+      roleId: parseInt(payload.role, 10),
       mandayRate: payload.mandayRate,
       imagePath: payload.imagePath,
       availDayTime: payload.checkboxGroup

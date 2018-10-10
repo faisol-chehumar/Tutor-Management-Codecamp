@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchLocations } from '../actions/locationsActions'
 import { Row, Col, Card } from 'antd'
 const { Meta } = Card
-const uuidv1 = require('uuid/v1')
+// const uuidv1 = require('uuid/v1')
 
 class LocationDetail extends Component {
   componentDidMount() {

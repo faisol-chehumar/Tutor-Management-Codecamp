@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchCustomers } from '../actions/customersActions'
 import { Row, Col, Card } from 'antd'
 const { Meta } = Card
-const uuidv1 = require('uuid/v1')
+// const uuidv1 = require('uuid/v1')
 
 class CustomerDetail extends Component {
   componentDidMount() {

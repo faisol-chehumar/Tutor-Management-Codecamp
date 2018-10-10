@@ -4,7 +4,7 @@ import { fetchCustomers } from '../actions/customersActions'
 import { Avatar, Col, Button, Row, Divider, Table } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import Moment from 'react-moment'
+// import Moment from 'react-moment'
 
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchStaff } from '../actions/staffActions'
-import { Row, Col, Card, Divider } from 'antd'
+import { Row, Col, Card } from 'antd'
 import AvaiDateTimeTable from '../components/AvailDateTimeTable/AvailDateTimeTable'
 const { Meta } = Card
 const uuidv1 = require('uuid/v1')

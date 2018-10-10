@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchCourses } from '../actions/coursesActions'
 import { Row, Col, Card } from 'antd'
 const { Meta } = Card
-const uuidv1 = require('uuid/v1')
+// const uuidv1 = require('uuid/v1')
 
 class CourseDetail extends Component {
   componentDidMount() {
