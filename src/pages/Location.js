@@ -4,6 +4,7 @@ import {  fetchLocations } from '../actions/locationsActions'
 import { Table, Divider, Button, Avatar, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import LinkDetail from '../components/ListTable/LinkDetail'
 
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
@@ -44,11 +45,14 @@ class Location extends Component {
       return a.localeCompare(b)},
       sortOrder: sortedInfo.columnKey === 'addressTitle' && sortedInfo.order,
       render: (text, record) => (
+
         <div>
-          <Link to={'locations/' + record.locationId}>
-            <Avatar style={{ marginRight: 5 }} size="large" src={record.imagePath} />
-            {`${record.addressTitle} ${record.addressTitle}`}
-          </Link>
+          <LinkDetail
+          linkPath = {'locations/' + record.locationId}
+          imagePath = {record.imagePath}
+          imageDefault = {'https://image.flaticon.com/icons/svg/235/235861.svg'}
+          title = {`${record.addressTitle} ${record.addressTitle}`}
+          />
         </div>
       )
     }, {

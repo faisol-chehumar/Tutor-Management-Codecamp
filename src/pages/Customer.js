@@ -4,7 +4,7 @@ import { fetchCustomers } from '../actions/customersActions'
 import { Avatar, Col, Button, Row, Divider, Table } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-// import Moment from 'react-moment'
+import LinkDetail from '../components/ListTable/LinkDetail'
 
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
@@ -46,16 +46,12 @@ class Course extends Component {
       sortOrder: sortedInfo.columnKey === 'title' && sortedInfo.order,
       render: (text, record) => (
         <div>
-          <Link to={'customers/' + record.customerId}>
-            <Avatar
-              style={{ marginRight: 5 }}
-              size="large"
-              src={record.imagePath === null || record.imagePath === '' || record.imagePath === 'www.google.com'
-                ? 'https://png2.kisspng.com/20180404/wpw/kisspng-computer-icons-users-group-internet-forum-user-avatar-5ac45a994caa27.692612531522817689314.png'
-                : record.imagePath}
+            <LinkDetail
+            linkPath = {'customers/' + record.customerId}
+            imagePath = {record.imagePath}
+            imageDefault = {'https://png2.kisspng.com/20180404/wpw/kisspng-computer-icons-users-group-internet-forum-user-avatar-5ac45a994caa27.692612531522817689314.png'}
+            title = {`${record.firstname} ${record.lastname}`}
             />
-            {`${record.firstname} ${record.lastname}`}
-          </Link>
         </div>
       )
     }, {

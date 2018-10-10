@@ -15,13 +15,6 @@ class StaffDetail extends Component {
   render() {
     const { staffDetail } = this.props
     console.log(staffDetail)
-    // let data = staffDetail.availDayTime.map(elm => {
-    //   return {
-    //     ...elm,
-    //     'AM': elm.time === 'AM' ? 'YES' : 'NO',
-    //     'PM': elm.time === 'PM' ? 'YES' : 'NO'
-    //   }
-    // })
 
     return (
       staffDetail.map(s =>
