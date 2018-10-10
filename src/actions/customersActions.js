@@ -16,7 +16,7 @@ export const fetchCustomersError = error => ({
 })
 
 export const fetchCustomers = (id=null) => {
-  console.log(id)
+  // console.log(id)
   return dispatch => {
     dispatch(fetchCustomersBegin())
     // console.log()
@@ -29,7 +29,7 @@ export const fetchCustomers = (id=null) => {
       })
     : fetchData('customers')
       .then(result => {
-        console.log(result)
+        // console.log(result)
         dispatch(fetchCustomersSuccess(result))
         return result
       })

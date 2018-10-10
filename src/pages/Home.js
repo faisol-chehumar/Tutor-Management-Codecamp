@@ -1,64 +1,55 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import FullCalendar from '../components/FullCalendar/FullCalendar'
-
 import { Row, Col, Card } from 'antd'
-import CountBox from '../components/CountBox/CountBox'
+import CountBoxList from '../components/CountBox/CountBoxList'
+import actions from '../actions/index'
+// const { fetchStaff, fetchCourses, fetchLocations, fetchCustomers } = actions
 import { fetchData } from '../utils/request'
 
-export default class Home extends Component {
+
+class Home extends Component {
   state = {
-    sumariesData: [
-      {title: 'Staff' , count: 0 },
-      {title: 'Courses', count: 0 },
-      {title: 'Locations', count: 0 },
-      {title: 'Customers', count: 0 }
-    ]
+    menuListData: []
   }
 
   async componentDidMount() {
-    const [ staff, courses, locations, customers ] = await Promise.all([
-      fetchData('staff'),
-      fetchData('courses'),
-      fetchData('locations'),
-      fetchData('customers')
-    ])
+    try {
+      // await Promise.all([
+      //   this.props.fetchStaff(),
+      //   this.props.fetchCourses(),
+      //   this.props.fetchLocations(),
+      //   this.props.fetchCustomers()
+      // ])
+      const menuListData = this.props.menuList.map(async menu => {
+        return {
+          title: menu,
+          count: await fetchData(menu)
+        }
+      })
+      this.setState({menuListData})
 
-    const sumariesData = [
-      {title: 'staff' , count: staff.length !== undefined ? staff.length : 0 },
-      {title: 'courses', count: courses.length !== undefined ? courses.length : 0 },
-      {title: 'locations', count: locations.length !== undefined ? locations.length : 0 },
-      {title: 'customers', count: customers.length !== undefined ? customers.length : 0 }
-    ]
-
-    await this.setState({sumariesData})
+    } catch (error) {
+      console.error('Fetch Error:', error )
+    }
   }
 
-
   render() {
-    const { sumariesData } = this.state
+    console.log('Home Render')
+    // const { menuList } = this.props
+    const { menuListData } = this.state
+    console.log(menuListData)
+    // const menuListData = menuList.map( menu => {
+    //   return {
+    //     title: menu,
+    //     count: this.props[menu].length
+    //   }
+    // })
     
     return (
       <div>
         <Row gutter={16} style={{ marginBottom: 16 }}>
-          {
-            sumariesData.map((data, index) => (
-              <Col
-                className="gutter-row"
-                span={24/sumariesData.length}
-                key={data.title}>
-                <Link to={data.title}>
-                  <Card >
-                    <CountBox
-                      key={index}
-                      title={data.title}
-                      count={data.count}
-                    />
-                  </Card>
-                </Link>
-              </Col>
-            ))
-          }
+          <CountBoxList dataSource={menuListData} />
         </Row>
         <Row gutter={16}>
           <Col span={24}>
@@ -71,3 +62,24 @@ export default class Home extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  menuList: state.items.menuList.filter(menu => menu.title !== 'dashboard').map(menu => menu.title),
+  staff: state.items.staff,
+  courses: state.items.courses,
+  locations: state.items.locations,
+  customers: state.items.customers
+})
+
+// const mapDispatchToProps = {
+//   fetchStaff,
+//   fetchCourses,
+//   fetchLocations,
+//   fetchCustomers
+// }
+
+
+export default connect(
+  mapStateToProps,
+  // mapDispatchToProps
+)(Home)

@@ -1,13 +1,14 @@
 import axios from 'axios'
 const uuidv1 = require('uuid/v1')
+const apiUrl = 'localhost'
+const apiPort = '8000'
 
 export const fetchData = async (title) => {
-  // console.log(`http://35.240.164.119:3000/api/v1/${title}`)
+  // console.log(`http://${apiUrl}:${apiPort}/api/v1/${title}`)
   try {
-    const result = await axios.get(`http://localhost:8000/api/v1/${title}`)
+    const result = await axios.get(`http://${apiUrl}:${apiPort}/api/v1/${title}`)
     return result.data.length >= 1 
       ? result.data.map(elm => {
-        // console.log(elm)
         return ({
           ...elm,
           key: uuidv1(),
@@ -22,10 +23,8 @@ export const fetchData = async (title) => {
 }
 
 export const postData = async (title, payload) => {
-  // console.log(`http://35.240.164.119:3000/api/v1/${title}`)
-  console.log(payload)
   try {
-    const result = await axios.post(`http://localhost:8000/api/v1/${title}`, {
+    const result = await axios.post(`http://${apiUrl}:${apiPort}/api/v1/${title}`, {
       firstname: payload.firstname,
       lastname: payload.lastname,
       email: payload.email,
@@ -36,6 +35,7 @@ export const postData = async (title, payload) => {
       imagePath: payload.imagePath,
       availDayTime: payload.checkboxGroup
     })
+
     return result
   } catch(error) {
     console.error(error)
@@ -43,9 +43,9 @@ export const postData = async (title, payload) => {
 }
 
 export const deleteData = async (title, id) => {
-  // console.log(`http://35.240.164.119:3000/api/v1/${title}`)
   try {
-    const result = await axios.delete(`http://localhost:8000/api/v1/${title}/${id}`)
+    const result = await axios.delete(`http://${apiUrl}:${apiPort}/api/v1/${title}/${id}`)
+
     return result
   } catch(error) {
     console.error(error)

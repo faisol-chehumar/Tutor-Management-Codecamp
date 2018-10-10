@@ -16,7 +16,7 @@ export const fetchLocationsError = error => ({
 })
 
 export const fetchLocations = (id=null) => {
-  console.log(id)
+  // console.log(id)
   return dispatch => {
     dispatch(fetchLocationsBegin())
     // console.log()
