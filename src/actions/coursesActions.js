@@ -16,7 +16,7 @@ export const fetchCoursesError = error => ({
 })
 
 export const fetchCourses = (id=null) => {
-  console.log(id)
+  // console.log(id)
   return dispatch => {
     dispatch(fetchCoursesBegin())
     // console.log()
@@ -29,7 +29,7 @@ export const fetchCourses = (id=null) => {
       })
     : fetchData('courses')
       .then(result => {
-        console.log(result)
+        // console.log(result)
         dispatch(fetchCoursesSuccess(result))
         return result
       })
