@@ -8,7 +8,7 @@ const CreateForm = ({formData}) => {
     <div>
       <h1>Create New {formData.title}</h1>
       <Formik 
-        initialValues={user}
+        // initialValues={}
         onSubmit={(values, actions) => {
           console.log('Call api')
         }}
