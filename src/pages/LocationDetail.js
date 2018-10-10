@@ -5,7 +5,7 @@ import { Row, Col, Card } from 'antd'
 const { Meta } = Card
 const uuidv1 = require('uuid/v1')
 
-class LocationsDetail extends Component {
+class LocationDetail extends Component {
   componentDidMount() {
     this.props.fetchLocations(this.props.match.params.id)
     console.log(this.props.match.params.id)
@@ -47,25 +47,6 @@ class LocationsDetail extends Component {
               </address>
             </Col>
           </Row>
-          {/* <Row>
-            <Col span={24}>
-              { locationsDetail.length <= 0 ? 'Loading'
-                : <AvaiDateTimeTable
-                    title={'Locations Available DateTime'}
-                    data={(({availDayTime}) => {
-                      console.log(availDayTime)
-                      return availDayTime.map(elm => {
-                        return {
-                          ...elm,
-                          'am': elm.time === 'AM' ? 'YES' : 'NO',
-                          'pm': elm.time === 'PM' ? 'YES' : 'NO',
-                          'key': uuidv1()
-                        }
-                      })
-                    })(...locationsDetail)}
-                  />}
-            </Col>
-          </Row> */}
         </div>
         
       )
@@ -85,4 +66,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LocationsDetail)
+)(LocationDetail)
