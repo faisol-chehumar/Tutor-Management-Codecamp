@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import FullCalendar from '../components/FullCalendar/FullCalendar'
 import { Row, Col, Card } from 'antd'
+
+import FullCalendar from '../components/FullCalendar/FullCalendar'
 import CountBoxList from '../components/CountBox/CountBoxList'
 import { fetchData } from '../utils/request'
 
@@ -42,7 +43,7 @@ class Home extends Component {
     return (
       <div>
         <Row gutter={16} style={{ marginBottom: 16 }}>
-          { menuTitleList.length > 0 ? <CountBoxList titles={menuTitleList} counts={menuCountList} /> : 'Loading' }
+          <CountBoxList titles={menuTitleList} counts={menuCountList} />
         </Row>
         <Row gutter={16}>
           <Col span={24}>
