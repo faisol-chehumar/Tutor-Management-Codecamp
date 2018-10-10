@@ -79,7 +79,7 @@ async function getAllCourse(ctx) {
 }
 
 async function getCourseById(ctx) {
-  const result = (await courseService.list()).filter(Course => Course.CourseId == ctx.params.id)
+  const result = (await courseService.list()).filter(Course => Course.courseId == ctx.params.id)
 
   if(!result) {
     return ctx.throw()
