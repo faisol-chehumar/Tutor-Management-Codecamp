@@ -5,6 +5,7 @@ import { Avatar, Col, Button, Row, Divider, Table } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Moment from 'react-moment'
+import LinkDetail from '../components/ListTable/LinkDetail'
 
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
@@ -46,16 +47,12 @@ class Course extends Component {
       sortOrder: sortedInfo.columnKey === 'title' && sortedInfo.order,
       render: (text, record) => (
         <div>
-          <Link to={'courses/' + record.courseId}>
-            <Avatar
-              style={{ marginRight: 5 }}
-              size="large"
-              src={record.imagePath === null || record.imagePath === '' || record.imagePath === 'www.google.com'
-                ? 'https://static1.squarespace.com/static/593ff48f20099eef990d199d/59db9c3dccc5c5531166f2c2/59db9c3de5dd5b5a1b440128/1507652291838/Icon+-+Coding.png?format=300w'
-                : record.imagePath}
-            />
-            {`${record.title}`}
-          </Link>
+          <LinkDetail
+          linkPath = {'courses/' + record.courseId}
+          imagePath = {record.imagePath}
+          imageDefault = {'https://static1.squarespace.com/static/593ff48f20099eef990d199d/59db9c3dccc5c5531166f2c2/59db9c3de5dd5b5a1b440128/1507652291838/Icon+-+Coding.png?format=300w'}
+          title = {record.title}
+          />
         </div>
       )
     }, {

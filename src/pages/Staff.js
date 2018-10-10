@@ -4,7 +4,7 @@ import {  fetchStaff } from '../actions/staffActions'
 import { Table, Divider, Tag, Button, Avatar, Slider, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-
+import LinkDetail from '../components/ListTable/LinkDetail'
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
 
@@ -45,16 +45,12 @@ class Staff extends Component {
       sortOrder: sortedInfo.columnKey === 'firstname' && sortedInfo.order,
       render: (text, record) => (
         <div>
-          <Link to={'staff/' + record.staffId}>
-            <Avatar
-              style={{ marginRight: 5 }}
-              size="large"
-              src={record.imagePath === null || record.imagePath === '' || record.imagePath === 'www.google.com'
-                ? 'https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png'
-                : record.imagePath}
-            />
-            {`${record.firstname} ${record.lastname}`}
-          </Link>
+          <LinkDetail
+          linkPath = {'staff/' + record.staffId}
+          imagePath = {record.imagePath}
+          imageDefault = {'https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png'}
+          title = {`${record.firstname} ${record.lastname}`}
+          />
         </div>
       )
     }, {
