@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCustomers } from '../actions/customersActions'
-import { Row, Col, Card } from 'antd'
-const { Meta } = Card
+import ImageView from '../components/PageView/ImageView'
+import { Row, Col } from 'antd'
 // const uuidv1 = require('uuid/v1')
 
 class CustomerDetail extends Component {
@@ -12,28 +12,18 @@ class CustomerDetail extends Component {
   }
   render() {
     const { customerList } = this.props
-    console.log('customerList>>>>>>>',customerList)
+    console.log('customerList>>>>>>>', customerList)
     return (
       customerList.map(s =>
         <div key={s.key}>
           <Row gutter={16}>
             <Col span={6}>
-              <Card
-                hoverable
-                style={{ width: 240 }}
-                cover={
-                  <img alt="example"
-                    src={s.imagePath === null || s.imagePath === '' || s.imagePath === 'www.google.com'
-                    ? 'https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png'
-                    : s.imagePath}
-                  />
-                }
-              >
-                <Meta
-                  title={`${s.firstname} ${s.lastname}`}
-                  description="www.instagram.com"
-                />
-              </Card>
+              <ImageView
+                title={`${s.firstname} ${s.lastname}`}
+                description={'www.instagram.com'}
+                imagePath={s.imagePath}
+                imageDefault={'https://png2.kisspng.com/20180404/wpw/kisspng-computer-icons-users-group-internet-forum-user-avatar-5ac45a994caa27.692612531522817689314.png'}
+              />
             </Col>
             <Col span={18} >
               <h1>{`${s.firstname} ${s.lastname}`}</h1>
@@ -42,13 +32,13 @@ class CustomerDetail extends Component {
               <p><b>Child Age: </b> {s.childAge}</p>
               <p><b>Actived Status: </b> {s.activedStatus}</p>
               <address>
-                <p><b>Adress Title:</b> { s.addressTitle}</p>
-                <p><b>Adress:</b> { s.address}</p>
+                <p><b>Adress Title:</b> {s.addressTitle}</p>
+                <p><b>Adress:</b> {s.address}</p>
               </address>
             </Col>
           </Row>
         </div>
-        
+
       )
     );
   }
