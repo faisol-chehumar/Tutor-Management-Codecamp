@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {  fetchLocations } from '../actions/locationsActions'
-import { Table, Divider, Button, Avatar, Row, Col } from 'antd'
+import { Table, Divider, Button, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import LinkDetail from '../components/ListTable/LinkDetail'

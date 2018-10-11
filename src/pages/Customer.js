@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCustomers } from '../actions/customersActions'
-import { Avatar, Col, Button, Row, Divider, Table } from 'antd'
+import { Col, Button, Row, Divider, Table } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import LinkDetail from '../components/ListTable/LinkDetail'

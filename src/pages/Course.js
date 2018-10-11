@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCourses } from '../actions/coursesActions'
-import { Avatar, Col, Button, Row, Divider, Table } from 'antd'
+import { Col, Button, Row, Divider, Table } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Moment from 'react-moment'
@@ -14,7 +14,6 @@ const ButtonGroup = styled.div`
     margin-right: 0.5rem;
   }
 `
-
 
 class Course extends Component {
   state = {

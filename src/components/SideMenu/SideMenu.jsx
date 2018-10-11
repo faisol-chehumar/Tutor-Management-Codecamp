@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { Layout, Menu, Icon } from 'antd'
 import { connect } from 'react-redux'
-import { getSideMenu } from '../../actions/sideMenuActions'
 import styled from 'styled-components'
 
+import { getSideMenu } from '../../actions/sideMenuActions'
+
+const { Sider } = Layout
 const Logo = styled.div`
   font-size: 1.2em;
   font-weight: 800;
@@ -12,8 +14,6 @@ const Logo = styled.div`
   padding: 1.2rem 1rem;
   background-color: #003e79;
 `
-
-const { Sider } = Layout
 
 class SideMenu extends Component {
   constructor(props) {
@@ -33,9 +33,6 @@ class SideMenu extends Component {
         collapsible
         collapsed={this.props.collapsed}
       >
-        {/* <div className="logo">
-          <span style={{ fontSize: '16px', fontWeight: 800, color: 'white' }}>Tutor Management</span>
-        </div> */}
         <Logo>Tutor Management</Logo>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${currentSideMenu}`]}>
           {

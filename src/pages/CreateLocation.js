@@ -4,11 +4,11 @@ import * as Yup from 'yup'
 import { postData } from '../utils/request'
 import { Form, Row, Col } from 'antd'
 import TextInput from '../components/Form/TextInput'
-import InputFeedback from '../components/Form/InputFeedback'
-import Label from '../components/Form/Label'
+// import InputFeedback from '../components/Form/InputFeedback'
+// import Label from '../components/Form/Label'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import classNames from 'classnames'
+// import classNames from 'classnames'
 const formikEnhancer = withFormik({
   validationSchema: Yup.object().shape({
     contact: Yup.string()
