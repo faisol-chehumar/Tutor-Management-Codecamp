@@ -9,12 +9,32 @@ class CreateCourse extends Component {
   
   render() {
     const { title } = this.state
-    const dataScouces = {
-      title
-    }
+    const formData = [
+      {
+        title: 'Course title',
+        decorator: 'courseTitle',
+        required: true,
+        type: 'INPUT'
+      }, {
+        title: 'Course Description',
+        decorator: 'courseDescription',
+        required: false,
+        type: 'TEXT_AREA'
+      }, {
+        title: 'Class Locations',
+        decorator: 'classLocations',
+        required: true,
+        type: 'CASCADER'
+      }, {
+        title: 'Start/End Date',
+        decorator: 'startEndDate',
+        required: true,
+        type: 'DATEPICKER'
+      }
+    ]
     
     return (
-      <CreateForm formData={dataScouces} />
+      <CreateForm formTitle={title} formData={formData} />
     )
   }
 }
