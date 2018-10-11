@@ -91,7 +91,7 @@ class Location extends Component {
         <Row>
           <Col span={12}>
             <ButtonGroup>
-              <Button icon="plus-circle">Add Location</Button>
+            <Link to="locations/create"><Button icon="plus-circle">Add Location</Button></Link>
               <Button icon="minus-circle">Send Email</Button>
               <Button icon="minus-circle">Delete All</Button>
             </ButtonGroup>

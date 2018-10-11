@@ -27,13 +27,15 @@ class CourseDetail extends Component {
               />
             </Col>
             <Col span={18} >
-              <h1>{`${s.title}`}</h1>
-              <p><b>StartDate: </b> {s.startDate}</p>
-              <p><b>EndDate: </b> {s.endDate}</p>
-              <address>
-                <p><b>Adress Title:</b> {s.addressTitle}</p>
-                <p><b>Adress:</b> {s.address}</p>
-              </address>
+              <div>
+                <h1>{`${s.title}`}</h1>
+                <p><b>StartDate: </b> {s.startDate}</p>
+                <p><b>EndDate: </b> {s.endDate}</p>
+                <address>
+                  <p><b>Adress Title:</b> {s.addressTitle}</p>
+                  <p><b>Adress:</b> {s.address}</p>
+                </address>
+              </div>
             </Col>
           </Row>
         </div>
