@@ -11,9 +11,7 @@ export const fetchData = async (title) => {
       ? result.data.map(elm => {
         return ({
           ...elm,
-          key: uuidv1(),
-          staffImage: 'https://placeimg.com/640/480/people',
-          courseImage: 'https://placeimg.com/640/480/people'
+          key: uuidv1()
         })
       })
       : result.data
