@@ -1,5 +1,6 @@
 import React from 'react'
 import { Upload, Icon, message } from 'antd'
+import axios from 'axios'
 
 function getBase64(img, callback) {
   const reader = new FileReader()
@@ -25,6 +26,7 @@ class Avatar extends React.Component {
   }
 
   handleChange = (info) => {
+    console.log(info)
     if (info.file.status === 'uploading') {
       this.setState({ loading: true })
       return
@@ -46,13 +48,36 @@ class Avatar extends React.Component {
       </div>
     )
     const imageUrl = this.state.imageUrl
+
     return (
       <Upload
         name="avatar"
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action="//jsonplaceholder.typicode.com/posts/"
+        customRequest={(file) => {
+          console.log(file.file)
+          const formData = new FormData()
+            formData.append("file", file.file)
+            formData.append("tags", `codeinfuse, medium, gist`)
+            formData.append("upload_preset", "io4200sx") // Replace the preset name with your own
+            formData.append("api_key", "186427164758563") // Replace API key with your own Cloudinary key
+            formData.append("timestamp", (Date.now() / 1000) | 0)
+
+            axios.post("https://api.cloudinary.com/v1_1/dbzxmgk2h/image/upload", formData, {
+              headers: { "X-Requested-With": "XMLHttpRequest" },
+            }).then(response => {
+              const data = response.data
+              const fileURL = data.secure_url // You should store this URL for future references in your app
+              console.log(data)
+              console.log(fileURL)
+              this.setState({
+                imageUrl: fileURL,
+                loading: false,
+              })
+            })
+
+        }}
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >

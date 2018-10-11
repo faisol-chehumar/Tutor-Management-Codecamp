@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, Input, Cascader, Button, DatePicker } from 'antd'
 
 import Avatar from '../AvatarUpload/AvatarUpload'
+import RichTextArea from '../RichTextArea/RichTextArea'
 
 const { RangePicker } = DatePicker
 const { TextArea } = Input
@@ -81,7 +82,10 @@ class AddForm extends React.Component {
                   <Input placeholder={`Enter your ${field.title}`} />
                   : null || 
                 field.type === 'TEXT_AREA' ?
-                  <TextArea rows={4} placeholder={`Enter your ${field.title}`} />
+                  <TextArea rows={4} />
+                  : null ||
+                field.type === 'RICH_TXT_EDITOR' ?
+                  <RichTextArea />
                   : null ||
                 field.type === 'CASCADER' ?
                   <Cascader
