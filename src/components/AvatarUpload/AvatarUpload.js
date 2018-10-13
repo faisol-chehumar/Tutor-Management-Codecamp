@@ -37,7 +37,12 @@ class Avatar extends React.Component {
         imageUrl,
         loading: false,
       }))
+
     }
+  }
+
+  uploadHandle = (url) => {
+    this.props.onUploadAvatar(url)
   }
 
   render() {
@@ -48,7 +53,7 @@ class Avatar extends React.Component {
       </div>
     )
     const imageUrl = this.state.imageUrl
-
+    console.log(this.props)
     return (
       <Upload
         name="avatar"
@@ -56,6 +61,7 @@ class Avatar extends React.Component {
         className="avatar-uploader"
         showUploadList={false}
         customRequest={(file) => {
+          console.log(file)
           console.log(file.file)
           const formData = new FormData()
             formData.append("file", file.file)
@@ -75,6 +81,7 @@ class Avatar extends React.Component {
                 imageUrl: fileURL,
                 loading: false,
               })
+              this.uploadHandle(fileURL)
             })
 
         }}

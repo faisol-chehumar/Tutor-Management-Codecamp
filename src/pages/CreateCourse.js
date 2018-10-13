@@ -11,6 +11,10 @@ class CreateCourse extends Component {
     const { title } = this.state
     const formData = [
       {
+        title: 'Course Cover',
+        decorator: 'imgPath',
+        type: 'IMG_UPLOAD'
+      }, {
         title: 'Course title',
         decorator: 'courseTitle',
         required: true,
