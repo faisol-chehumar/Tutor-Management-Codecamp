@@ -8,6 +8,10 @@ class CheckBoxWithInput extends Component {
     taIsDisable: true
   }
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return nextProps.values !== this.props.values
+  // } 
+
   onChange = (checkedValues) => {
     console.log('checked = ', checkedValues)
   }

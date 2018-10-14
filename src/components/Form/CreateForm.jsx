@@ -3,7 +3,7 @@ import { Form, Input, Cascader, Button, DatePicker } from 'antd'
 
 import Avatar from '../AvatarUpload/AvatarUpload'
 import RichTextArea from '../RichTextArea/RichTextArea'
-import CheckBoxWithInput from './CheckBoxWithInput'
+// import CheckBoxWithInput from './CheckBoxWithInput'
 import DayTimeSelect from './DayTimeSelect'
 
 const { RangePicker } = DatePicker
@@ -83,7 +83,7 @@ class AddForm extends React.Component {
                 }],
               })(
                 field.type === 'IMG_UPLOAD'
-                  ? <Avatar onUploadAvatar={(imgPath) => {
+                  ? <Avatar onUpoaded={(imgPath) => {
                       this.props.form.setFields({
                         imgPath: {
                           value: imgPath,

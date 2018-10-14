@@ -25,6 +25,7 @@ const TextInput = ({ type, id, label, error, value, onChange, className, ...prop
     },
     className
   )
+  
   return (
     <FormItem  className={classes} {...formItemLayout} >
       <Label htmlFor={id} error={error}>
