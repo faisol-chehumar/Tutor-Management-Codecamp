@@ -3,6 +3,8 @@ import { Form, Input, Cascader, Button, DatePicker } from 'antd'
 
 import Avatar from '../AvatarUpload/AvatarUpload'
 import RichTextArea from '../RichTextArea/RichTextArea'
+import CheckBoxWithInput from './CheckBoxWithInput'
+import DayTimeSelect from './DayTimeSelect'
 
 const { RangePicker } = DatePicker
 const { TextArea } = Input
@@ -20,14 +22,14 @@ class AddForm extends React.Component {
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
-    imgPath: ''
+    // imgPath: ''
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        values.imgPath = this.state.imgPath
+        // values.imgPath = this.state.imgPath
         console.log('Received values of form: ', values)
       }
     })
@@ -40,10 +42,6 @@ class AddForm extends React.Component {
 
   onDatePickerChange(date, dateString) {
     console.log(date, dateString);
-  }
-
-  avatarHandle = (imgPath) => {
-    this.setState({imgPath})
   }
 
   render() {
@@ -70,7 +68,7 @@ class AddForm extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <h2>CREATE NEW {formTitle.toUpperCase()}</h2>
-        {/* <Avatar /> */}
+
         {
           formData.map(field => (
             <FormItem
@@ -84,34 +82,49 @@ class AddForm extends React.Component {
                   required: true, message: `Please input your ${field.title}`,
                 }],
               })(
-                field.type === 'IMG_UPLOAD' ?
-                  <Avatar onUploadAvatar={this.avatarHandle} />
-                  : null ||
-                field.type === 'INPUT' ?
-                  <Input placeholder={`Enter your ${field.title}`} />
-                  : null || 
-                field.type === 'TEXT_AREA' ?
-                  <TextArea rows={4} />
-                  : null ||
-                field.type === 'RICH_TXT_EDITOR' ?
-                  <RichTextArea />
-                  : null ||
-                field.type === 'CASCADER' ?
-                  <Cascader
-                    options={classLocations}
-                    showSearch={(inputValue, path) => (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))}
-                  />
-                  : null ||
-                field.type === 'DATEPICKER' ?
-                  <RangePicker onChange={this.onDatePickerChange} /> 
-                  : null
+                field.type === 'IMG_UPLOAD'
+                  ? <Avatar onUploadAvatar={(imgPath) => {
+                      this.props.form.setFields({
+                        imgPath: {
+                          value: imgPath,
+                          errors: [new Error('forbid ha')],
+                        },
+                      })
+                    }} /> : null
+                    
+                  || field.type === 'INPUT'
+                  ? <Input placeholder={`Enter your ${field.title}`} /> : null 
+                  
+                  || field.type === 'TEXT_AREA' 
+                  ? <TextArea rows={4} /> : null
+                  
+                  || field.type === 'RICH_TXT_EDITOR'
+                  ? <RichTextArea /> : null
+                  
+                  || field.type === 'CASCADER'
+                  ? <Cascader
+                      options={classLocations}
+                      showSearch={(inputValue, path) => (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))}
+                    /> : null
+                  
+                  || field.type === 'DATEPICKER'
+                  ? <RangePicker onChange={this.onDatePickerChange} /> : null
+
+                  || field.type === 'DAYTIME_SELECT'
+                  ? <DayTimeSelect onSelected={(courseSchedule) => {
+                      this.props.form.setFields({
+                        courseSchedule: {
+                          value: courseSchedule
+                        },
+                      })
+                    }}/> : null
               )
             }
             </FormItem>
           ))
         }
         <FormItem {...tailFormItemLayout}>
-          <Button style={{ marginRight: '0.5rem' }} onClick={e => alert('Reset Form')}>
+          <Button style={{ marginRight: '0.5rem' }} onClick={e => this.props.form.resetFields()}>
             Reset
           </Button>
           <Button type="primary" htmlType="submit">

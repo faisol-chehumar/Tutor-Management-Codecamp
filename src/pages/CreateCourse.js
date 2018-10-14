@@ -32,8 +32,13 @@ class CreateCourse extends Component {
       }, {
         title: 'Start/End Date',
         decorator: 'startEndDate',
-        required: true,
+        required: false,
         type: 'DATEPICKER'
+      }, {
+        title: 'Course Schedule',
+        decorator: 'courseSchedule',
+        required: false,
+        type: 'DAYTIME_SELECT'
       }
     ]
     

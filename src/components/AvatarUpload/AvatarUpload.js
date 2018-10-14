@@ -26,7 +26,7 @@ class Avatar extends React.Component {
   }
 
   handleChange = (info) => {
-    console.log(info)
+    // console.log(info)
     if (info.file.status === 'uploading') {
       this.setState({ loading: true })
       return
@@ -43,6 +43,7 @@ class Avatar extends React.Component {
 
   uploadHandle = (url) => {
     this.props.onUploadAvatar(url)
+    // this.props.avatarHandle = url
   }
 
   render() {
@@ -53,7 +54,8 @@ class Avatar extends React.Component {
       </div>
     )
     const imageUrl = this.state.imageUrl
-    console.log(this.props)
+    // console.log(this.props)
+    // console.log(this.state)
     return (
       <Upload
         name="avatar"
@@ -61,8 +63,8 @@ class Avatar extends React.Component {
         className="avatar-uploader"
         showUploadList={false}
         customRequest={(file) => {
-          console.log(file)
-          console.log(file.file)
+          // console.log(file)
+          // console.log(file.file)
           const formData = new FormData()
             formData.append("file", file.file)
             formData.append("tags", `codeinfuse, medium, gist`)
@@ -75,12 +77,13 @@ class Avatar extends React.Component {
             }).then(response => {
               const data = response.data
               const fileURL = data.secure_url // You should store this URL for future references in your app
-              console.log(data)
-              console.log(fileURL)
+              // console.log(data)
+              // console.log(fileURL)
               this.setState({
                 imageUrl: fileURL,
                 loading: false,
               })
+              
               this.uploadHandle(fileURL)
             })
 
