@@ -3,14 +3,30 @@ import { Select } from 'antd'
 
 const Option = Select.Option
 
+const timeSelectHandle = (value) => {
+  console.log('>>>>>>>>>>>>>',value)
+}
+
 const TimeSelect = (props) => (
   <div>
-    <Select disabled={props.selectDisabled} defaultValue="am" style={{ width: 120 }} onChange={props.timeSelectHandle}>
-      <Option value="am">Morning</Option>
-      <Option value="pm">Afternoon</Option>
-      <Option value="fullDay">Full Day</Option>
+    {console.log(props)}
+    <Select
+      disabled={props.selectDisabled}
+      defaultValue="am"
+      style={{ width: 120 }}
+      onChange={timeSelectHandle}
+    >
+      <Option value={props.day+"am"}>Morning</Option>
+      <Option value={props.day+"pm"}>Afternoon</Option>
+      <Option value={props.day+"fullDay"}>Full Day</Option>
     </Select>
-    <Select disabled={props.selectDisabled} defaultValue="avl" style={{ width: 120 }} onChange={props.timeSelectHandle}>
+
+    <Select
+      disabled={props.selectDisabled}
+      defaultValue="avl"
+      style={{ width: 120 }}
+      onChange={timeSelectHandle}
+    >
       <Option value="avl">Available</Option>
       <Option value="m">Maybe</Option>
     </Select>

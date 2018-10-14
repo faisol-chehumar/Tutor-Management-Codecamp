@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Checkbox, Row, Col, Select } from 'antd'
+import { Checkbox, Row, Col } from 'antd'
 
 import TimeSelect from './TimeSelect'
 
@@ -15,8 +15,9 @@ class DayTimeSelect extends Component {
       Friday: true,
       Saturday: true,
       Sunday: true,
-    }
+    },
 
+    availDayTime: {}
   }
 
   onChange = (checkedValues) => {
@@ -28,11 +29,16 @@ class DayTimeSelect extends Component {
     console.log(`selected ${value}`);
   }
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return nextProps.values !== this.props.values
+  // } 
+
   render() {
-    const { daysCheckList } = this.state
+    const { daysCheckList, availDayTime } = this.state
 
     return (
       <CheckboxGroup style={{ width: '100%' }} onChange={this.onChange}>
+        {console.log(this.state)}
         {
           Object.keys(daysCheckList).map(day => (
             <Row key={day}>
@@ -42,13 +48,28 @@ class DayTimeSelect extends Component {
                     daysCheckList: {
                       ...daysCheckList,
                       [day]: !daysCheckList[day]
+                    },
+                    availDayTime: {
+                      [day]: `${day} am avl`
                     }
                   })}
                   value={day}>{day.toUpperCase()}
                 </Checkbox>
               </Col>
               <Col span={20}>
-                <TimeSelect selectDisabled={daysCheckList[day]}/>
+                <TimeSelect
+                  day={day}
+                  selectDisabled={daysCheckList[day]}
+                  test={(value) => {
+                    console.log(value)
+                    this.setState({
+                      availDayTime: {
+                        ...availDayTime,
+                        [day]: value
+                      }
+                    })
+                  }}
+                />
               </Col>
             </Row>
           ))

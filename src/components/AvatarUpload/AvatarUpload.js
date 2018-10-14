@@ -42,7 +42,7 @@ class Avatar extends React.Component {
   }
 
   uploadHandle = (url) => {
-    this.props.onUploadAvatar(url)
+    this.props.onUpoaded(url)
     // this.props.avatarHandle = url
   }
 
