@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchLocations } from '../actions/locationsActions'
+import MapContainer from '../components/GoogleMap/MapContainer'
+
 import ImageView from '../components/PageView/ImageView'
 import { Row, Col } from 'antd'
 // const uuidv1 = require('uuid/v1')
@@ -36,6 +38,9 @@ class LocationDetail extends Component {
                 <p><b>Adress:</b> {s.address}</p>
               </address>
             </Col>
+          </Row>
+          <Row>
+            <MapContainer />
           </Row>
         </div>
 
