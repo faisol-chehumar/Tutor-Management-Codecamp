@@ -5,6 +5,7 @@ import Avatar from '../AvatarUpload/AvatarUpload'
 import RichTextArea from '../RichTextArea/RichTextArea'
 // import CheckBoxWithInput from './CheckBoxWithInput'
 import DayTimeSelect from './DayTimeSelect'
+import ListTable from '../ListTable/ListTable'
 
 const { RangePicker } = DatePicker
 const { TextArea } = Input
@@ -51,11 +52,11 @@ class AddForm extends React.Component {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 6 },
+        sm: { span: 24 },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 16 },
+        sm: { span: 24 },
       },
     }
     const tailFormItemLayout = {
@@ -111,13 +112,19 @@ class AddForm extends React.Component {
                   ? <RangePicker onChange={this.onDatePickerChange} /> : null
 
                   || field.type === 'DAYTIME_SELECT'
-                  ? <DayTimeSelect onSelected={(courseSchedule) => {
-                      this.props.form.setFields({
-                        courseSchedule: {
-                          value: courseSchedule
-                        },
-                      })
-                    }}/> : null
+                  ? <DayTimeSelect
+                      onSelected={(courseSchedule) => {
+                        this.props.form.setFields({
+                          courseSchedule: {
+                            value: courseSchedule
+                          },
+                        })
+                      }}
+                      options={'hide'}
+                    /> : null
+
+                  || field.type === 'LIST_TABLE'
+                  ? <ListTable dataSource={field.dataSource}/> : null
               )
             }
             </FormItem>

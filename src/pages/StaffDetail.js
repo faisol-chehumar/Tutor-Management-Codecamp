@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { fetchStaff } from '../actions/staffActions'
 import AvaiDateTimeTable from '../components/AvailDateTimeTable/AvailDateTimeTable'
 import ImageView from '../components/PageView/ImageView'
 import { Row, Col } from 'antd'
+import {fetchData} from '../utils/request';
 const uuidv1 = require('uuid/v1')
 
 class StaffDetail extends Component {
-  componentDidMount() {
-    this.props.fetchStaff(this.props.match.params.id)
+  state = {
+    staffDetail : []
+  }
+ async componentDidMount() {
+    this.setState({ staffDetail :  await fetchData('staff/'+this.props.match.params.id) })
     console.log(this.props.match.params.id)
   }
 
   render() {
-    const { staffDetail } = this.props
+    const { staffDetail } = this.state
     console.log(staffDetail)
 
     return (
@@ -71,16 +73,4 @@ class StaffDetail extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  staffDetail: state.items.staffDetail,
-  loading: state.items.loading,
-  error: state.items.error
-})
-
-const mapDispatchToProps = {
-  fetchStaff
-}
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StaffDetail)
+export default StaffDetail 

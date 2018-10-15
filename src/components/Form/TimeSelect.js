@@ -3,34 +3,44 @@ import { Select } from 'antd'
 
 const Option = Select.Option
 
-const timeSelectHandle = (value) => {
-  console.log('>>>>>>>>>>>>>',value)
-}
 
-const TimeSelect = (props) => (
+
+const TimeSelect = (props) => {
+  const timeSelectHandle = (value) => {
+    const valueArr = value.split(',')
+    props.timeSelectHandle([props.day,...valueArr])
+
+    console.log(`${props.day} ${value}`)
+    // console.log('>>>>>>>>>>>>> sunday, am, pm',value)
+  }
+
+  return (
   <div>
-    {console.log(props)}
+    {/* {console.log(props)} */}
     <Select
       disabled={props.selectDisabled}
-      defaultValue="am"
+      defaultValue="time,am"
+      style={{ width: 120 }}
+      onChange={timeSelectHandle.bind(props)}
+    >
+      <Option value={"time,am"}>Morning</Option>
+      <Option value={"time,pm"}>Afternoon</Option>
+      <Option value={"time,fullDay"}>Full Day</Option>
+    </Select>
+    {
+      props.options === 'hide' ? null :
+      <Select
+      disabled={props.selectDisabled}
+      defaultValue="avlStatus,avl"
       style={{ width: 120 }}
       onChange={timeSelectHandle}
     >
-      <Option value={props.day+"am"}>Morning</Option>
-      <Option value={props.day+"pm"}>Afternoon</Option>
-      <Option value={props.day+"fullDay"}>Full Day</Option>
+      <Option value={"avlStatus,avl"}>Available</Option>
+      <Option value={"avlStatus,m"}>Maybe</Option>
     </Select>
-
-    <Select
-      disabled={props.selectDisabled}
-      defaultValue="avl"
-      style={{ width: 120 }}
-      onChange={timeSelectHandle}
-    >
-      <Option value="avl">Available</Option>
-      <Option value="m">Maybe</Option>
-    </Select>
+    }
   </div>
-)
+  )
+}
 
 export default TimeSelect

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {  fetchStaff } from '../actions/staffActions'
-import { Table, Divider, Tag, Button, Slider, Row, Col } from 'antd'
+import { Table, Divider, Tag, Button, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import LinkDetail from '../components/ListTable/LinkDetail'
@@ -16,8 +16,8 @@ const ButtonGroup = styled.div`
 class Staff extends Component {
   state = {
     sortedInfo: null,
-    mandayMin: 800,
-    mandayMax: 8000
+    // mandayMin: 800,
+    // mandayMax: 8000
   }
 
   handleChange = (pagination, filters, sorter) => {
@@ -32,7 +32,7 @@ class Staff extends Component {
   }
   
   render() {
-    let { sortedInfo, mandayMin, mandayMax } = this.state
+    let { sortedInfo } = this.state
     let { staffList } = this.props
     
     sortedInfo = sortedInfo || {}
@@ -41,7 +41,9 @@ class Staff extends Component {
       title: 'Name',
       dataIndex: 'firstname',
       key: 'firstname',
-      sorter: (a, b) => a.firstname.length - b.firstname.length,
+      sorter: (a, b) =>  {a = a.firstname || ''
+      b = b.firstname || ''
+      return a.localeCompare(b)},
       sortOrder: sortedInfo.columnKey === 'firstname' && sortedInfo.order,
       render: (text, record) => (
         <div>
@@ -60,7 +62,9 @@ class Staff extends Component {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      sorter: (a, b) => a.email.length - b.email.length,
+      sorter: (a, b) =>  {a = a.firstname || ''
+      b = b.firstname || ''
+      return a.localeCompare(b)},
       sortOrder: sortedInfo.columnKey === 'email' && sortedInfo.order
     }, {
       title: 'Tel',
@@ -70,8 +74,6 @@ class Staff extends Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <a href="" onClick={ e => console.log('Make send email feature!')}>Send Email</a>
-          <Divider type="vertical" />
           <a href="" onClick={ e => console.log('Make edit feature!')}>Edit</a>
           <Divider type="vertical" />
           <a href="" onClick={ e => console.log('Make delete feature!')}>Delete</a>
@@ -96,13 +98,8 @@ class Staff extends Component {
           <Col span={12}>
             <ButtonGroup>
               <Link to="staff/create"><Button icon="plus-circle">Add Staff</Button></Link>
-              <Button icon="minus-circle">Send Email</Button>
               <Button icon="minus-circle">Delete All</Button>
             </ButtonGroup>
-          </Col>
-          <Col span={12}>
-            <span style={{ marginRight: 6 }}>Manday Rate: </span>
-            <Slider style={{ width: '50%' }} range defaultValue={[800, 3000]} min={mandayMin} max={mandayMax} />
           </Col>
         </Row>
         <Table
