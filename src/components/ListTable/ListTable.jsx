@@ -16,24 +16,21 @@ const columns = [{
         title = {`${record.firstname} ${record.lastname}`}
       />
     </div>
-  )
-}, {
-  title: 'Email',
-  dataIndex: 'email',
-}, {
-  title: 'Manday Rate',
-  dataIndex: 'mandayRate',
+  )}, {
+    title: 'Email',
+    dataIndex: 'email',
+  }, {
+    title: 'Manday Rate',
+    dataIndex: 'mandayRate',
   render: (text, record) => {
     
   }
-}];
-
-
+}]
 
 // rowSelection object indicates the need for row selection
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
   },
   getCheckboxProps: record => ({
     name: record.name,
@@ -50,7 +47,7 @@ class ListTable extends Component {
           columns={columns}
           dataSource={data}
           pagination={{ pageSize: 10 }}
-          scroll={{ y: 240 }}
+          scroll={{ y: 280 }}
       />
     )
   }

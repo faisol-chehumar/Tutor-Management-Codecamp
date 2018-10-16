@@ -3,7 +3,6 @@ import { Form, Input, Cascader, Button, DatePicker } from 'antd'
 
 import Avatar from '../AvatarUpload/AvatarUpload'
 import RichTextArea from '../RichTextArea/RichTextArea'
-// import CheckBoxWithInput from './CheckBoxWithInput'
 import DayTimeSelect from './DayTimeSelect'
 import ListTable from '../ListTable/ListTable'
 
@@ -11,13 +10,13 @@ const { RangePicker } = DatePicker
 const { TextArea } = Input
 const FormItem = Form.Item
 
-const classLocations = [{
-  value: '1',
-  label: 'BB Coworking'
-}, {
-  value: '2',
-  label: 'Jiangsu',
-}]
+// const classLocations = [{
+//   value: '1',
+//   label: 'BB Coworking'
+// }, {
+//   value: '2',
+//   label: 'Jiangsu',
+// }]
 
 class AddForm extends React.Component {
   state = {
@@ -47,7 +46,7 @@ class AddForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form
-    const { formTitle, formData } = this.props
+    const { formTitle, formData, locationsData } = this.props
 
     const formItemLayout = {
       labelCol: {
@@ -104,7 +103,7 @@ class AddForm extends React.Component {
                   
                   || field.type === 'CASCADER'
                   ? <Cascader
-                      options={classLocations}
+                      options={locationsData}
                       showSearch={(inputValue, path) => (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))}
                     /> : null
                   

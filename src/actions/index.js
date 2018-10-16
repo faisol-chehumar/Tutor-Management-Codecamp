@@ -10,4 +10,4 @@ const actions = {
   fetchCustomers
 }
 
-export default {...actions} 
+export default actions 
