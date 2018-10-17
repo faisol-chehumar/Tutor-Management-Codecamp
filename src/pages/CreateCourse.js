@@ -45,26 +45,38 @@ class CreateCourse extends Component {
         decorator: 'teacherList',
         required: false,
         type: 'LIST_TABLE',
-        dataSource: this.props.staffList.filter(staff => {
-          const x = staff.role.filter(role => {
-            // console.log(role.title)
-            return role.title === 'tch'
+        dataSource: this.props.staffList
+          .filter(staff => {
+            const x = staff.role.filter(role => {
+              return role.title === 'tch'
+            })
+            return x.length > 0
           })
-          return x.length > 0
-        })
+          .map(staff => ({
+            key: staff.staffId,
+            name: `${staff.firstname} ${staff.lastname}`,
+            email: staff.email,
+            mandayRate: staff.role[0].mandayRate
+          }))
       },
       {
         title: 'Invite TA',
         decorator: 'taList',
         required: false,
         type: 'LIST_TABLE',
-        dataSource: this.props.staffList.filter(staff => {
-          const x = staff.role.filter(role => {
-            // console.log(role.title)
-            return role.title === 'ta'
+        dataSource: this.props.staffList
+          .filter(staff => {
+            const x = staff.role.filter(role => {
+              return role.title === 'ta'
+            })
+            return x.length > 0
           })
-          return x.length > 0
-        })
+          .map(staff => ({
+            key: staff.staffId,
+            name: `${staff.firstname} ${staff.lastname}`,
+            email: staff.email,
+            mandayRate: staff.role[0].mandayRate
+          }))
       }
     ]
   }
@@ -84,13 +96,6 @@ class CreateCourse extends Component {
     const { title, formData } = this.state
     const { locationList } =this.props
 
-    // const classLocations = [{
-    //   value: '1',
-    //   label: 'BB Coworking'
-    // }, {
-    //   value: '2',
-    //   label: 'Jiangsu',
-    // }]
 
     const classLocations = locationList.map(location => ({
       value: location.locationId,
