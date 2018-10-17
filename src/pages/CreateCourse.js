@@ -27,8 +27,9 @@ class CreateCourse extends Component {
       }, {
         title: 'Class Locations',
         decorator: 'classLocations',
-        required: true,
-        type: 'CASCADER'
+        required: false,
+        type: 'SELECT',
+        dataSource: this.props.locationList
       }, {
         title: 'Start/End Date',
         decorator: 'startEndDate',
@@ -39,8 +40,7 @@ class CreateCourse extends Component {
         decorator: 'courseSchedule',
         required: false,
         type: 'DAYTIME_SELECT'
-      }, 
-      {
+      }, {
         title: 'Invite Teacher',
         decorator: 'teacherList',
         required: false,
@@ -55,11 +55,11 @@ class CreateCourse extends Component {
           .map(staff => ({
             key: staff.staffId,
             name: `${staff.firstname} ${staff.lastname}`,
+            imagePath: staff.imagePath,
             email: staff.email,
             mandayRate: staff.role[0].mandayRate
           }))
-      },
-      {
+      }, {
         title: 'Invite TA',
         decorator: 'taList',
         required: false,
@@ -74,6 +74,7 @@ class CreateCourse extends Component {
           .map(staff => ({
             key: staff.staffId,
             name: `${staff.firstname} ${staff.lastname}`,
+            imagePath: staff.imagePath,
             email: staff.email,
             mandayRate: staff.role[0].mandayRate
           }))
@@ -94,19 +95,11 @@ class CreateCourse extends Component {
   
   render() {
     const { title, formData } = this.state
-    const { locationList } =this.props
-
-
-    const classLocations = locationList.map(location => ({
-      value: location.locationId,
-      label: location.addressTitle
-    }))
     
     return (
       <CreateForm
         formTitle={title}
         formData={formData}
-        locationsData={classLocations}
       />
     )
   }

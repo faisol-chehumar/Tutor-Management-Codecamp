@@ -1,35 +1,27 @@
 import React from 'react'
-import { Form, Input, Cascader, Button, DatePicker } from 'antd'
+import { Form, Input, Cascader, Button, DatePicker, Select } from 'antd'
 
 import Avatar from '../AvatarUpload/AvatarUpload'
 import RichTextArea from '../RichTextArea/RichTextArea'
 import DayTimeSelect from './DayTimeSelect'
 import ListTable from '../ListTable/ListTable'
+// import SelectOptions from '../Select/SelectOptions'
 
+const Option = Select.Option
 const { RangePicker } = DatePicker
 const { TextArea } = Input
 const FormItem = Form.Item
 
-// const classLocations = [{
-//   value: '1',
-//   label: 'BB Coworking'
-// }, {
-//   value: '2',
-//   label: 'Jiangsu',
-// }]
-
 class AddForm extends React.Component {
   state = {
     confirmDirty: false,
-    autoCompleteResult: [],
-    // imgPath: ''
+    autoCompleteResult: []
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // values.imgPath = this.state.imgPath
         console.log('Received values of form: ', values)
       }
     })
@@ -46,7 +38,7 @@ class AddForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form
-    const { formTitle, formData, locationsData } = this.props
+    const { formTitle, formData } = this.props
 
     const formItemLayout = {
       labelCol: {
@@ -101,12 +93,30 @@ class AddForm extends React.Component {
                   || field.type === 'RICH_TXT_EDITOR'
                   ? <RichTextArea /> : null
                   
+                  || field.type === 'SELECT'
+                  ? <Select
+                      showSearch
+                      style={{ width: 400 }}
+                      placeholder="Select a Location"
+                      optionFilterProp="children"
+                      filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    >{ 
+                      field.dataSource.map(item => (
+                        <Option
+                          key={item.locationId}
+                          value={item.locationId}
+                        >
+                          {`${item.addressTitle} - ${item.address} | Room size: ${item.roomSize}`}
+                        </Option>
+                      ))}
+                    </Select>: null
+                  
                   || field.type === 'CASCADER'
                   ? <Cascader
-                      options={locationsData}
+                      options={field.dataSource}
                       showSearch={(inputValue, path) => (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))}
                     /> : null
-                  
+
                   || field.type === 'DATEPICKER'
                   ? <RangePicker onChange={this.onDatePickerChange} /> : null
 
@@ -129,6 +139,7 @@ class AddForm extends React.Component {
             </FormItem>
           ))
         }
+
         <FormItem {...tailFormItemLayout}>
           <Button style={{ marginRight: '0.5rem' }} onClick={e => this.props.form.resetFields()}>
             Reset

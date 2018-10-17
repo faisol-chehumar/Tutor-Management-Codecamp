@@ -3,29 +3,6 @@ import { Table } from 'antd'
 
 import LinkDetail from './LinkDetail' 
 
-// const columns = [
-//   {
-//     title: 'Name',
-//     dataIndex: 'name',
-//     render: (text, record) => (
-//       <LinkDetail
-//         linkPath = {'/staff/' + record.staffId}
-//         imagePath = {record.imagePath}
-//         imageDefault = {'https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png'}
-//         title = {record.name}
-//       />
-//     )
-//   },
-//   {
-//     title: 'Email',
-//     dataIndex: 'email',
-//   },
-//   {
-//     title: 'Manday Rate',
-//     dataIndex: 'mandayRate'
-//   }
-// ]
-
 // rowSelection object indicates the need for row selection
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -40,19 +17,27 @@ class ListTable extends Component {
   
   render() {
     const data = this.props.dataSource
-
     return (
       data.length > 0 ?
       <Table
           size="small"
           rowSelection={rowSelection}
-          columns={Object.keys(data[0]).filter(key => key !== 'key').map(key => ({
-            title: key,
-            dataIndex: key,
-          }))}
+          columns={Object.keys(data[0]).filter(key => key !== 'key' && key !== 'imagePath').map((key, index) => {
+            return index === 0 ? {
+                title: key.toUpperCase(),
+                dataIndex: key,
+                render: (text, record) => (
+                  <LinkDetail
+                    linkPath = {'/staff/' + record.key}
+                    imagePath = {record.imagePath}
+                    imageDefault = {'https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png'}
+                    title = {record.name}
+                  />
+                )
+              } : { title: key.toUpperCase(), dataIndex: key }
+          })}
           dataSource={data}
           pagination={{ pageSize: 10 }}
-          // scroll={{ y: 280 }}
       /> : <div>Loading</div>
     )
   }
