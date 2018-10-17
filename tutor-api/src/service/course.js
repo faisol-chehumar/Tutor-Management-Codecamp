@@ -20,54 +20,49 @@ async function list(options) {
       })
     }
   })
-      .map(course => {
-        return {
-          ...course,
-          'coursesSchedule': coursesScheduleList
-          .filter(coursesSchedule => {
-          return course.courseId === coursesSchedule.courseId
+  .map(course => {
+    return {
+      ...course,
+      'coursesSchedule': coursesScheduleList
+      .filter(coursesSchedule => {
+        return course.courseId === coursesSchedule.courseId
       })
     }
   })
-      .map(course => {
-        return {
-          ...course,
-          'location': locationList
-          .filter(location => {
-          return course.locationId === location.locationId
+  .map(course => {
+    return {
+      ...course,
+      'location': locationList
+      .filter(location => {
+        return course.locationId === location.locationId
       })
     }
   })
-      .map(course => {
-        return {
-          ...course,
-          'staffRegistration': staffRegistrationList
-          .filter(staffRegistration => {
-          return course.courseId === staffRegistration.courseId
+  .map(course => {
+    return {
+      ...course,
+      'staffRegistration': staffRegistrationList
+      .filter(staffRegistration => {
+        return course.courseId === staffRegistration.courseId
       })
+    }
+  })
 }
-      })
-      }
 
 async function create(coursesData) {
-  if (await isDuplicate(coursesData.email)) {
-    throw new AppError('Email is already use', 400)
-  }
+  const { tchInvitedList, taInvitedList } = coursesData
+  console.log('Teacher list: ', tchInvitedList)
+  console.log('TA list: ', taInvitedList)
 
-  // const mapMarkerId = await mapMarkers.insert(coursesData)
-  const result = await courses.insert(coursesData)
-
-  return result.insertId
+  const courseId = await courses.insert(coursesData)
+  
+  // const regisId = await staffRegistrations.insert()
+  return courseId.insertId
 }
 
 async function remove(option) {
   await courses.remove(option)
   return
-}
-
-async function isDuplicate(email) {
-  const result = (await courses.get()).filter(courses => courses.email === email)
-  return result.length >= 1
 }
 
 module.exports = {

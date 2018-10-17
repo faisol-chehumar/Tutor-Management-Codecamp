@@ -20,20 +20,21 @@ export const fetchData = async (title) => {
   }
 }
 
+// const staffData = {
+//   firstname: payload.firstname,
+//   lastname: payload.lastname,
+//   email: payload.email,
+//   lat: 12.1234567890,
+//   lng: 12.1234567890,
+//   roleId: parseInt(payload.role, 10),
+//   mandayRate: payload.mandayRate,
+//   imagePath: payload.imagePath,
+//   availDayTime: payload.checkboxGroup
+// }
+
 export const postData = async (title, payload) => {
   try {
-    const result = await axios.post(`http://${apiUrl}:${apiPort}/api/v1/${title}`, {
-      firstname: payload.firstname,
-      lastname: payload.lastname,
-      email: payload.email,
-      lat: 12.1234567890,
-      lng: 12.1234567890,
-      roleId: parseInt(payload.role, 10),
-      mandayRate: payload.mandayRate,
-      imagePath: payload.imagePath,
-      availDayTime: payload.checkboxGroup
-    })
-
+    const result = await axios.post(`http://${apiUrl}:${apiPort}/api/v1/${title}`, payload)
     return result
   } catch(error) {
     console.error(error)

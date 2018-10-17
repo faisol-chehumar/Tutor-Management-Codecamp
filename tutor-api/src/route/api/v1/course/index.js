@@ -96,18 +96,23 @@ async function getCourseById(ctx) {
 
 async function addCourse(ctx) {
   const CourseSchema = Joi.object().keys({
-    firstname: Joi.string().required(),
-    lastname: Joi.string().required(),
-    email: Joi.string().email().required(),
-    tel: Joi.required(),
-    activedStatus :Joi.required(),
-    childAge:Joi.required(),
-    addressTitle: Joi.required(),
-    address: Joi.required(),
+    // firstname: Joi.string().required(),
+    // lastname: Joi.string().required(),
+    // email: Joi.string().email().required(),
+    // tel: Joi.required(),
+    // activedStatus :Joi.required(),
+    // childAge:Joi.required(),
+    locationId: Joi.number().require,
+    title: Joi.string().require,
+    description: Joi.string(),
+    startDate: Joi.date(),
+    endtDate: Joi.date(),
+    addressTitle: Joi.string(),
+    address: Joi.string(),
     lat: Joi.required(),
     lng: Joi.Required(),
-    markerType: Joi.required(),
-    imagePath: Joi.required()
+    markerType: Joi.string(),
+    imagePath: Joi.string()
   })
   
   try {

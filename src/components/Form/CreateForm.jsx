@@ -5,7 +5,7 @@ import Avatar from '../AvatarUpload/AvatarUpload'
 import RichTextArea from '../RichTextArea/RichTextArea'
 import DayTimeSelect from './DayTimeSelect'
 import ListTable from '../ListTable/ListTable'
-// import SelectOptions from '../Select/SelectOptions'
+import { postData } from '../../utils/request'
 
 const Option = Select.Option
 const { RangePicker } = DatePicker
@@ -23,17 +23,22 @@ class AddForm extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
+        postData(this.props.postUrl, values)
+        // postData('courses', value)
+        //   firstname: Joi.string().required(),
+        //   lastname: Joi.string().required(),
+        //   email: Joi.string().email().required(),
+        //   tel: Joi.required(),
+        //   activedStatus :Joi.required(),
+        //   childAge:Joi.required(),
+        //   addressTitle: Joi.required(),
+        //   address: Joi.required(),
+        //   lat: Joi.required(),
+        //   lng: Joi.Required(),
+        //   markerType: Joi.required(),
+        //   imagePath: Joi.required()
       }
     })
-  }
-
-  handleConfirmBlur = (e) => {
-    const value = e.target.value
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value })
-  }
-
-  onDatePickerChange(date, dateString) {
-    console.log(date, dateString);
   }
 
   render() {
