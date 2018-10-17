@@ -99,9 +99,12 @@ class AddForm extends React.Component {
                       style={{ width: 400 }}
                       placeholder="Select a Location"
                       optionFilterProp="children"
-                      filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >{ 
-                      field.dataSource.map(item => (
+                      filterOption={(input, option) => option.props.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                      }
+                    >
+                      {field.dataSource.map(item => (
                         <Option
                           key={item.locationId}
                           value={item.locationId}
@@ -114,7 +117,10 @@ class AddForm extends React.Component {
                   || field.type === 'CASCADER'
                   ? <Cascader
                       options={field.dataSource}
-                      showSearch={(inputValue, path) => (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1))}
+                      showSearch={(inputValue, path) => (path.some(option => (option.label)
+                        .toLowerCase()
+                        .indexOf(inputValue.toLowerCase()) > -1)
+                      )}
                     /> : null
 
                   || field.type === 'DATEPICKER'
@@ -122,9 +128,9 @@ class AddForm extends React.Component {
 
                   || field.type === 'DAYTIME_SELECT'
                   ? <DayTimeSelect
-                      onSelected={(courseSchedule) => {
+                      onSelected={courseSchedule => {
                         this.props.form.setFields({
-                          courseSchedule: {
+                          [field.decorator]: {
                             value: courseSchedule
                           },
                         })
@@ -133,7 +139,13 @@ class AddForm extends React.Component {
                     /> : null
 
                   || field.type === 'LIST_TABLE'
-                  ? <ListTable dataSource={field.dataSource}/> : null
+                  ? <ListTable dataSource={field.dataSource} listTableHandle={record => {
+                    this.props.form.setFields({
+                      [field.decorator]: {
+                        value: record
+                      }
+                    })
+                  }} /> : null
               )
             }
             </FormItem>

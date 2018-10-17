@@ -4,19 +4,26 @@ import { Table } from 'antd'
 import LinkDetail from './LinkDetail' 
 
 // rowSelection object indicates the need for row selection
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
-  },
-  getCheckboxProps: record => ({
-    name: record.name,
-  }),
-}
+
 
 class ListTable extends Component {
   
   render() {
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        this.props.listTableHandle(selectedRows.map(row => ({
+          id: row.key,
+          name: row.name,
+          email: row.email
+        })))
+      },
+      getCheckboxProps: record => ({
+        name: record.name,
+      })
+    }
+
     const data = this.props.dataSource
+
     return (
       data.length > 0 ?
       <Table
