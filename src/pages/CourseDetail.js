@@ -1,21 +1,25 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { fetchCourses } from '../actions/coursesActions'
+import { fetchData } from '../utils/request'
 import ImageView from '../components/PageView/ImageView'
 import { Row, Col } from 'antd'
 
 // const uuidv1 = require('uuid/v1')
 
 class CourseDetail extends Component {
-  componentDidMount() {
-    this.props.fetchCourses(this.props.match.params.id)
-    console.log(this.props.match.params.id)
+  state = {
+    courseDetail : []
   }
+
+  async componentDidMount() {
+    this.setState({ courseDetail :  await fetchData('courses/' + this.props.match.params.id) })
+  }
+
   render() {
-    const { courseList } = this.props
-    console.log('CourseDetail Page >>>>>>>', courseList)
+    const { courseDetail } = this.state
+    console.log(courseDetail)
+
     return (
-      courseList.map(s =>
+      courseDetail.map(s =>
         <div key={s.key}>
           <Row gutter={16}>
             <Col span={6}>
@@ -29,32 +33,20 @@ class CourseDetail extends Component {
             <Col span={18} >
               <div>
                 <h1>{`${s.title}`}</h1>
+                <p>{s.description}</p>
                 <p><b>StartDate: </b> {s.startDate}</p>
                 <p><b>EndDate: </b> {s.endDate}</p>
                 <address>
-                  <p><b>Adress Title:</b> {s.addressTitle}</p>
-                  <p><b>Adress:</b> {s.address}</p>
+                  <p><b>Adress Title:</b> {s.location[0].addressTitle}</p>
+                  <p><b>Adress:</b> {s.location[0].address}</p>
                 </address>
               </div>
             </Col>
           </Row>
         </div>
-
       )
-    );
+    )
   }
 }
 
-const mapStateToProps = state => ({
-  courseList: state.items.courses,
-  loading: state.items.loading,
-  error: state.items.error
-})
-
-const mapDispatchToProps = {
-  fetchCourses
-}
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CourseDetail)
+export default CourseDetail

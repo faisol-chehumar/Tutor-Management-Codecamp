@@ -50,11 +50,12 @@ async function list(options) {
 }
 
 async function create(coursesData) {
-  const { tchInvitedList, taInvitedList } = coursesData
-  console.log('Teacher list: ', tchInvitedList)
-  console.log('TA list: ', taInvitedList)
-
+  console.log('Create Courses service')
+  // const { tchInvitedList, taInvitedList } = coursesData
+  // console.log('Teacher list: ', tchInvitedList)
+  // console.log('TA list: ', taInvitedList)
   const courseId = await courses.insert(coursesData)
+  
   
   // const regisId = await staffRegistrations.insert()
   return courseId.insertId

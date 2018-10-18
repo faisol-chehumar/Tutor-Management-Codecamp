@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import CreateForm from '../components/Form/CreateForm'
 import { connect } from 'react-redux'
-import * as Yup from 'yup'
 
 import actions from '../actions/index'
 
 const { fetchStaff, fetchLocations } = actions
-
-const schema = Yup.object().shape({
-  
-})
 
 class CreateCourse extends Component {
   state = {
@@ -17,32 +12,32 @@ class CreateCourse extends Component {
     formData: [
       {
         title: 'Course Cover',
-        decorator: 'imgPath',
+        decorator: 'imagePath',
         type: 'IMG_UPLOAD'
       }, {
         title: 'Course title',
-        decorator: 'courseTitle',
+        decorator: 'title',
         required: true,
         type: 'INPUT'
       }, {
         title: 'Course Description',
-        decorator: 'courseDescription',
+        decorator: 'description',
         required: false,
         type: 'TEXT_AREA'
       }, {
         title: 'Class Locations',
-        decorator: 'classLocations',
-        required: false,
+        decorator: 'locationId',
+        required: true,
         type: 'SELECT',
         dataSource: this.props.locationList
       }, {
         title: 'Start/End Date',
         decorator: 'startEndDate',
-        required: false,
+        required: true,
         type: 'DATEPICKER'
       }, {
         title: 'Course Schedule',
-        decorator: 'courseSchedule',
+        decorator: 'schedule',
         required: false,
         type: 'DAYTIME_SELECT'
       }, {
@@ -105,7 +100,7 @@ class CreateCourse extends Component {
       <CreateForm
         formTitle={title}
         formData={formData}
-        postUrl={'course'}
+        postUrl={'courses'}
       />
     )
   }

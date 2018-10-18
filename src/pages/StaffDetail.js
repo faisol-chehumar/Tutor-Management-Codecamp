@@ -9,8 +9,9 @@ class StaffDetail extends Component {
   state = {
     staffDetail : []
   }
- async componentDidMount() {
-    this.setState({ staffDetail :  await fetchData('staff/'+this.props.match.params.id) })
+
+  async componentDidMount() {
+    this.setState({ staffDetail :  await fetchData('staff/' + this.props.match.params.id) })
     console.log(this.props.match.params.id)
   }
 

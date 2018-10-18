@@ -1,20 +1,24 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { fetchCustomers } from '../actions/customersActions'
+import { fetchData } from '../utils/request'
 import ImageView from '../components/PageView/ImageView'
 import { Row, Col } from 'antd'
-// const uuidv1 = require('uuid/v1')
 
 class CustomerDetail extends Component {
-  componentDidMount() {
-    this.props.fetchCustomers(this.props.match.params.id)
+  state = {
+    customerDetail : []
+  }
+
+  async componentDidMount() {
+    this.setState({ customerDetail :  await fetchData('customers/' + this.props.match.params.id) })
     console.log(this.props.match.params.id)
   }
+
   render() {
-    const { customerList } = this.props
-    console.log('customerList>>>>>>>', customerList)
+    const { customerDetail } = this.state
+    console.log(customerDetail)
+
     return (
-      customerList.map(s =>
+      customerDetail.map(s =>
         <div key={s.key}>
           <Row gutter={16}>
             <Col span={6}>
@@ -22,7 +26,7 @@ class CustomerDetail extends Component {
                 title={`${s.firstname} ${s.lastname}`}
                 description={'www.instagram.com'}
                 imagePath={s.imagePath}
-                imageDefault={'https://png2.kisspng.com/20180404/wpw/kisspng-computer-icons-users-group-internet-forum-user-avatar-5ac45a994caa27.692612531522817689314.png'}
+                // imageDefault={'https://png2.kisspng.com/20180404/wpw/kisspng-computer-icons-users-group-internet-forum-user-avatar-5ac45a994caa27.692612531522817689314.png'}
               />
             </Col>
             <Col span={18} >
@@ -40,20 +44,9 @@ class CustomerDetail extends Component {
         </div>
 
       )
-    );
+    )
   }
 }
 
-const mapStateToProps = state => ({
-  customerList: state.items.customers,
-  loading: state.items.loading,
-  error: state.items.error
-})
 
-const mapDispatchToProps = {
-  fetchCustomers
-}
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CustomerDetail)
+export default CustomerDetail

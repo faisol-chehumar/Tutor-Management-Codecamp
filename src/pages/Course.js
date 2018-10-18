@@ -47,10 +47,10 @@ class Course extends Component {
       render: (text, record) => (
         <div>
           <LinkDetail
-          linkPath = {'courses/' + record.courseId}
-          imagePath = {record.imagePath}
-          imageDefault = {'https://static1.squarespace.com/static/593ff48f20099eef990d199d/59db9c3dccc5c5531166f2c2/59db9c3de5dd5b5a1b440128/1507652291838/Icon+-+Coding.png?format=300w'}
-          title = {record.title}
+            linkPath = {'courses/' + record.courseId}
+            imagePath = {record.imagePath}
+            imageDefault = {'https://static1.squarespace.com/static/593ff48f20099eef990d199d/59db9c3dccc5c5531166f2c2/59db9c3de5dd5b5a1b440128/1507652291838/Icon+-+Coding.png?format=300w'}
+            title = {record.title}
           />
         </div>
       )

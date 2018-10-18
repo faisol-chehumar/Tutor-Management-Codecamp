@@ -56,11 +56,12 @@ async function create(staffData) {
   if(await isDuplicate(staffData.email)) {
     throw new AppError('Email is already use', 400)
   }
-  
+  console.log(staffData)
+
   // const mapMarkerId = await mapMarkers.insert(staffData)
   const result = await staff.insert(staffData)
-  console.log(staffData.availDayTime)
-  console.log(staffData.mandayRate)
+  // console.log(staffData.availDayTime)
+  // console.log(staffData.mandayRate)
   
   staffData.availDayTime.forEach( async element => {
     if(element == 1) {

@@ -15,7 +15,7 @@ class DayTimeSelect extends Component {
       Thursday: true,
       Friday: true,
       Saturday: true,
-      Sunday: true,
+      Sunday: true
     }
   }
 
@@ -51,7 +51,6 @@ class DayTimeSelect extends Component {
 
     return (
       <CheckboxGroup style={{ width: '100%' }} onChange={this.onChange}>
-        {console.log(this.state)}
         {
           Object.keys(daysCheckList).map(day => (
             <Row key={day}>

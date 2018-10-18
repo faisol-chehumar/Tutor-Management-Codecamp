@@ -13,13 +13,13 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-async function sendMail({email,subject,content,html}) {
+async function sendMail({email, subject, html}) {
     // setup email data
     let mailOptions = {
-      from: '"codecamp 👻" <foo@example.com>', // sender address
+      from: '"Codecamp 👻" <foo@example.com>', // sender address
       to: email, // list of receivers
-      subject:subject, // Subject line  'Hello ✔'
-      text: content, // plain text body
+      subject: subject, // Subject line  'Hello ✔'
+    //   text: content, // plain text body
       html: html // html body '<b>Hello world?</b>'
     }
       const result = await transporter.sendMail(mailOptions)

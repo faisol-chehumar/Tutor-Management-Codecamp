@@ -95,23 +95,14 @@ async function getCourseById(ctx) {
 }
 
 async function addCourse(ctx) {
+  console.log('Post new course')
+
   const CourseSchema = Joi.object().keys({
-    // firstname: Joi.string().required(),
-    // lastname: Joi.string().required(),
-    // email: Joi.string().email().required(),
-    // tel: Joi.required(),
-    // activedStatus :Joi.required(),
-    // childAge:Joi.required(),
-    locationId: Joi.number().require,
-    title: Joi.string().require,
+    locationId: Joi.number().required(),
+    title: Joi.string().required(),
     description: Joi.string(),
     startDate: Joi.date(),
     endtDate: Joi.date(),
-    addressTitle: Joi.string(),
-    address: Joi.string(),
-    lat: Joi.required(),
-    lng: Joi.Required(),
-    markerType: Joi.string(),
     imagePath: Joi.string()
   })
   
@@ -122,6 +113,7 @@ async function addCourse(ctx) {
     ctx.body = error
   }
   
+  console.log(ctx.request.body)
   const newCourseId = await courseService.create(ctx.request.body)
     
   if(!newCourseId) {

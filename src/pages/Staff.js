@@ -5,6 +5,7 @@ import { Table, Divider, Tag, Button, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import LinkDetail from '../components/ListTable/LinkDetail'
+
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
 
@@ -15,9 +16,7 @@ const ButtonGroup = styled.div`
 
 class Staff extends Component {
   state = {
-    sortedInfo: null,
-    // mandayMin: 800,
-    // mandayMax: 8000
+    sortedInfo: null
   }
 
   handleChange = (pagination, filters, sorter) => {
