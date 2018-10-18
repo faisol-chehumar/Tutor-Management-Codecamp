@@ -10,10 +10,9 @@ async function sendEmail(ctx) {
     const EmailSchema = Joi.object().keys({
         email: Joi.string().email().required(),
         subject: Joi.string().required(),
-        // content: Joi.string().required(),
         html: Joi.required()
     })
-    const resultEmail = null;
+
     try {
         await EmailSchema.validate(ctx.request.body)
         await emailService.sendMail(ctx.request.body)

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCourses } from '../actions/coursesActions'
+import { fetchCourses } from '../../actions/coursesActions'
 import { Col, Button, Row, Divider, Table } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Moment from 'react-moment'
-import LinkDetail from '../components/ListTable/LinkDetail'
+import LinkDetail from '../../components/ListTable/LinkDetail'
 
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
@@ -34,7 +34,7 @@ class Course extends Component {
   render() {
     let { sortedInfo } = this.state
     let { coursesList } = this.props
-    console.log(coursesList)
+    // console.log(coursesList)
     
     sortedInfo = sortedInfo || {}
     
@@ -74,8 +74,6 @@ class Course extends Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <a href="" onClick={ e => console.log('Make send email feature!')}>Send Email</a>
-          <Divider type="vertical" />
           <a href="" onClick={ e => console.log('Make edit feature!')}>Edit</a>
           <Divider type="vertical" />
           <a href="" onClick={ e => console.log('Make delete feature!')}>Delete</a>
@@ -92,7 +90,7 @@ class Course extends Component {
         name: record.name,
       })
     }
-    console.log(this.props.coursesList)
+    // console.log(this.props.coursesList)
     return (
       <div>
         <h1>COURSES BOARD</h1>

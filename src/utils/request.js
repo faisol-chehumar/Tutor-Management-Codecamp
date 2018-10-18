@@ -32,6 +32,21 @@ export const fetchData = async (title) => {
 //   availDayTime: payload.checkboxGroup
 // }
 
+// const CourseSchema = Joi.object().keys({
+//   firstname: Joi.string().required(),
+//   lastname: Joi.string().required(),
+//   email: Joi.string().email().required(),
+//   tel: Joi.required(),
+//   activedStatus :Joi.required(),
+//   childAge:Joi.required(),
+//   addressTitle: Joi.required(),
+//   address: Joi.required(),
+//   lat: Joi.required(),
+//   lng: Joi.Required(),
+//   markerType: Joi.required(),
+//   imagePath: Joi.required()
+// })
+
 export const postData = async (title, payload) => {
   try {
     const result = await axios.post(`http://${apiUrl}:${apiPort}/api/v1/${title}`, payload)

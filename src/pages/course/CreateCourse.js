@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
-import CreateForm from '../components/Form/CreateForm'
+import CreateForm from '../../components/Form/CreateForm'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 
-import actions from '../actions/index'
+import actions from '../../actions/index'
+import { postData } from '../../utils/request'
+import sendEmail from '../../utils/email'
 
 const { fetchStaff, fetchLocations } = actions
 
@@ -79,7 +82,8 @@ class CreateCourse extends Component {
             mandayRate: staff.role[0].mandayRate
           }))
       }
-    ]
+    ],
+    fireRedirect: false
   }
 
   componentDidMount() {
@@ -92,16 +96,38 @@ class CreateCourse extends Component {
       this.props.fetchLocations()
     }
   }
+  // {id: 3, name: "Sasithorn Supamarkpukdee", email: "saas.a@gmail.com"}
+  submitHandle = (payload) => {
+    this.setState({fireRedirect: true})
+    payload.tchInvitedList.forEach(tch => sendEmail({
+      name: tch.name,
+      email: tch.email,
+      courseTitle:
+    }))
+  }
   
   render() {
-    const { title, formData } = this.state
+    const { title, formData, fireRedirect } = this.state
     
     return (
-      <CreateForm
-        formTitle={title}
-        formData={formData}
-        postUrl={'courses'}
-      />
+      <div>
+        <CreateForm
+          formTitle={title}
+          formData={formData}
+          formSubmit={(payload)=>{
+            postData('courses', {
+              ...payload,
+              startDate: payload.startEndDate[0].format('YYYY-MM-DD').toString(),
+              endDate: payload.startEndDate[1].format('YYYY-MM-DD').toString()
+            }).then(
+              this.submitHandle(payload)
+            )
+          }}
+        />
+        {fireRedirect && (
+          <Redirect to={'/courses'}/>
+        )}
+      </div>
     )
   }
 }
