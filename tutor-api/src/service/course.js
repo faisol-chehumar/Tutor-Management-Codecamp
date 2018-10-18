@@ -50,14 +50,30 @@ async function list(options) {
 }
 
 async function create(coursesData) {
-  console.log('Create Courses service')
-  // const { tchInvitedList, taInvitedList } = coursesData
-  // console.log('Teacher list: ', tchInvitedList)
-  // console.log('TA list: ', taInvitedList)
+  const { tchInvitedList, taInvitedList, schedule } = coursesData
+
   const courseId = await courses.insert(coursesData)
-  
-  
-  // const regisId = await staffRegistrations.insert()
+  for (const key in schedule) {
+    coursesSchedule.insert({
+      courseId,
+      day: key,
+      timeCode: schedule[key].time
+    })
+  }
+
+  tchInvitedList.forEach(async tch => await staffRegistrations.insert({
+    staffId: tch.id,
+    roleId: 1,
+    courseId
+  }))
+
+  taInvitedList.forEach(async tch => await staffRegistrations.insert({
+    staffId: tch.id,
+    roleId: 1,
+    courseId
+  }))
+
+
   return courseId.insertId
 }
 

@@ -7,7 +7,7 @@ import actions from '../../actions/index'
 import { postData } from '../../utils/request'
 import sendEmail from '../../utils/email'
 
-const { fetchStaff, fetchLocations } = actions
+const { fetchStaff, fetchLocations, fetchCustomers } = actions
 
 class CreateCourse extends Component {
   state = {
@@ -48,7 +48,7 @@ class CreateCourse extends Component {
         decorator: 'tchInvitedList',
         required: false,
         type: 'LIST_TABLE',
-        dataSource: this.props.staffList
+        dataSource: this.props.staffList.length > 0 ? this.props.staffList
           .filter(staff => {
             const x = staff.role.filter(role => {
               return role.title === 'tch'
@@ -61,33 +61,45 @@ class CreateCourse extends Component {
             imagePath: staff.imagePath,
             email: staff.email,
             mandayRate: staff.role[0].mandayRate
-          }))
+          })) : null
       }, {
         title: 'Invite TA',
         decorator: 'taInvitedList',
         required: false,
         type: 'LIST_TABLE',
-        dataSource: this.props.staffList
-          .filter(staff => {
-            const x = staff.role.filter(role => {
-              return role.title === 'ta'
-            })
-            return x.length > 0
+        dataSource: this.props.staffList.length > 0 ? this.props.staffList
+        .filter(staff => {
+          const x = staff.role.filter(role => {
+            return role.title === 'ta'
           })
-          .map(staff => ({
-            key: staff.staffId,
-            name: `${staff.firstname} ${staff.lastname}`,
-            imagePath: staff.imagePath,
-            email: staff.email,
-            mandayRate: staff.role[0].mandayRate
-          }))
+          return x.length > 0
+        })
+        .map(staff => ({
+          key: staff.staffId,
+          name: `${staff.firstname} ${staff.lastname}`,
+          imagePath: staff.imagePath,
+          email: staff.email,
+          mandayRate: staff.role[0].mandayRate
+        })) : null
+      }, {
+        title: 'Customer Enroll',
+        decorator: 'customerEnroll',
+        required: false,
+        type: 'LIST_TABLE',
+        dataSource: this.props.customerList.length ? this.props.customerList
+          .map(customer => ({
+            key: customer.customerId,
+            name: `${customer.firstname} ${customer.lastname}`,
+            imagePath: customer.imagePath,
+            email: customer.email
+          })) : null
       }
     ],
     fireRedirect: false
   }
 
   componentDidMount() {
-    if(this.props.staffList.length <= 0) {
+    if(this.props.staffList) {
       console.log('Fecth Staff')
       this.props.fetchStaff()
     }
@@ -95,33 +107,46 @@ class CreateCourse extends Component {
       console.log('Fecth Locations')
       this.props.fetchLocations()
     }
+    if(this.props.customerList.length <= 0) {
+      console.log('Fecth customer')
+      this.props.fetchCustomers()
+    }
   }
-  // {id: 3, name: "Sasithorn Supamarkpukdee", email: "saas.a@gmail.com"}
-  submitHandle = (payload) => {
+
+  submitHandle = async (payload) => {
+    await postData('courses', {
+      ...payload,
+      startDate: payload.startEndDate[0].format('YYYY-MM-DD').toString(),
+      endDate: payload.startEndDate[1].format('YYYY-MM-DD').toString()
+    })
+
     this.setState({fireRedirect: true})
+
     payload.tchInvitedList.forEach(tch => sendEmail({
       name: tch.name,
       email: tch.email,
-      courseTitle:
+      courseTitle: payload.title,
+      imagePath: payload.imagePath
+    }))
+
+    payload.taInvitedList.forEach(tch => sendEmail({
+      name: tch.name,
+      email: tch.email,
+      courseTitle: payload.title,
+      imagePath: payload.imagePath
     }))
   }
   
   render() {
     const { title, formData, fireRedirect } = this.state
-    
+
     return (
       <div>
         <CreateForm
           formTitle={title}
           formData={formData}
-          formSubmit={(payload)=>{
-            postData('courses', {
-              ...payload,
-              startDate: payload.startEndDate[0].format('YYYY-MM-DD').toString(),
-              endDate: payload.startEndDate[1].format('YYYY-MM-DD').toString()
-            }).then(
-              this.submitHandle(payload)
-            )
+          formSubmit={(payload) => {
+            this.submitHandle(payload)
           }}
         />
         {fireRedirect && (
@@ -135,13 +160,15 @@ class CreateCourse extends Component {
 const mapStateToProps = state => ({
   staffList: state.items.staff,
   locationList: state.items.locations,
+  customerList: state.items.customers,
   loading: state.items.loading,
   error: state.items.error
 })
 
 const mapDispatchToProps = {
   fetchStaff,
-  fetchLocations
+  fetchLocations,
+  fetchCustomers
 }
 
 export default connect(

@@ -5,11 +5,12 @@ const get = async () => {
 	try {
 		const result = await pool.query(`
         SELECT 
-					staff_registration_id AS staffRegistrationId,
-					staff_id AS staffId,
-					course_id AS courseId,
-					role_id AS roleId
-        FROM staff_registrations
+			staff_registration_id AS staffRegistrationId,
+			staff_id AS staffId,
+			course_id AS courseId,
+			role_id AS roleId
+		FROM
+			staff_registrations
         `)
 		return result[0]
 	} catch (err) {
@@ -23,12 +24,13 @@ const getByStaffId = async (staffId) => {
 	try {
 		const result = await pool.query(`
         SELECT 
-					staff_registration_id AS staffRegistrationId,
-					staff_id AS staffId,
-					course_id AS courseId,
-					role_id AS roleId
-					FROM staff_registrations
-        WHERE  staff_id = ?
+			staff_registration_id AS staffRegistrationId,
+			staff_id AS staffId,
+			course_id AS courseId,
+			role_id AS roleId
+			FROM staff_registrations
+		WHERE
+			staff_id = ?
         `, [staffId])
 		return result[0]
 	} catch (err) {
@@ -37,21 +39,27 @@ const getByStaffId = async (staffId) => {
 	}
 }
 
-const insert = async (staffId, courseId, roleId) => {
-	try {
-		const result = await pool.query(`
-        INSERT INTO staff_registrations
-        	(staff_id,course_id,role_id)
-        VALUES
-        	(?,?,?)
-        ` [staffId, courseId, roleId])
-		return result
-	} catch (err) {
-		console.log(err.message)
-		return undefined
-	}
+const insert = async ({
+	staffId=null,
+	courseId=null,
+	roleId=null
+} = {}) => {
 
+  try {
+    const [results] = await pool.query(`
+      INSERT INTO courses (
+        staffId, courseId, roleId
+      ) VALUES (?, ?, ?)
+    `, [staffId, courseId, roleId])
+
+    return results
+
+  } catch (error) {
+    console.error(error)
+  }
 }
+
+
 const removeByStaffId = async ({
 	id = null
 } = {}) => {

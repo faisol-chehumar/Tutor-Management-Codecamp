@@ -13,6 +13,8 @@ async function sendEmail(ctx) {
         html: Joi.required()
     })
 
+    console.log('Send mail')
+
     try {
         await EmailSchema.validate(ctx.request.body)
         await emailService.sendMail(ctx.request.body)

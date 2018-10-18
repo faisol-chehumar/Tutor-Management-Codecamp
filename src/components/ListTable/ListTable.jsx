@@ -23,9 +23,9 @@ class ListTable extends Component {
     }
 
     const data = this.props.dataSource
-
+    console.log(data)
     return (
-      data.length > 0 ?
+      data ?
       <Table
           size="small"
           rowSelection={rowSelection}

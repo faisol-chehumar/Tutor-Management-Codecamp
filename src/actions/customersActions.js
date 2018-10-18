@@ -29,7 +29,7 @@ export const fetchCustomers = (id=null) => {
       })
     : fetchData('customers')
       .then(result => {
-        // console.log(result)
+        console.log(result)
         dispatch(fetchCustomersSuccess(result))
         return result
       })
