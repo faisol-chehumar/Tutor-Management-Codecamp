@@ -95,7 +95,7 @@ async function getCourseById(ctx) {
 }
 
 async function addCourse(ctx) {
-  console.log('Post new course')
+  // console.log('Post new course')
 
   const CourseSchema = Joi.object().keys({
     locationId: Joi.number().required(),
