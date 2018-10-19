@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import AvaiDateTimeTable from '../components/AvailDateTimeTable/AvailDateTimeTable'
-import ImageView from '../components/PageView/ImageView'
+import AvaiDateTimeTable from '../../components/AvailDateTimeTable/AvailDateTimeTable'
+import ImageView from '../../components/PageView/ImageView'
 import { Row, Col } from 'antd'
-import {fetchData} from '../utils/request';
+import {fetchData} from '../../utils/request';
 const uuidv1 = require('uuid/v1')
 
 class StaffDetail extends Component {

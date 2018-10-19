@@ -55,13 +55,6 @@ async function create(coursesData) {
   const courseId = (await courses.insert(coursesData)).insertId
 
   for (const key in schedule) {
-    console.log('Insert course schedule')
-    console.log({
-      courseId,
-      day: key,
-      timeCode: schedule[key].time
-    })
-
     await coursesSchedule.insert({
       courseId,
       day: key,

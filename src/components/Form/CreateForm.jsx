@@ -7,6 +7,8 @@ import Avatar from '../AvatarUpload/AvatarUpload'
 import RichTextArea from '../RichTextArea/RichTextArea'
 import DayTimeSelect from './DayTimeSelect'
 import ListTable from '../ListTable/ListTable'
+// import LocationSearchInput from '../GoogleMap/LocationSearchInput'
+import GoogleMapSearch from '../GoogleMap/GoogleMapSearch'
 
 
 const Option = Select.Option
@@ -127,7 +129,7 @@ class AddForm extends React.Component {
                           },
                         })
                       }}
-                      options={'hide'}
+                      options={this.props.formTitle === 'staff' ? 'hide' : null}
                     /> : null
 
                   || field.type === 'LIST_TABLE'
@@ -138,6 +140,12 @@ class AddForm extends React.Component {
                       }
                     })
                   }} /> : null
+
+                  // || field.type === 'MAP_INPUT'
+                  // ? <LocationSearchInput /> : null
+
+                  || field.type === 'MAP_INPUT'
+                  ? <GoogleMapSearch /> : null
               )
             }
             </FormItem>

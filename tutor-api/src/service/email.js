@@ -19,7 +19,7 @@ async function sendMail({email, subject, html}) {
       from: '"Codecamp 👻" <foo@example.com>', // sender address
       to: email, // list of receivers
       subject: subject, // Subject line  'Hello ✔'
-    //   text: content, // plain text body
+    //text: content, // plain text body
       html: html // html body '<b>Hello world?</b>'
     }
       const result = await transporter.sendMail(mailOptions)

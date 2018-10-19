@@ -60,8 +60,6 @@ async function create(staffData) {
 
   // const mapMarkerId = await mapMarkers.insert(staffData)
   const result = await staff.insert(staffData)
-  // console.log(staffData.availDayTime)
-  // console.log(staffData.mandayRate)
   
   staffData.availDayTime.forEach( async element => {
     if(element == 1) {
@@ -91,8 +89,6 @@ async function create(staffData) {
   })
 
   if(staffData.roleId === 3) {
-    // console.log('roleId === 3')
-    // console.log({staffId: result.insertId, ...staffData, roleId: 1})
     await staffRoles.insert({staffId: result.insertId, ...staffData, roleId: 1})
     await staffRoles.insert({staffId: result.insertId, ...staffData, roleId: 2})
     return result.insertId

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {  fetchStaff } from '../actions/staffActions'
+import { fetchStaff } from '../../actions/staffActions'
 import { Table, Divider, Tag, Button, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import LinkDetail from '../components/ListTable/LinkDetail'
+import LinkDetail from '../../components/ListTable/LinkDetail'
 
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
