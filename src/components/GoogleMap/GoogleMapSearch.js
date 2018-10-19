@@ -1,12 +1,14 @@
 import React from "react"
 
 import MapComponent from './MapComponent'
-// import LocationSearchInput from './LocationSearchInput'
+import LocationSearchInput from './LocationSearchInput'
 
 
 class GoogleMapSearch extends React.PureComponent {
   state = {
     isMarkerShown: false,
+    lat: 13.7258011,
+    lng: 100.52679339999997
   }
 
   componentDidMount() {
@@ -27,11 +29,14 @@ class GoogleMapSearch extends React.PureComponent {
   render() {
     return (
       <div>
-        {/* <LocationSearchInput /> */}
         <MapComponent
           isMarkerShown={this.state.isMarkerShown}
           onMarkerClick={this.handleMarkerClick}
+          lat={this.state.lat}
+          lng={this.state.lng}
         />
+        <LocationSearchInput
+          onSearch={(value)=>this.setState({lat: value.lat, lng: value.lng})} />
       </div>
     )
   }

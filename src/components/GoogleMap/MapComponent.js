@@ -18,21 +18,23 @@ import LocationSearchInput from './LocationSearchInput'
 
 const MapComponent = compose(
   withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBfDtONM2UXrCITy6OMl2O03SjE92BvwFs&v=3.exp&libraries=geometry,drawing,places",
+    // googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBfDtONM2UXrCITy6OMl2O03SjE92BvwFs&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
-  withScriptjs,
+  // withScriptjs,
   withGoogleMap
 )((props) =>
   <div>
-    <LocationSearchInput />
+    {/* <LocationSearchInput /> */}
+    {console.log(props.lat, props.lng)}
     <GoogleMap
+      center={{ lat: props.lat, lng: props.lng }}
       defaultZoom={8}
-      defaultCenter={{ lat: -34.397, lng: 150.644 }}
+      defaultCenter={{ lat: 13.7563309, lng: 100.50176510000006 }}
     >
-      {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
+      {props.isMarkerShown && <Marker position={{ lat: props.lat, lng: props.lng }} />}
     </GoogleMap>
   </div>
 )
