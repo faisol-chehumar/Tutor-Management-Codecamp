@@ -50,11 +50,19 @@ async function list(options) {
 }
 
 async function create(coursesData) {
-  const { tchInvitedList, taInvitedList, schedule } = coursesData
+  const { tchInvitedList, taInvitedList, schedule, customerEnroll } = coursesData
 
-  const courseId = await courses.insert(coursesData)
+  const courseId = (await courses.insert(coursesData)).insertId
+
   for (const key in schedule) {
-    coursesSchedule.insert({
+    console.log('Insert course schedule')
+    console.log({
+      courseId,
+      day: key,
+      timeCode: schedule[key].time
+    })
+
+    await coursesSchedule.insert({
       courseId,
       day: key,
       timeCode: schedule[key].time
@@ -69,12 +77,17 @@ async function create(coursesData) {
 
   taInvitedList.forEach(async tch => await staffRegistrations.insert({
     staffId: tch.id,
-    roleId: 1,
+    roleId: 2,
+    courseId
+  }))
+
+  customerEnroll.forEach(async customer => await coursesEnrolments.insert({
+    customerId: customer.id,
     courseId
   }))
 
 
-  return courseId.insertId
+  return courseId
 }
 
 async function remove(option) {

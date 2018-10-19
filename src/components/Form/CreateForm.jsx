@@ -17,8 +17,6 @@ const FormItem = Form.Item
 class AddForm extends React.Component {
   state = {
     confirmDirty: false,
-    autoCompleteResult: [],
-    // fireRedirect: false
   }
 
   handleSubmit = (e) => {
@@ -26,11 +24,7 @@ class AddForm extends React.Component {
 
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // console.log('Received values of form: ', values)
         this.props.formSubmit(values)
-        // .then(
-        //   this.setState({fireRedirect: true})
-        // )
       }
     })
   }
@@ -38,8 +32,7 @@ class AddForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form
     const { formTitle, formData } = this.props
-    // const { from } = this.props.location.state || '/'
-    // const { fireRedirect } = this.state
+
 
     const formItemLayout = {
       labelCol: {

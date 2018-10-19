@@ -47,10 +47,12 @@ const insert = async ({
 
   try {
     const [results] = await pool.query(`
-      INSERT INTO courses (
-        staffId, courseId, roleId
+      INSERT INTO staff_registrations (
+				staff_id,
+				course_id,
+				role_id
       ) VALUES (?, ?, ?)
-    `, [staffId, courseId, roleId])
+    `, [ staffId, courseId, roleId ])
 
     return results
 

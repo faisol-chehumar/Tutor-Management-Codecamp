@@ -42,21 +42,43 @@ const getByCourseId = async (courseId) => {
   }
 }
 
-const insert = async (courseId, day, timeCode) => {
-  try {
-    const result = await pool.query(`
-        INSERT INTO courses_schedule
-          (course_id, day, time_code)
-        VALUES
-          (?,?,?)
-        `[courseId, day, timeCode])
-    return result
-  }
-  catch (err) {
-    console.log(err.message)
-    return undefined
-  }
+// const insert = async (courseId, day, timeCode) => {
+//   try {
+//     const result = await pool.query(`
+//         INSERT INTO courses_schedule
+//           (course_id, day, time_code)
+//         VALUES
+//           (?,?,?)
+//         `[ courseId, day, timeCode ])
+//     return result
+//   }
+//   catch (err) {
+//     console.log(err.message)
+//     return undefined
+//   }
+// }
 
+const insert = async ({
+  courseId=null,
+  day=null,
+  timeCode=null
+} = {}) => {
+  
+  try {
+    const [results] = await pool.query(`
+      INSERT INTO courses_schedule (
+        course_id,
+        day,
+        time_code
+      ) VALUES (?, ?, ?)
+    `, [ courseId, day, timeCode ])
+
+    console.log(results)
+    return results
+
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const remove = async ({ id = null } = {}) => {
