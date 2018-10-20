@@ -8,5 +8,5 @@ router.use('/customers', require('./customer'))
 router.use('/locations',require('./location'))
 router.use('/courses',require('./course'))
 router.use('/email',require('./email'))
-
+router.use('/calendar',require('./calendar'))
 module.exports = router.routes()

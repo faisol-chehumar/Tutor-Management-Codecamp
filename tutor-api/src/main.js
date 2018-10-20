@@ -38,7 +38,8 @@ app
   apis: ['./src/route/api/v1/staff/index.js',
          './src/route/api/v1/location/index.js',
          './src/route/api/v1/customer/index.js',
-         './src/route/api/v1/course/index.js']
+         './src/route/api/v1/course/index.js',
+         './src/route/api/v1/calendar/index.js']
 }))
   .use(serve(path.join(__dirname, 'public')))
   .use(cors({ credentials: true }))
