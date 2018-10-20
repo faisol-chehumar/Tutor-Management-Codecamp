@@ -15,10 +15,8 @@ const get = async ({
       actived_status AS activedStatus,
       child_age AS childAge,
       address_title AS addressTitle,
-      address,
       lat,
       lng,
-      marker_type AS markerType,
       image_path AS imagePath
     FROM
       customers
@@ -117,10 +115,8 @@ const insert = async ({
   activedStatus=null,
   childAge=null,
   addressTitle=null,
-  address=null,
   lat=null,
   lng=null,
-  markerType=null,
   imagePath=null
 }={}) => {
 
@@ -134,13 +130,11 @@ const insert = async ({
         actived_status,
         child_age,
         address_title,
-        address,
         lat,
         lng,
-        marker_type,
         image_path
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, [ firstname, lastname, email, tel, activedStatus, childAge, addressTitle,address,lat,lng,markerType,imagePath])
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [ firstname, lastname, email, tel, activedStatus, childAge, addressTitle, lat, lng, imagePath])
 
     return results
 

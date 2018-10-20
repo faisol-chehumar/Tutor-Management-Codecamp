@@ -53,26 +53,42 @@ async function list(options) {
 }
 
 async function create(staffData) {
-  const day = {
-    'Sunday' : 0,
-    'Monday' : 1,
-    'Tuesday' : 2,
-    'Wednesday' : 3,
-    'Thuesday' : 4,
-    'Friday' : 5,
-    'Saturday' : 6,
-  }
+  // const day = {
+  //   'Sunday' : 0,
+  //   'Monday' : 1,
+  //   'Tuesday' : 2,
+  //   'Wednesday' : 3,
+  //   'Thuesday' : 4,
+  //   'Friday' : 5,
+  //   'Saturday' : 6,
+  // }
 
   if(await isDuplicate(staffData.email)) {
     throw new AppError('Email is already use', 400)
   }
+  
   console.log(staffData)
 
   const result = await staff.insert(staffData)
 
-  Object.keys(staffData.availableTime).forEach(key => {
 
-  })
+
+  for (const day in staffData.availableTime) {
+    staffData.availableTime
+    console.log({
+      staffId: result.insertId,
+      day: day,
+      timeCode: staffData.availableTime[day].time,
+      statusCode: staffData.availableTime[day].availStatus
+    })
+    await staffAvailDaytime.insert({
+      staffId: result.insertId,
+      day: day,
+      timeCode: staffData.availableTime[day].time,
+      statusCode: staffData.availableTime[day].availStatus
+    })
+  }
+
   // console.log(staffData.availableTime)
   // staffData.availableTime.forEach( async time => {
   //   console.log(time)

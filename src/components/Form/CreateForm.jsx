@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 // import { Redirect } from 'react-router'
-import { Form, Input, Cascader, Button, DatePicker, Select } from 'antd'
+import { Form, Input, Cascader, Button, DatePicker, Select, Radio } from 'antd'
 
 import Avatar from '../AvatarUpload/AvatarUpload'
 import RichTextArea from '../RichTextArea/RichTextArea'
@@ -16,6 +16,8 @@ const Option = Select.Option
 const { RangePicker } = DatePicker
 const { TextArea } = Input
 const FormItem = Form.Item
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 
 class AddForm extends React.Component {
   state = {
@@ -66,9 +68,14 @@ class AddForm extends React.Component {
             <h3>{field.title}</h3>
             {
               getFieldDecorator(field.decorator, {
-                rules: field.required && [{
-                  required: true, message: `Please input your ${field.title}`,
-                }],
+                rules: field.required && [
+                  // field.email && {
+                  //   type: 'email', message: 'The input is not valid E-mail!',
+                  // },
+                  {
+                    required: true, message: `Please input your ${field.title}`,
+                  }
+                ],
               })(
                 field.type === 'IMG_UPLOAD'
                   ? <Avatar onUpoaded={(imagePath) => {
@@ -167,6 +174,13 @@ class AddForm extends React.Component {
                         })
                       }}
                     /> : null
+
+                    || field.type === 'RADIO_BUTTON_GROUP'
+                    ? <RadioGroup>
+                        <RadioButton value="a">item 1</RadioButton>
+                        <RadioButton value="b">item 2</RadioButton>
+                        <RadioButton value="c">item 3</RadioButton>
+                      </RadioGroup> : null
               )
             }
             </FormItem>

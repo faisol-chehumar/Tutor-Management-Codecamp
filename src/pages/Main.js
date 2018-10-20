@@ -9,6 +9,7 @@ import StaffDetail from './staff/StaffDetail'
 import CreateStaff from './staff/CreateStaff'
 import Customer from './customer/Customer'
 import CustomerDetail from './customer/CustomerDetail'
+import CreateCustomer from './customer/CreateCustomer'
 import Location from './Location'
 import CreateLocation from './CreateLocation'
 import LocationDetail from './LocationDetail'
@@ -24,6 +25,7 @@ const Main = () => (
     <Route path='/staff/create' exact component={CreateStaff} />
     <Route path='/staff/:id' exact component={StaffDetail} />
     <Route path='/customers' exact component={Customer} />
+    <Route path='/customers/create' exact component={CreateCustomer} />
     <Route path='/customers/:id' exact component={CustomerDetail} />
     <Route path='/locations' exact component={Location} />
     <Route path='/locations/create' exact component={CreateLocation} />

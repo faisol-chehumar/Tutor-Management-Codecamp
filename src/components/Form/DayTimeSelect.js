@@ -26,7 +26,7 @@ class DayTimeSelect extends Component {
           ...data,
           [day]: {
             time: 'am',
-            availStatus: 'avl'
+            availStatus: 'a'
           }
         }
       }

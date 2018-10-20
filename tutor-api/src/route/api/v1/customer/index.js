@@ -98,15 +98,13 @@ async function addCustomer(ctx) {
     firstname: Joi.string().required(),
     lastname: Joi.string().required(),
     email: Joi.string().email().required(),
-    tel: Joi.required(),
-    activedStatus :Joi.required(),
-    childAge:Joi.required(),
-    addressTitle: Joi.required(),
-    address: Joi.required(),
-    lat: Joi.required(),
-    lng: Joi.Required(),
-    markerType: Joi.required(),
-    imagePath: Joi.required()
+    tel: Joi.string().required(),
+    activedStatus :Joi.number().required(),
+    childAge:Joi.number().required(),
+    addressTitle: Joi.string().required(),
+    lat: Joi.number().required(),
+    lng: Joi.number().required(),
+    imagePath: Joi.string().required()
   })
   
   try {

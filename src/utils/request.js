@@ -52,7 +52,8 @@ export const postData = async (title, payload) => {
     const result = await axios.post(`http://${apiUrl}:${apiPort}/api/v1/${title}`, payload)
     return result
   } catch(error) {
-    console.error(error)
+    console.error(error.message)
+    return error
   }
 }
 

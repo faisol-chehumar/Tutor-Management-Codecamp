@@ -31,11 +31,11 @@ const TimeSelect = (props) => {
       props.options === 'hide' ? null :
       <Select
       disabled={props.selectDisabled}
-      defaultValue="avlStatus,avl"
+      defaultValue="avlStatus,a"
       style={{ width: 120 }}
       onChange={timeSelectHandle}
     >
-      <Option value={"avlStatus,avl"}>Available</Option>
+      <Option value={"avlStatus,a"}>Available</Option>
       <Option value={"avlStatus,m"}>Maybe</Option>
     </Select>
     }

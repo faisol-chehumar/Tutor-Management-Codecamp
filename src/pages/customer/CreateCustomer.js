@@ -6,12 +6,12 @@ import { Redirect } from 'react-router'
 import { postData } from '../../utils/request'
 import CreateForm from '../../components/Form/CreateForm'
 
-class CreateStaff extends Component {
+class CreateCustomer extends Component {
   state = {
-    title: 'Staff',
+    title: 'Customer',
     formData: [
       {
-        title: 'Staff Cover',
+        title: 'Customer Cover',
         decorator: 'imagePath',
         type: 'IMG_UPLOAD'
       }, {
@@ -27,19 +27,18 @@ class CreateStaff extends Component {
       }, {
         title: 'Email',
         decorator: 'email',
-        // email: true,
         required: true,
         type: 'INPUT'
-      },{
+      }, {
         title: 'Telephone',
         decorator: 'tel',
-        required: false,
+        required: true,
         type: 'INPUT'
       }, {
-        title: 'Role Setting',
-        decorator: 'roleSetting',
-        required: false,
-        type: 'ROLE_SELECT'
+        title: 'Child Age',
+        decorator: 'childAge',
+        required: true,
+        type: 'INPUT'
       }, {
         title: 'Address Title',
         decorator: 'addressTitle',
@@ -50,11 +49,6 @@ class CreateStaff extends Component {
         decorator: 'mapValue',
         required: false,
         type: 'MAP_INPUT'
-      }, {
-        title: 'Available Day&Times',
-        decorator: 'availableTime',
-        required: true,
-        type: 'DAYTIME_SELECT'
       }
     ],
     fireRedirect: false
@@ -62,12 +56,20 @@ class CreateStaff extends Component {
 
   submitHandle = async (payload) => {
     
-    const result = await postData('staff', {
+    const result = await postData('customers', {
       ...payload,
+      activedStatus: 1,
       lat: payload.mapValue.lat,
-      lng: payload.mapValue.lng,
+      lng: payload.mapValue.lng
     })
 
+    console.log({
+      ...payload,
+      activedStatus: 1,
+      lat: payload.mapValue.lat,
+      lng: payload.mapValue.lng
+    })
+    
     console.log(result)
     this.setState({fireRedirect: true})
   }
@@ -85,7 +87,7 @@ class CreateStaff extends Component {
           }}
         />
         {fireRedirect && (
-          <Redirect to={'/staff'}/>
+          <Redirect to={'/customers'}/>
         )}
       </div>
     )
@@ -94,4 +96,4 @@ class CreateStaff extends Component {
 
 export default connect(
   null
-)(CreateStaff)
+)(CreateCustomer)

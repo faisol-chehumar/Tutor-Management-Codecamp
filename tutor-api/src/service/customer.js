@@ -16,7 +16,7 @@ async function create(CustomerData) {
   }
   
   // const mapMarkerId = await mapMarkers.insert(CustomerData)
-  const result = await customer.insert(CustomerData)
+  const result = await customers.insert(CustomerData)
 
   return result.insertId
 }
