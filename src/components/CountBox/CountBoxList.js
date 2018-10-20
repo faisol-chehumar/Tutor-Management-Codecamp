@@ -4,7 +4,7 @@ import { Col } from 'antd'
 import CountBox from './CountBox'
 const uuidv1 = require('uuid/v1')
 
-const CountBoxList = ({titles, counts}) => (
+const CountBoxList = ({avatar, titles, counts, captions}) => (
   titles.map((title, index) => (
     <Col
       className='gutter-row'  
@@ -14,8 +14,10 @@ const CountBoxList = ({titles, counts}) => (
       <Link to={title}>
         <CountBox 
           key={index}
+          avatar={avatar[index]}
           title={title.toUpperCase()}
           count={counts[title] || 0}
+          captions={captions[index]}
         />
       </Link>
     </Col>

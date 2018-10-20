@@ -4,7 +4,9 @@ import { Row, Col, Card } from 'antd'
 
 import FullCalendar from '../components/FullCalendar/FullCalendar'
 import CountBoxList from '../components/CountBox/CountBoxList'
-import { fetchData } from '../utils/request'
+import actions from '../actions/index'
+
+const { fetchStaff, fetchCourses, fetchLocations, fetchCustomers } = actions
 
 
 class Home extends Component {
@@ -14,18 +16,18 @@ class Home extends Component {
 
   async componentDidMount() {
     try {
-      const [staff, courses, locations, customers] = await Promise.all([
-        fetchData('staff'),
-        fetchData('courses'),
-        fetchData('locations'),
-        fetchData('customers')
+      await Promise.all([
+        this.props.staffList.length === 0 && this.props.fetchStaff(),
+        this.props.coursesList.length === 0 && this.props.fetchCourses(),
+        this.props.locationsList.length === 0 && this.props.fetchLocations(),
+        this.props.customersList.length === 0 && this.props.fetchCustomers(),
       ])
 
       const menuCountList = {
-        staff: staff.length,
-        courses: courses.length,
-        locations: locations.length,
-        customers: customers.length
+        staff: this.props.staffList.length,
+        courses: this.props.coursesList.length,
+        locations: this.props.locationsList.length,
+        customers: this.props.customersList.length
       }
 
       this.setState({menuCountList})
@@ -36,14 +38,18 @@ class Home extends Component {
   }
 
   render() {
-    console.log('Home Render')
-    const { menuTitleList } = this.props
+    const { menuTitleList, menuCaptions, menuAvatar } = this.props
     const { menuCountList } = this.state
     
     return (
       <div>
         <Row gutter={16} style={{ marginBottom: 16 }}>
-          <CountBoxList titles={menuTitleList} counts={menuCountList} />
+          <CountBoxList
+            avatar={menuAvatar}
+            titles={menuTitleList}
+            counts={menuCountList}
+            captions={menuCaptions}
+          />
         </Row>
         <Row gutter={16}>
           <Col span={24}>
@@ -58,13 +64,29 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  menuTitleList: state.items.menuList.filter(menu => menu.title !== 'dashboard').map(menu => menu.title),
-  staff: state.items.staff,
-  courses: state.items.courses,
-  locations: state.items.locations,
-  customers: state.items.customers
+  menuTitleList: state.items.menuList
+    .filter(menu => menu.title !== 'dashboard')
+    .map(menu => menu.title),
+  menuCaptions: state.items.menuList
+    .filter(menu => menu.title !== 'dashboard')
+    .map(menu => menu.captions),
+  menuAvatar: state.items.menuList
+    .filter(menu => menu.title !== 'dashboard')
+    .map(menu => menu.icon),
+  staffList: state.items.staff,
+  coursesList: state.items.courses,
+  locationsList: state.items.locations,
+  customersList: state.items.customers,
 })
 
+const mapDispatchToProps = {
+  fetchStaff,
+  fetchCourses,
+  fetchLocations,
+  fetchCustomers
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Home)

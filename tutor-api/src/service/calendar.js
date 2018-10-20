@@ -49,7 +49,7 @@ async function list(options) {
                     start: course.startDate,
                     end: course.endDate
                 }],
-                url: 'http://localhost:3000/courses/' + course.courseId,
+               url: 'http://localhost:3000/courses/' + course.courseId,
 
             }
         })

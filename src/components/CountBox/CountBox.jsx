@@ -1,10 +1,19 @@
 import React from 'react'
-import { Card } from 'antd'
+import { Card, Avatar, Row, Col, Badge, Tag } from 'antd'
 
-const CountBox = ({title, count}) => (
+const CountBox = ({avatar, title, count, captions}) => (
   <Card>
-    <h2>{title}</h2>
-    <p>{count}</p>
+    <Row>
+    <Col span={6}>
+    {console.log(avatar)}
+      <Avatar style={{ backgroundColor: '#003e79' }} size="large" icon={avatar} />
+    </Col>
+    <Col span={16}>
+      <h2>{title}</h2>
+      <span>{`${captions}: `}<Tag style={{ width: 60, textAlign: 'center' }} color="green">{count}</Tag></span>
+      
+    </Col>
+    </Row>
   </Card>
 )
 

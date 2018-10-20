@@ -3,12 +3,13 @@ import $ from 'jquery'
 import 'fullcalendar'
 import 'fullcalendar/dist/fullcalendar.css'
 import { fetchData } from '../../utils/request'
-export default class FullCalendar extends Component {
 
+class FullCalendar extends Component {
   async componentDidMount() {
-    
    this.events = await fetchData('calendar')
     this.$el = $(this.el)
+    // console.log('+++++',this.$el);
+    
     this.$el.fullCalendar({
       events: this.events,
       eventClick: function(event) {
@@ -20,12 +21,13 @@ export default class FullCalendar extends Component {
       dayClick: function(date, jsEvent, view, resourceObj) {
         alert('Date: ' + date.format())
       }, 
-      eventRender: function(events, element, view){
-      
-        return (events.ranges.filter(function(range){
+      eventRender: function(events, element){
+       $(element).addClass('ant-popover')
+        return (
+          events.ranges.filter(function(range){
             return (events.start.isBefore(range.end) &&
             events.end.isAfter(range.start));
-        }).length)>0;
+        }).length) > 0;
         
     }
     })
@@ -36,10 +38,12 @@ export default class FullCalendar extends Component {
   componentWillUnmount() {
     this.$el.fullCalendar('destroy')
   }
-  
+
   render(){
     return (
-      <div ref={el => this.el = el}></div>  
+      <div id="test" ref={el => this.el = el}></div>  
     )
   }
 }
+
+export default FullCalendar
