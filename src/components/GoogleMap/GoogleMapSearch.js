@@ -36,7 +36,12 @@ class GoogleMapSearch extends React.PureComponent {
           lng={this.state.lng}
         />
         <LocationSearchInput
-          onSearch={(value)=>this.setState({lat: value.lat, lng: value.lng})} />
+          onSearch={(value)=> {
+            console.log(this.props)
+            this.props.onMarker({lat: value.lat, lng: value.lng})
+            this.setState({lat: value.lat, lng: value.lng})
+          }
+        } />
       </div>
     )
   }

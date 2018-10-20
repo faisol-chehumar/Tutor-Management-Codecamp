@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import CreateForm from '../../components/Form/CreateForm'
+
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
+
 import { postData } from '../../utils/request'
+import CreateForm from '../../components/Form/CreateForm'
 
 class CreateStaff extends Component {
   state = {
@@ -28,6 +30,11 @@ class CreateStaff extends Component {
         required: true,
         type: 'INPUT'
       }, {
+        title: 'Role Setting',
+        decorator: 'roleSetting',
+        required: false,
+        type: 'ROLE_SELECT'
+      }, {
         title: 'Address Title',
         decorator: 'addressTitle',
         required: true,
@@ -35,21 +42,23 @@ class CreateStaff extends Component {
       }, {
         title: 'Map Address',
         decorator: 'mapValue',
-        required: true,
+        required: false,
         type: 'MAP_INPUT'
       }, {
         title: 'Available Times',
         decorator: 'availableTime',
         required: true,
         type: 'DAYTIME_SELECT'
-      },
+      }
     ],
     fireRedirect: false
   }
 
   submitHandle = async (payload) => {
-    await postData('Staff', {
-      ...payload
+    await postData('staff', {
+      ...payload,
+      lat: payload.mapValue.lat,
+      lng: payload.mapValue.lng,
     })
 
     this.setState({fireRedirect: true})

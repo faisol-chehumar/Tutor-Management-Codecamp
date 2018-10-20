@@ -1,8 +1,9 @@
 import React from 'react'
-import { compose, withProps } from "recompose"
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import { compose, withProps, lifecycle } from "recompose"
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+// import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
-import LocationSearchInput from './LocationSearchInput'
+// import LocationSearchInput from './LocationSearchInput'
 
 // const MapComponent = withScriptjs(withGoogleMap((props) =>
 //   <div>
@@ -23,6 +24,22 @@ const MapComponent = compose(
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
+  lifecycle({
+    componentWillMount() {
+        const refs = {}
+
+        this.setState({
+            position: null,
+            onMarkerMounted: ref => {
+                refs.marker = ref;
+            },
+            onPositionChanged: () => {
+                const position = refs.marker.getPosition();
+                console.log(position.toString());
+            }
+        })
+    },
+}),
   // withScriptjs,
   withGoogleMap
 )((props) =>
@@ -31,10 +48,16 @@ const MapComponent = compose(
     {console.log(props.lat, props.lng)}
     <GoogleMap
       center={{ lat: props.lat, lng: props.lng }}
-      defaultZoom={8}
+      defaultZoom={15}
       defaultCenter={{ lat: 13.7563309, lng: 100.50176510000006 }}
     >
-      {props.isMarkerShown && <Marker position={{ lat: props.lat, lng: props.lng }} />}
+      {props.isMarkerShown && 
+      <Marker 
+        position={{ lat: props.lat, lng: props.lng }}
+        draggable={true} 
+        ref={props.onMarkerMounted}
+        onPositionChanged={props.onPositionChanged}
+      />}
     </GoogleMap>
   </div>
 )

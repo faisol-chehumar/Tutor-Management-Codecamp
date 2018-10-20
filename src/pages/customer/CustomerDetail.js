@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { fetchData } from '../utils/request'
-import ImageView from '../components/PageView/ImageView'
+import { fetchData } from '../../utils/request'
+import ImageView from '../../components/PageView/ImageView'
 import { Row, Col } from 'antd'
 
 class CustomerDetail extends Component {

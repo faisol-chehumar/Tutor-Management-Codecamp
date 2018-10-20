@@ -9,6 +9,7 @@ import DayTimeSelect from './DayTimeSelect'
 import ListTable from '../ListTable/ListTable'
 // import LocationSearchInput from '../GoogleMap/LocationSearchInput'
 import GoogleMapSearch from '../GoogleMap/GoogleMapSearch'
+import RoleSelect from './RoleSelect'
 
 
 const Option = Select.Option
@@ -26,6 +27,7 @@ class AddForm extends React.Component {
 
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        // console.log(values)
         this.props.formSubmit(values)
       }
     })
@@ -145,7 +147,26 @@ class AddForm extends React.Component {
                   // ? <LocationSearchInput /> : null
 
                   || field.type === 'MAP_INPUT'
-                  ? <GoogleMapSearch /> : null
+                  ? <GoogleMapSearch 
+                      onMarker={mapValue => {
+                        console.log(mapValue)
+                        this.props.form.setFields({
+                          [field.decorator]: {
+                            value: mapValue
+                          },
+                        })
+                      }}/> : null
+
+                  || field.type === 'ROLE_SELECT'
+                  ? <RoleSelect
+                      onSelected={roleSetting => {
+                        this.props.form.setFields({
+                          [field.decorator]: {
+                            value: roleSetting
+                          },
+                        })
+                      }}
+                    /> : null
               )
             }
             </FormItem>
@@ -166,8 +187,6 @@ class AddForm extends React.Component {
 }
 
 const CreateForm = Form.create()(AddForm)
-
-// export default CreateForm
 
 export default connect(
   null

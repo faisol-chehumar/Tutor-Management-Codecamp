@@ -12,15 +12,15 @@ async function list(options) {
   console.log(staffAvailDaytimeList)
 
   const roleTitle = helper.mappedValue(roleList, ['roleId', 'title'])
-  const weekDay = {
-    0: 'Sunday',
-    1: 'Monday',
-    2: 'Tuesday',
-    3: 'Wednesday',
-    4: 'Thuesday',
-    5: 'Friday',
-    6: 'Saturday',
-  }
+  // const weekDay = {
+  //   0: 'Sunday',
+  //   1: 'Monday',
+  //   2: 'Tuesday',
+  //   3: 'Wednesday',
+  //   4: 'Thuesday',
+  //   5: 'Friday',
+  //   6: 'Saturday',
+  // }
 
   return staffList
     .map(staff => {
@@ -43,7 +43,7 @@ async function list(options) {
           })
           .map(staffAvailDaytime => {
             return {
-              'day': weekDay[staffAvailDaytime.weekdayNum],
+              'day': staffAvailDaytime.day,
               'time': staffAvailDaytime.timeCode,
               'status': staffAvailDaytime.statusCode
             }
@@ -53,48 +53,46 @@ async function list(options) {
 }
 
 async function create(staffData) {
+  const day = {
+    'Sunday' : 0,
+    'Monday' : 1,
+    'Tuesday' : 2,
+    'Wednesday' : 3,
+    'Thuesday' : 4,
+    'Friday' : 5,
+    'Saturday' : 6,
+  }
+
   if(await isDuplicate(staffData.email)) {
     throw new AppError('Email is already use', 400)
   }
   console.log(staffData)
 
-  // const mapMarkerId = await mapMarkers.insert(staffData)
   const result = await staff.insert(staffData)
-  
-  staffData.availDayTime.forEach( async element => {
-    if(element == 1) {
-      await staffAvailDaytime.insert({
-        staffId: result.insertId,
-        weekdayNum: 1,
-        timeCode: 'AM',
-        ...staffData
-      })
-    }
-    if(element == 2) {
-      await staffAvailDaytime.insert({
-        staffId: result.insertId,
-        weekdayNum: 1,
-        timeCode: 'PM',
-        ...staffData
-      })
-    }
-    if(element == 3) {
-      await staffAvailDaytime.insert({
-        staffId: result.insertId,
-        weekdayNum: 2,
-        timeCode: 'AM',
-        ...staffData
-      })
-    }
+
+  Object.keys(staffData.availableTime).forEach(key => {
+
   })
+  // console.log(staffData.availableTime)
+  // staffData.availableTime.forEach( async time => {
+  //   console.log(time)
+  //   if(element == 1) {
+  //     await staffAvailDaytime.insert({
+  //       staffId: result.insertId,
+  //       weekdayNum: 1,
+  //       timeCode: 'AM',
+  //       ...staffData
+  //     })
+  //   }
+  // })
 
-  if(staffData.roleId === 3) {
-    await staffRoles.insert({staffId: result.insertId, ...staffData, roleId: 1})
-    await staffRoles.insert({staffId: result.insertId, ...staffData, roleId: 2})
-    return result.insertId
-  }
+  // if(staffData.roleId === 3) {
+  //   await staffRoles.insert({staffId: result.insertId, ...staffData, roleId: 1})
+  //   await staffRoles.insert({staffId: result.insertId, ...staffData, roleId: 2})
+  //   return result.insertId
+  // }
 
-  await staffRoles.insert({staffId: result.insertId, ...staffData})
+  // await staffRoles.insert({staffId: result.insertId, ...staffData})
   return result.insertId
 }
 
