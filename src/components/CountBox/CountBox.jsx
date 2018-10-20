@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Avatar, Row, Col, Badge, Tag } from 'antd'
+import { Card, Avatar, Row, Col, Tag } from 'antd'
 
 const CountBox = ({avatar, title, count, captions}) => (
   <Card>

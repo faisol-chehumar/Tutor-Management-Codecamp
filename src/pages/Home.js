@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Row, Col, Card } from 'antd'
+import { Row, Col, Card, Divider } from 'antd'
 
 import FullCalendar from '../components/FullCalendar/FullCalendar'
 import CountBoxList from '../components/CountBox/CountBoxList'
+import ListContent from '../components/List/ListContent'
 import actions from '../actions/index'
 
 const { fetchStaff, fetchCourses, fetchLocations, fetchCustomers } = actions
@@ -38,24 +39,40 @@ class Home extends Component {
   }
 
   render() {
-    const { menuTitleList, menuCaptions, menuAvatar } = this.props
+    const { menuTitleList, menuCaptions, menuAvatar, coursesList } = this.props
     const { menuCountList } = this.state
     
     return (
       <div>
         <Row gutter={16} style={{ marginBottom: 16 }}>
-          <CountBoxList
-            avatar={menuAvatar}
-            titles={menuTitleList}
-            counts={menuCountList}
-            captions={menuCaptions}
-          />
+          <Col span={24}>
+            <Divider orientation="left"><h2>Overview Summaries</h2></Divider>
+          </Col>
+          <Col span={24}>
+            <CountBoxList
+              avatar={menuAvatar}
+              titles={menuTitleList}
+              counts={menuCountList}
+              captions={menuCaptions}
+            />
+          </Col>
         </Row>
         <Row gutter={16}>
+          <Col span={24}>
+            <Divider orientation="left"><h2>Courses Schedule</h2></Divider>
+          </Col>
           <Col span={24}>
             <Card>
               <FullCalendar />
             </Card>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={24}>
+            <Divider orientation="left"><h2>Courses List</h2></Divider>
+          </Col>
+          <Col span={24}>
+            <ListContent listData={coursesList} />
           </Col>
         </Row>
       </div>
