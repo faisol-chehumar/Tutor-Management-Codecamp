@@ -155,6 +155,7 @@ class AddForm extends React.Component {
 
                   || field.type === 'MAP_INPUT'
                   ? <GoogleMapSearch 
+                      search={field.search}
                       onMarker={mapValue => {
                         console.log(mapValue)
                         this.props.form.setFields({

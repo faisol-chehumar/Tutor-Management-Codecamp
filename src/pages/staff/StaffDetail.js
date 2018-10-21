@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import { Row, Col, Divider } from 'antd'
+
+import {fetchData} from '../../utils/request'
 import AvaiDateTimeTable from '../../components/AvailDateTimeTable/AvailDateTimeTable'
 import ImageView from '../../components/PageView/ImageView'
-import { Row, Col } from 'antd'
-import {fetchData} from '../../utils/request';
+import GoogleMapSearch from '../../components/GoogleMap/GoogleMapSearch'
+
 const uuidv1 = require('uuid/v1')
 
 class StaffDetail extends Component {
@@ -58,8 +61,8 @@ class StaffDetail extends Component {
                     return availDayTime.map(elm => {
                       return {
                         ...elm,
-                        'am': elm.time === 'AM' ? 'YES' : 'NO',
-                        'pm': elm.time === 'PM' ? 'YES' : 'NO',
+                        'am': elm.time === 'am' ? 'YES' : 'NO',
+                        'pm': elm.time === 'pm' ? 'YES' : 'NO',
                         'key': uuidv1()
                       }
                     })
@@ -67,10 +70,16 @@ class StaffDetail extends Component {
                 />}
             </Col>
           </Row>
+          <Row>
+            <Col span={24}>
+            <Divider orientation="left"><h3>Staff Address</h3></Divider>
+            {console.log(s)}
+              <GoogleMapSearch lat={s.lat} lng={s.lng} search={false} />
+            </Col>
+          </Row>
         </div>
-
       )
-    );
+    )
   }
 }
 

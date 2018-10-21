@@ -10,9 +10,9 @@ import CreateStaff from './staff/CreateStaff'
 import Customer from './customer/Customer'
 import CustomerDetail from './customer/CustomerDetail'
 import CreateCustomer from './customer/CreateCustomer'
-import Location from './Location'
-import CreateLocation from './CreateLocation'
-import LocationDetail from './LocationDetail'
+import Location from './location/Location'
+import CreateLocation from './location/CreateLocation'
+import LocationDetail from './location/LocationDetail'
 import Exception from '../components/Exception/Exception'
 
 const Main = () => (

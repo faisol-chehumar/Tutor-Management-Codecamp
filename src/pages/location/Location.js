@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {  fetchLocations } from '../actions/locationsActions'
+import {  fetchLocations } from '../../actions/locationsActions'
 import { Table, Divider, Button, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import LinkDetail from '../components/ListTable/LinkDetail'
+import LinkDetail from '../../components/ListTable/LinkDetail'
 
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
@@ -56,8 +56,8 @@ class Location extends Component {
         </div>
       )
     }, {
-      title: 'Contract',
-      dataIndex: 'contract'
+      title: 'Contact',
+      dataIndex: 'contact'
     }, {
       title: 'Tel',
       dataIndex: 'tel',

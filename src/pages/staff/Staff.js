@@ -4,6 +4,7 @@ import { fetchStaff } from '../../actions/staffActions'
 import { Table, Divider, Tag, Button, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+
 import LinkDetail from '../../components/ListTable/LinkDetail'
 
 const ButtonGroup = styled.div`
@@ -16,54 +17,74 @@ const ButtonGroup = styled.div`
 
 class Staff extends Component {
   state = {
+    filteredInfo: null,
     sortedInfo: null
   }
 
   handleChange = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter)
     this.setState({
+      filteredInfo: filters,
       sortedInfo: sorter
     })
   }
 
-  componentDidMount() {
-    this.props.fetchStaff()
+  async componentDidMount() {
+    this.props.staffList.length === 0 && await this.props.fetchStaff()
   }
   
   render() {
-    let { sortedInfo } = this.state
+    let { sortedInfo, filteredInfo  } = this.state
     let { staffList } = this.props
     
     sortedInfo = sortedInfo || {}
+    filteredInfo = filteredInfo || {}
     
     const columns = [{
       title: 'Name',
       dataIndex: 'firstname',
       key: 'firstname',
-      sorter: (a, b) =>  {a = a.firstname || ''
-      b = b.firstname || ''
-      return a.localeCompare(b)},
+      sorter: (a, b) =>  {
+        a = a.firstname || ''
+        b = b.firstname || ''
+        return a.localeCompare(b)
+      },
       sortOrder: sortedInfo.columnKey === 'firstname' && sortedInfo.order,
       render: (text, record) => (
         <div>
           <LinkDetail
-          linkPath = {'staff/' + record.staffId}
-          imagePath = {record.imagePath}
-          imageDefault = {'https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png'}
-          title = {`${record.firstname} ${record.lastname}`}
+            linkPath = {'staff/' + record.staffId}
+            imagePath = {record.imagePath}
+            imageDefault = {'https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png'}
+            title = {`${record.firstname} ${record.lastname}`}
           />
         </div>
       )
     }, {
       title: 'Role',
-      render: (record) => <div>{record.role.map(tag => <Tag color="blue" key={tag.title}>{(tag.title === 'tch' ? 'Teacher' : 'TA' )}</Tag>)}</div>
+      filters: [
+        { text: 'Teacher', value: 'tch' },
+        { text: 'TA', value: 'ta' },
+      ],
+      filteredValue: filteredInfo.role || null,
+      onFilter: (value, record) => record.role[0].title.includes(value) || record.role[1].title.includes(value),
+      render: (record) => (
+        <div>
+          {
+            record.role.map(tag => (
+              <Tag color="blue" key={tag.title}>{(tag.title === 'tch' ? 'Teacher' : 'TA' )}</Tag>)
+            )
+          }
+        </div>
+      )
     }, {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      sorter: (a, b) =>  {a = a.firstname || ''
-      b = b.firstname || ''
-      return a.localeCompare(b)},
+      sorter: (a, b) =>  {
+        a = a.firstname || ''
+        b = b.firstname || ''
+        return a.localeCompare(b)},
       sortOrder: sortedInfo.columnKey === 'email' && sortedInfo.order
     }, {
       title: 'Tel',
@@ -89,7 +110,7 @@ class Staff extends Component {
         name: record.name,
       })
     }
-    console.log(this.props.staffList)
+    // console.log(this.props.staffList)
     return (
       <div>
         <h1>STAFF BOARD</h1>

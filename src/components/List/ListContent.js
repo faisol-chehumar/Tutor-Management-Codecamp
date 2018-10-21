@@ -43,7 +43,7 @@ const ListContent = (props) => (
 							<div>
 							<b style={{ fontSize: '1rem' }}>Day: </b>
 								{item.coursesSchedule.map(elm => (
-									<Tag color="#108ee9">{elm.day.toUpperCase()} : {elm.timeCode.toUpperCase()}</Tag>
+									<Tag key={elm.day} color="#108ee9">{elm.day.toUpperCase()} : {elm.timeCode.toUpperCase()}</Tag>
 								))}
 							</div>
 							<div>
