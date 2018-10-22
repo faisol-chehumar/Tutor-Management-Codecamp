@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { Layout, Icon, Avatar, Badge, Divider, Input } from 'antd'
+import { Layout, Icon, Avatar, Badge, Input } from 'antd'
 import './App.css'
 
 import Main from './pages/Main'
 import SideMenu from './components/SideMenu/SideMenu'
+
+import color from './styles/color'
 
 const { Header, Content } = Layout
 const Search = Input.Search;
@@ -30,7 +32,10 @@ class App extends Component {
           />
           <Layout>
             <Header
-              style={{ background: '#fff', padding: 0 }}>
+              style={{
+                backgroundImage: 'linear-gradient(60deg, #29323c 0%, #485563 100%)',
+                padding: 0,
+              }}>
               <Icon
                 className="trigger"
                 type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
@@ -43,15 +48,42 @@ class App extends Component {
                 size="large"
                 onSearch={value => console.log(value)}
               />
-              <div style={{display: 'inline', float: 'right'}}>
-                <Badge style={{ marginRight: '1rem', backgroundColor: '#f0d000' }} count={1}>
-                  <Avatar style={{ backgroundColor: '#003e79' }} shape="square" icon="bell" />
+              <div
+                style={{
+                  display: 'inline', 
+                  float: 'right'
+                }}>
+                <Badge 
+                  style={{
+                    marginRight: '2rem',
+                    backgroundColor: '#f0d000'
+                  }} 
+                  count={1}
+                >
+                  <Avatar
+                    style={{
+                      backgroundColor: color.darkgray,
+                      border: `1px solid ${color.darkgrayLighter}`
+                    }}
+                    shape="square" icon="bell" />
                 </Badge>
-                <Divider type="vertical" />
-                <Badge style={{ marginRight: '1rem' }} count={1}>
-                  <Avatar style={{ backgroundColor: '#003e79' }} shape="square" icon="mail" />
+
+                <Badge
+                  style={{
+                    marginRight: '2rem'
+                  }}
+                  count={1}
+                >
+                  <Avatar
+                    style={{
+                      backgroundColor: color.darkgray,
+                      border: `1px solid ${color.darkgrayLighter}`
+                    }}
+                    shape="square"
+                    icon="mail"
+                  />
                 </Badge>
-                <Divider type="vertical" />
+
                 <span style={{ marginRight: '1rem' }}>
                   <Avatar
                     style={{ border: '1px solid #eee' }}
@@ -63,9 +95,10 @@ class App extends Component {
             </Header>
             <Content
               style={{
+                backgroundColor: '#eeeeee0a',
+                border: '1px solid #eeeeee0f',
                 margin: '24px 16px',
                 padding: 24,
-                background: '#fff',
                 minHeight: 280 
               }}>
               <Main />
@@ -75,26 +108,5 @@ class App extends Component {
     )
   }
 }
-
-// const mapStateToProps = state => ({
-//   staffList: state.items.staff,
-//   coursesList: state.items.courses,
-//   locationsList: state.items.locations,
-//   customersList: state.items.customers,
-//   loading: state.items.loading,
-//   error: state.items.error
-// })
-
-// const mapDispatchToProps = {
-//   fetchStaff,
-//   fetchCourses,
-//   fetchLocations,
-//   fetchCustomers
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(App)
 
 export default App

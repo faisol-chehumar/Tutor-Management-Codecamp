@@ -1,3 +1,30 @@
+body {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #fff;
+}
+
+.ant-card {
+  color: #adadad !important;
+}
+
+
+.ant-card-bordered {
+  background-color: #24292f !important;
+  border: 1px solid #000 !important;
+  border-radius: 5px !important;
+}
+
+.fc-unthemed th, .fc-unthemed td, .fc-unthemed thead, .fc-unthemed tbody, .fc-unthemed .fc-divider, .fc-unthemed .fc-row, .fc-unthemed .fc-content, .fc-unthemed .fc-popover, .fc-unthemed .fc-list-view, .fc-unthemed .fc-list-heading td {
+  border-color: #00000066 !important;
+}
+
+.ant-divider-horizontal.ant-divider-with-text:before, .ant-divider-horizontal.ant-divider-with-text-left:before, .ant-divider-horizontal.ant-divider-with-text-right:before, .ant-divider-horizontal.ant-divider-with-text:after, .ant-divider-horizontal.ant-divider-with-text-left:after, .ant-divider-horizontal.ant-divider-with-text-right:after {
+  border-top: 1px solid #82858a73 !important;
+}
+
 .App .trigger {
   font-size: 18px;
   line-height: 64px;
@@ -7,7 +34,7 @@
 }
 
 .App .trigger:hover {
-  color: #1890ff;
+  color: #ffed00;
 }
 
 .App .logo {
@@ -19,3 +46,62 @@
 .App {
   min-height: 100vh;
 }
+
+.ant-layout {
+  background-color: #0e1218;
+}
+
+.emybME .fc-event {
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+  border: 1px solid #111;
+}
+
+.emybME .fc-unthemed td.fc-today {
+  background-color: #ffffff17 !important;
+}
+
+.fc-event, .fc-event:hover {
+  color: #222 !important;
+  font-weight: 700;
+}
+
+.ant-menu-inline > .ant-menu-item {
+  line-height: 60px !important;
+  height: 60px !important;
+}
+
+.ant-btn-primary {
+  background-color: #40484c;
+  border-color: #eeeeee30;
+}
+
+.ant-menu-dark.ant-menu-inline .ant-menu-item:first-child {
+  margin-top: 0;
+}
+
+.ant-menu-dark.ant-menu-inline .ant-menu-item {
+  border-bottom: 1px solid #000000;
+  margin-top: -0.5rem;
+}
+
+.ant-menu-dark.ant-menu-inline .ant-menu-item {
+  margin-top: -0.5rem;
+  border-bottom: 1px solid #000000;
+}
+
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+  background-color: #525a5f;
+  border-color: #eeeeee30;
+}
+
+.ant-input-affix-wrapper .ant-input:not(:last-child) {
+  background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+  border: 0;
+}
+
+.ant-input:hover,
+.ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled) {
+  border-color: #eeeeee30;
+}
+
+

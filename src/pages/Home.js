@@ -44,9 +44,9 @@ class Home extends Component {
     
     return (
       <div>
-        <Row gutter={16} style={{ marginBottom: 16 }}>
+        <Row gutter={16} style={{ marginBottom: '5rem' }}>
           <Col span={24}>
-            <Divider orientation="left"><h2>Overview Summaries</h2></Divider>
+            <Divider orientation="left"><h4>Overview Summaries</h4></Divider>
           </Col>
           <Col span={24}>
             <CountBoxList
@@ -57,9 +57,9 @@ class Home extends Component {
             />
           </Col>
         </Row>
-        <Row gutter={16}>
+        <Row gutter={16} style={{ marginBottom: '5rem' }}>
           <Col span={24}>
-            <Divider orientation="left"><h2>Courses Schedule</h2></Divider>
+            <Divider orientation="left"><h4>Courses Schedule</h4></Divider>
           </Col>
           <Col span={24}>
             <Card>
@@ -67,9 +67,9 @@ class Home extends Component {
             </Card>
           </Col>
         </Row>
-        <Row gutter={16}>
+        <Row gutter={16} style={{ marginBottom: '5rem' }}>
           <Col span={24}>
-            <Divider orientation="left"><h2>Courses List</h2></Divider>
+            <Divider orientation="left"><h4>Courses List</h4></Divider>
           </Col>
           <Col span={24}>
             <ListContent listData={coursesList} />
