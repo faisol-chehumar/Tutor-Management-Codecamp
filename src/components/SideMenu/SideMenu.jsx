@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { getSideMenu } from '../../actions/sideMenuActions'
+import color from '../../styles/color'
 
 const { Sider } = Layout
 
@@ -13,10 +14,9 @@ const Logo = styled.div`
   font-weight: 800;
   color: #fff;
   padding: 1.2rem 1rem;
-  background-color: #003e79;
 
   .logo-txt-hilight {
-    color: #ffed00;
+    color: ${color.primary};
   }
 
   .ant-layout-sider-collapsed & {
@@ -33,6 +33,19 @@ const Logo = styled.div`
   }
 `
 
+const SideMenuContainer = styled(Sider)`
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+`
+
+const MenuContainer = styled(Menu)`
+  background: transparent !important;
+  
+  &.ant-menu-dark .ant-menu-item > a {
+    color: ${color.gray} !important;
+    font-weight: 600;
+  }
+`
+
 class SideMenu extends Component {
   constructor(props) {
     super(props)
@@ -46,7 +59,7 @@ class SideMenu extends Component {
     const { menuList } = this.props
 
     return (
-      <Sider
+      <SideMenuContainer
         trigger={null}
         collapsible
         collapsed={this.props.collapsed}
@@ -55,7 +68,7 @@ class SideMenu extends Component {
           <span className="logo-txt-hilight">TUTOR </span> 
           <span className="logo-txt-small">MANAGEMENT</span>
         </Logo>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={[`${currentSideMenu}`]}>
+        <MenuContainer theme="dark" mode="inline" defaultSelectedKeys={[`${currentSideMenu}`]}>
           {
             menuList.map(({link, icon, title}, index) => (
                 <Menu.Item key={index}>
@@ -67,8 +80,8 @@ class SideMenu extends Component {
               )
             )
           }
-        </Menu>
-      </Sider>
+        </MenuContainer>
+      </SideMenuContainer>
     )
   }
 }

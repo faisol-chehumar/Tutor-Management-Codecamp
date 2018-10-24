@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
 import { Layout, Icon, Avatar, Badge, Divider, Input } from 'antd'
 import './App.css'
+import styled from 'styled-components'
 
 import Main from './pages/Main'
 import SideMenu from './components/SideMenu/SideMenu'
+import color from './styles/color'
 
 const { Header, Content } = Layout
-const Search = Input.Search;
+const Search = Input.Search
+
+
+const ContentLayout = styled(Layout)`
+  background-color: ${color.base}
+`
 
 class App extends Component {
   state = {
@@ -28,7 +35,7 @@ class App extends Component {
             style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}
             collapsed={collapsed}
           />
-          <Layout>
+          <ContentLayout>
             <Header
               style={{ background: '#fff', padding: 0 }}>
               <Icon
@@ -65,12 +72,11 @@ class App extends Component {
               style={{
                 margin: '24px 16px',
                 padding: 24,
-                background: '#fff',
                 minHeight: 280 
               }}>
               <Main />
             </Content>
-          </Layout>
+          </ContentLayout>
         </Layout>
     )
   }
