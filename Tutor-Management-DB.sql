@@ -104,7 +104,7 @@ CREATE TABLE courses_schedule (
   PRIMARY KEY(course_schedule_id),
   course_schedule_id INT NOT NULL AUTO_INCREMENT,
   course_id INT NOT NULL,
-  weekday_num SMALLINT(1) NOT NULL, -- 0 - 6 is Sun - Sat
+  day VARCHAR(12) NOT NULL, -- Sun - Sat
   time_code VARCHAR(2) NOT NULL, -- MO = Morning, AF = Afternoon
   FOREIGN KEY (course_id) REFERENCES courses(course_id)
 );

@@ -20,54 +20,72 @@ async function list(options) {
       })
     }
   })
-      .map(course => {
-        return {
-          ...course,
-          'coursesSchedule': coursesScheduleList
-          .filter(coursesSchedule => {
-          return course.courseId === coursesSchedule.courseId
+  .map(course => {
+    return {
+      ...course,
+      'coursesSchedule': coursesScheduleList
+      .filter(coursesSchedule => {
+        return course.courseId === coursesSchedule.courseId
       })
     }
   })
-      .map(course => {
-        return {
-          ...course,
-          'location': locationList
-          .filter(location => {
-          return course.locationId === location.locationId
+  .map(course => {
+    return {
+      ...course,
+      'location': locationList
+      .filter(location => {
+        return course.locationId === location.locationId
       })
     }
   })
-      .map(course => {
-        return {
-          ...course,
-          'staffRegistration': staffRegistrationList
-          .filter(staffRegistration => {
-          return course.courseId === staffRegistration.courseId
+  .map(course => {
+    return {
+      ...course,
+      'staffRegistration': staffRegistrationList
+      .filter(staffRegistration => {
+        return course.courseId === staffRegistration.courseId
       })
+    }
+  })
 }
-      })
-      }
 
 async function create(coursesData) {
-  if (await isDuplicate(coursesData.email)) {
-    throw new AppError('Email is already use', 400)
+  const { tchInvitedList, taInvitedList, schedule, customerEnroll } = coursesData
+
+  const courseId = (await courses.insert(coursesData)).insertId
+
+  for (const key in schedule) {
+    await coursesSchedule.insert({
+      courseId,
+      day: key,
+      timeCode: schedule[key].time
+    })
   }
 
-  // const mapMarkerId = await mapMarkers.insert(coursesData)
-  const result = await courses.insert(coursesData)
+  tchInvitedList.forEach(async tch => await staffRegistrations.insert({
+    staffId: tch.id,
+    roleId: 1,
+    courseId
+  }))
 
-  return result.insertId
+  taInvitedList.forEach(async tch => await staffRegistrations.insert({
+    staffId: tch.id,
+    roleId: 2,
+    courseId
+  }))
+
+  customerEnroll.forEach(async customer => await coursesEnrolments.insert({
+    customerId: customer.id,
+    courseId
+  }))
+
+
+  return courseId
 }
 
 async function remove(option) {
   await courses.remove(option)
   return
-}
-
-async function isDuplicate(email) {
-  const result = (await courses.get()).filter(courses => courses.email === email)
-  return result.length >= 1
 }
 
 module.exports = {

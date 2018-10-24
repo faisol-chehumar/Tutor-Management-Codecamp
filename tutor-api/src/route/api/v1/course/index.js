@@ -79,7 +79,7 @@ async function getAllCourse(ctx) {
 }
 
 async function getCourseById(ctx) {
-  const result = (await courseService.list()).filter(Course => Course.CourseId == ctx.params.id)
+  const result = (await courseService.list()).filter(Course => Course.courseId == ctx.params.id)
 
   if(!result) {
     return ctx.throw()
@@ -95,19 +95,15 @@ async function getCourseById(ctx) {
 }
 
 async function addCourse(ctx) {
+  // console.log('Post new course')
+
   const CourseSchema = Joi.object().keys({
-    firstname: Joi.string().required(),
-    lastname: Joi.string().required(),
-    email: Joi.string().email().required(),
-    tel: Joi.required(),
-    activedStatus :Joi.required(),
-    childAge:Joi.required(),
-    addressTitle: Joi.required(),
-    address: Joi.required(),
-    lat: Joi.required(),
-    lng: Joi.Required(),
-    markerType: Joi.required(),
-    imagePath: Joi.required()
+    locationId: Joi.number().required(),
+    title: Joi.string().required(),
+    description: Joi.string(),
+    startDate: Joi.date(),
+    endtDate: Joi.date(),
+    imagePath: Joi.string()
   })
   
   try {
@@ -117,6 +113,7 @@ async function addCourse(ctx) {
     ctx.body = error
   }
   
+  console.log(ctx.request.body)
   const newCourseId = await courseService.create(ctx.request.body)
     
   if(!newCourseId) {

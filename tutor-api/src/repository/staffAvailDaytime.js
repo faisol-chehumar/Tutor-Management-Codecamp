@@ -4,8 +4,7 @@ const get = async () => {
 	const [results] = await pool.query(`
 		SELECT
 			staff_id AS staffId,
-            manday_rate AS mandayRate,
-            weekday_num AS weekdayNum,
+            day,
             time_code AS timeCode,
             status_code AS statusCode
 		FROM
@@ -15,17 +14,15 @@ const get = async () => {
 	return results
 }
 
-const insert = async ({staffId=null, mandayRate=null, weekdayNum=null, timeCode=null, statusCode=null}={}) => {
+const insert = async ({staffId=null, day=null, timeCode=null, statusCode='A'}={}) => {
 	const [results] = await pool.query(`
 		INSERT INTO staff_avail_daytime (
 			staff_id,
-            manday_rate,
-            weekday_num,
+            day,
             time_code,
             status_code
-		) VALUES (?, ?, ?, ?, ?)
-	`, [ staffId, mandayRate, weekdayNum, timeCode, statusCode])
-
+		) VALUES (?, ?, ?, ?)
+	`, [ staffId, day, timeCode, statusCode])
 	return results
 }
 

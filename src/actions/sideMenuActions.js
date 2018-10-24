@@ -7,7 +7,7 @@ export const getCurrentSideMenu = currentSideMenu => ({
 
 export const getSideMenu = (path=null) => {
   let indexMenu = ''
-  console.log(path)
+  // console.log(path)
   if(path === '/') {
     indexMenu = 0
   } else if (path === '/staff') {
@@ -19,7 +19,7 @@ export const getSideMenu = (path=null) => {
   } else if (path === '/customers') {
     indexMenu = 4
   }
-  console.log(indexMenu)
+  // console.log(indexMenu)
   return indexMenu
 
   // return dispatch => {  

@@ -4,7 +4,8 @@ const cors = require('@koa/cors')
 const swagger = require('swagger-koa')
 const serve = require('koa-static')
 const path = require('path')
-const app = new Koa(),port = 8000
+const app = new Koa()
+const port = 8000
 
 
 // throwAppError checks app error and return error message to client
@@ -37,13 +38,13 @@ app
   apis: ['./src/route/api/v1/staff/index.js',
          './src/route/api/v1/location/index.js',
          './src/route/api/v1/customer/index.js',
-         './src/route/api/v1/course/index.js']
+         './src/route/api/v1/course/index.js',
+         './src/route/api/v1/calendar/index.js']
 }))
   .use(serve(path.join(__dirname, 'public')))
   .use(cors({ credentials: true }))
   .use(koaBody({ multipart: true }))
   .use(handleError)
   .use(require('./route'))
-
   .listen(port)
   

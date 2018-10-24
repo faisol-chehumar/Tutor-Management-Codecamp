@@ -16,23 +16,14 @@ export const fetchStaffError = error => ({
 })
 
 export const fetchStaff = (id=null) => {
-  console.log(id)
   return dispatch => {
     dispatch(fetchStaffBegin())
-    // console.log()
-    return id 
-    ? fetchData('staff/' + id)
-      .then(result => {
-        // console.log(result.data)
-        dispatch(fetchStaffSuccess(result))
-        return result
-      })
-    : fetchData('staff')
-      .then(result => {
-        // console.log(result.data)
-        dispatch(fetchStaffSuccess(result))
-        return result
-      })
+   
+    return fetchData('staff')
+    .then(result => {
+      dispatch(fetchStaffSuccess(result))
+      return result
+    })
   }
 }
 
@@ -43,4 +34,5 @@ export const fetchStaff = (id=null) => {
 //   }
 //   return response;
 // }
+
 

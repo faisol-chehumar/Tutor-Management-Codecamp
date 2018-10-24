@@ -1,79 +1,105 @@
 const pool = require('../db')
-  
-const get = async () =>{
-    console.log("get courses_schedule")
-    try {
-        const result = await pool.query(`
+
+const get = async () => {
+  console.log("get courses_schedule")
+  try {
+    const result = await pool.query(`
         SELECT 
-        course_schedule_id AS courseScheduleId,
-        course_id AS courseId,
-        weekday_num AS weekDayNum,
-        time_code AS timeCode
-        FROM courses_schedule
+          course_schedule_id AS courseScheduleId,
+          course_id AS courseId,
+          day AS day,
+          time_code AS timeCode
+        FROM
+          courses_schedule
         `)
-        return result[0]
-    }
-    catch(err){
-        console.log(err.message)
-        return undefined
-    }
+    return result[0]
+  }
+  catch (err) {
+    console.log(err.message)
+    return undefined
+  }
 }
 
 const getByCourseId = async (courseId) => {
-    
-    try {
-        const result = await pool.query(`
+
+  try {
+    const result = await pool.query(`
         SELECT 
-        course_schedule_id AS courseScheduleId,
-        course_id AS courseId,
-        weekday_num AS weekDayNum,
-        time_code AS timeCode
-        FROM courses_schedule
-        WHERE  course_id = ?
-        `,[courseId])
-        return result[0]
-    }
-    catch(err){
-        console.log(err.message)
-        return undefined
-    }
+          course_schedule_id AS courseScheduleId,
+          course_id AS courseId,
+          day AS day,
+          time_code AS timeCode
+        FROM
+          courses_schedule
+        WHERE
+          course_id = ?
+        `, [courseId])
+    return result[0]
+  }
+  catch (err) {
+    console.log(err.message)
+    return undefined
+  }
 }
 
-const insert = async (courseId,weekdayNum,timeCode) => {
-    try{
-       const result = await pool.query(`
-        INSERT INTO courses_schedule
-        (course_id,weekday_num,time_code)
-        VALUES
-        (?,?,?)
-        `[courseId,weekdayNum,timeCode])
-        return result
-    }
-    catch(err){
-        console.log(err.message)
-        return undefined
-    }
+// const insert = async (courseId, day, timeCode) => {
+//   try {
+//     const result = await pool.query(`
+//         INSERT INTO courses_schedule
+//           (course_id, day, time_code)
+//         VALUES
+//           (?,?,?)
+//         `[ courseId, day, timeCode ])
+//     return result
+//   }
+//   catch (err) {
+//     console.log(err.message)
+//     return undefined
+//   }
+// }
 
+const insert = async ({
+  courseId=null,
+  day=null,
+  timeCode=null
+} = {}) => {
+  
+  try {
+    const [results] = await pool.query(`
+      INSERT INTO courses_schedule (
+        course_id,
+        day,
+        time_code
+      ) VALUES (?, ?, ?)
+    `, [ courseId, day, timeCode ])
+
+    console.log(results)
+    return results
+
+  } catch (error) {
+    console.error(error)
+  }
 }
-const remove = async ({id=null}={}) => {	
-	let queryCondition = 'DELETE FROM courses_schedule'
-	if(id) {
-		queryCondition += ` WHERE courses_schedule.course_id = ${id}`
+
+const remove = async ({ id = null } = {}) => {
+  let queryCondition = 'DELETE FROM courses_schedule'
+  if (id) {
+    queryCondition += ` WHERE courses_schedule.course_id = ${id}`
   }
 
   try {
     const [results] = await pool.query(
       queryCondition
     )
-  
-    return results 
-  } catch(error) {
-    console.error(error)  
+
+    return results
+  } catch (error) {
+    console.error(error)
   }
 }
-module.exports ={
-    get,
-    getByCourseId,
-    insert,
-    remove
+module.exports = {
+  get,
+  getByCourseId,
+  insert,
+  remove
 }
