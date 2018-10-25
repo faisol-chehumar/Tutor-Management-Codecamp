@@ -10,13 +10,12 @@ import color from '../../styles/color'
 const { Sider } = Layout
 
 const Logo = styled.div`
-  font-size: 1m;
   font-weight: 800;
-  color: #fff;
-  padding: 1.2rem 1rem;
+  padding: 1.35rem 1rem;
+  color: ${color.blue} !important;
 
   .logo-txt-hilight {
-    color: ${color.primary};
+    color: ${color.hilight};
   }
 
   .ant-layout-sider-collapsed & {
@@ -35,13 +34,25 @@ const Logo = styled.div`
 
 const SideMenuContainer = styled(Sider)`
   background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-right: 1px solid ${color.shadow};
+  background: transparent !important;
+
+  .ant-menu.ant-menu-dark .ant-menu-item-selected,
+  .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+    background-color: #ffffffb0 !important;
+  }
 `
 
 const MenuContainer = styled(Menu)`
   background: transparent !important;
-  
+
   &.ant-menu-dark .ant-menu-item > a {
-    color: ${color.gray} !important;
+    color: ${color.lightBlue} !important;
+    font-weight: 400;
+  }
+
+  &.ant-menu-dark .ant-menu-item-selected > a {
+    color: ${color.blue} !important;
     font-weight: 600;
   }
 `
@@ -74,7 +85,9 @@ class SideMenu extends Component {
                 <Menu.Item key={index}>
                   <Link to={link}>
                     <Icon type={icon} theme="outlined" />
-                    <span>{title.toUpperCase()}</span>
+                    <span>
+                      {title.toUpperCase()}
+                    </span>
                   </Link>
                 </Menu.Item>
               )
