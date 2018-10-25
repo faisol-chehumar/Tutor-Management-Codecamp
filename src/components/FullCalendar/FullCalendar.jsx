@@ -4,12 +4,14 @@ import 'fullcalendar'
 import 'fullcalendar/dist/fullcalendar.css'
 import styled from 'styled-components'
 
+import color from '../../styles/color'
 import { fetchData } from '../../utils/request'
 
 const FullCalendaWrapper = styled.div`
   .fc-event {
-    background-color: #003e79;
+    background-color: ${color.hilight};
     padding: 0.5rem;
+    border: 0 !important;
   }
 
   .fc-unthemed td.fc-today {

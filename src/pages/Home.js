@@ -1,14 +1,27 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Card, Divider } from 'antd'
+import styled from 'styled-components'
 
 import FullCalendar from '../components/FullCalendar/FullCalendar'
 import CountBoxList from '../components/CountBox/CountBoxList'
 import ListContent from '../components/List/ListContent'
 import actions from '../actions/index'
+import color from '../styles/color'
 
 const { fetchStaff, fetchCourses, fetchLocations, fetchCustomers } = actions
 
+const ContentBlock = styled.div`
+  margin-bottom: 3rem;
+`
+
+const TitleDivider = styled(Divider)`
+  color: ${color.lightGray}
+
+  h4 {
+    color: ${color.hilight} !important;
+  }
+`
 
 class Home extends Component {
   state = {
@@ -44,37 +57,45 @@ class Home extends Component {
     
     return (
       <div>
-        <Row gutter={16} style={{ marginBottom: 16 }}>
-          <Col span={24}>
-            <Divider orientation="left"><h2>Overview Summaries</h2></Divider>
-          </Col>
-          <Col span={24}>
-            <CountBoxList
-              avatar={menuAvatar}
-              titles={menuTitleList}
-              counts={menuCountList}
-              captions={menuCaptions}
-            />
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={24}>
-            <Divider orientation="left"><h2>Courses Schedule</h2></Divider>
-          </Col>
-          <Col span={24}>
-            <Card>
-              <FullCalendar />
-            </Card>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={24}>
-            <Divider orientation="left"><h2>Courses List</h2></Divider>
-          </Col>
-          <Col span={24}>
-            <ListContent listData={coursesList} />
-          </Col>
-        </Row>
+        <ContentBlock>
+          <Row gutter={16}>
+            <Col span={24}>
+              <TitleDivider orientation="left"><h4>Overview Summaries</h4></TitleDivider>
+            </Col>
+            <Col span={24}>
+              <CountBoxList
+                avatar={menuAvatar}
+                titles={menuTitleList}
+                counts={menuCountList}
+                captions={menuCaptions}
+              />
+            </Col>
+          </Row>
+        </ContentBlock>
+
+        <ContentBlock>
+          <Row gutter={16}>
+            <Col span={24}>
+              <TitleDivider orientation="left"><h4>Courses Schedule</h4></TitleDivider>
+            </Col>
+            <Col span={24}>
+              <Card>
+                <FullCalendar />
+              </Card>
+            </Col>
+          </Row>
+        </ContentBlock>
+
+        <ContentBlock>
+          <Row gutter={16}>
+            <Col span={24}>
+              <TitleDivider orientation="left"><h4>Courses List</h4></TitleDivider>
+            </Col>
+            <Col span={24}>
+              <ListContent listData={coursesList} />
+            </Col>
+          </Row>
+        </ContentBlock>
       </div>
     )
   }
