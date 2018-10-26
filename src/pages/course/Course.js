@@ -49,7 +49,7 @@ class Course extends Component {
           <LinkDetail
             linkPath = {'courses/' + record.courseId}
             imagePath = {record.imagePath}
-            imageDefault = {'https://static1.squarespace.com/static/593ff48f20099eef990d199d/59db9c3dccc5c5531166f2c2/59db9c3de5dd5b5a1b440128/1507652291838/Icon+-+Coding.png?format=300w'}
+            imageDefault = {'https://res.cloudinary.com/dbzxmgk2h/image/upload/v1540543273/exam-icon.png'}
             title = {record.title}
           />
         </div>

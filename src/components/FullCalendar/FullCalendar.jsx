@@ -8,10 +8,16 @@ import color from '../../styles/color'
 import { fetchData } from '../../utils/request'
 
 const FullCalendaWrapper = styled.div`
+  a.fc-event {
+    color: ${color.white}
+  }  
+
   .fc-event {
     background-color: ${color.hilight};
     padding: 0.5rem;
     border: 0 !important;
+
+
   }
 
   .fc-unthemed td.fc-today {

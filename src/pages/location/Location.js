@@ -48,10 +48,10 @@ class Location extends Component {
 
         <div>
           <LinkDetail
-          linkPath = {'locations/' + record.locationId}
-          imagePath = {record.imagePath}
-          imageDefault = {'https://image.flaticon.com/icons/svg/235/235861.svg'}
-          title = {`${record.addressTitle} ${record.addressTitle}`}
+            linkPath = {'locations/' + record.locationId}
+            imagePath = {record.imagePath}
+            imageDefault = {'https://res.cloudinary.com/dbzxmgk2h/image/upload/v1540543818/001-building.png'}
+            title = {`${record.addressTitle} ${record.addressTitle}`}
           />
         </div>
       )

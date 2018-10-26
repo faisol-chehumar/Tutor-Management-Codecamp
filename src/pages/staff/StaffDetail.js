@@ -31,7 +31,7 @@ class StaffDetail extends Component {
                 title={`${s.firstname} ${s.lastname}`}
                 description={'www.instagram.com'}
                 imagePath={s.imagePath}
-                imageDefault={'https://www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png'}
+                imageDefault={'https://res.cloudinary.com/dbzxmgk2h/image/upload/v1540528677/002-worker-3.png'}
               />
             </Col>
             <Col span={18} >

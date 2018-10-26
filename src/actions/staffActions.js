@@ -1,5 +1,5 @@
-import { FETCH_STAFF_BEGIN, FETCH_STAFF_SUCCESS, FETCH_STAFF_FAILURE  } from "../constants/action-types"
-import { fetchData } from '../utils/request'
+import { FETCH_STAFF_BEGIN, FETCH_STAFF_SUCCESS, FETCH_STAFF_FAILURE, DELETE_STAFF_BEGIN, DELETE_STAFF_SUCCESS } from "../constants/action-types"
+import { fetchData, deleteData } from '../utils/request'
 
 export const fetchStaffBegin = () => ({
   type: FETCH_STAFF_BEGIN
@@ -22,6 +22,27 @@ export const fetchStaff = (id=null) => {
     return fetchData('staff')
     .then(result => {
       dispatch(fetchStaffSuccess(result))
+      return result
+    })
+  }
+}
+
+export const deleteStaffBegin = () => ({
+  type: DELETE_STAFF_BEGIN
+})
+
+export const deleteStaffSuccess = staffId => ({
+  type: DELETE_STAFF_SUCCESS,
+  payload: { staffId }
+})
+
+export const deleteStaff = (id) => {
+  return dispatch => {
+    dispatch(deleteStaffBegin())
+
+    return deleteData('staff', id)
+    .then(result => {
+      dispatch(deleteStaffSuccess(id))
       return result
     })
   }

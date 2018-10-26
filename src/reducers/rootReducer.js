@@ -1,5 +1,5 @@
 import {
-  FETCH_STAFF_BEGIN, FETCH_STAFF_SUCCESS, FETCH_STAFF_FAILURE,
+  FETCH_STAFF_BEGIN, FETCH_STAFF_SUCCESS, FETCH_STAFF_FAILURE, DELETE_STAFF_BEGIN, DELETE_STAFF_SUCCESS,
   FETCH_COURSES_BEGIN, FETCH_COURSES_SUCCESS, FETCH_COURSES_FAILURE,
   FETCH_LOCATIONS_BEGIN, FETCH_LOCATIONS_SUCCESS, FETCH_LOCATIONS_FAILURE,
   FETCH_CUSTOMERS_BEGIN, FETCH_CUSTOMERS_SUCCESS, FETCH_CUSTOMERS_FAILURE,
@@ -26,8 +26,6 @@ const rootReducer = (state=initialState, action) => {
   switch (action.type) {
     
     case GET_CURRENT_SIDE_MENU:
-      // console.log('Get current path')
-      // console.log('action.payload.currentSideMenu:', action.payload.currentSideMenu)
       return {
         ...state,
         currentSideMenu: action.payload.currentSideMenu
@@ -53,6 +51,21 @@ const rootReducer = (state=initialState, action) => {
         loading: false,
         error: action.payload.error,
         staff: []
+      }
+
+    case DELETE_STAFF_BEGIN:
+      console.log('delete staff')
+      return {
+        ...state,
+        loading: true,
+        error: null
+      }
+
+    case DELETE_STAFF_SUCCESS:
+      console.log(state)
+      return {
+        ...state,
+        staff: state.staff.filter(staff => staff.staffId !== action.payload.staffId)
       }
 
     case FETCH_COURSES_BEGIN:

@@ -27,7 +27,7 @@ class CourseDetail extends Component {
                 title={s.title}
                 description={s.description}
                 imagePath={s.imagePath}
-                imageDefault={'https://static1.squarespace.com/static/593ff48f20099eef990d199d/59db9c3dccc5c5531166f2c2/59db9c3de5dd5b5a1b440128/1507652291838/Icon+-+Coding.png?format=300w'}
+                imageDefault={'https://res.cloudinary.com/dbzxmgk2h/image/upload/v1540543273/exam-icon.png'}
               />
             </Col>
             <Col span={18} >

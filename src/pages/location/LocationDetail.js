@@ -24,7 +24,7 @@ class LocationDetail extends Component {
                 title={s.addressTitle}
                 description={s.address}
                 imagePath={s.imagePath}
-                imageDefault={'https://image.flaticon.com/icons/svg/235/235861.svg'}
+                imageDefault={'https://res.cloudinary.com/dbzxmgk2h/image/upload/v1540543818/001-building.png'}
               />
             </Col>
             <Col span={18} >

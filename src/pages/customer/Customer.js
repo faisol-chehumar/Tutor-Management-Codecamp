@@ -49,7 +49,7 @@ class Course extends Component {
             <LinkDetail
             linkPath = {'customers/' + record.customerId}
             imagePath = {record.imagePath}
-            imageDefault = {'https://png2.kisspng.com/20180404/wpw/kisspng-computer-icons-users-group-internet-forum-user-avatar-5ac45a994caa27.692612531522817689314.png'}
+            imageDefault = {'https://res.cloudinary.com/dbzxmgk2h/image/upload/v1540544187/003-worker-1.png'}
             title = {`${record.firstname} ${record.lastname}`}
             />
         </div>

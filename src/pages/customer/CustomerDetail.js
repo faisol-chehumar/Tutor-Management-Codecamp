@@ -26,7 +26,7 @@ class CustomerDetail extends Component {
                 title={`${s.firstname} ${s.lastname}`}
                 description={'www.instagram.com'}
                 imagePath={s.imagePath}
-                // imageDefault={'https://png2.kisspng.com/20180404/wpw/kisspng-computer-icons-users-group-internet-forum-user-avatar-5ac45a994caa27.692612531522817689314.png'}
+                imageDefault={'https://res.cloudinary.com/dbzxmgk2h/image/upload/v1540544187/003-worker-1.png'}
               />
             </Col>
             <Col span={18} >

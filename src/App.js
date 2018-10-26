@@ -24,6 +24,14 @@ const ContentLayout = styled(Layout)`
   body {
     color: ${color.black};
   }
+
+  .ant-card {
+    border-radius: 8px !important;
+  }
+
+  a {
+    color: ${color.hilight};
+  }
 `
 
 const HeaderContainer = styled(Header)`
