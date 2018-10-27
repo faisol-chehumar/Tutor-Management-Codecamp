@@ -88,8 +88,9 @@ class Staff extends Component {
       dataIndex: 'firstname',
       key: 'firstname',
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-        <div className="custom-filter-dropdown">
+        <div className="custom-filter-dropdown" style={{ backgroundColor: '#fff', padding: '1rem', border: `1px solid ${color.shadow}`}}>
           <Input
+            style={{ marginBottom: '0.5rem'}}
             ref={ele => this.searchInput = ele}
             placeholder="Search name"
             value={selectedKeys[0]}
@@ -128,7 +129,7 @@ class Staff extends Component {
               <span>
                 {text.split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i')).map((fragment, i) => (
                   fragment.toLowerCase() === searchText.toLowerCase()
-                    ? <b key={i} className="highlight">{fragment}</b> : `${fragment} ${record.lastname}` // eslint-disable-line
+                    ? <span><b key={i} className="highlight">{fragment}</b> {record.lastname}</span> : `${fragment} ${record.lastname}` // eslint-disable-line
                 ))}
               </span>
             }
