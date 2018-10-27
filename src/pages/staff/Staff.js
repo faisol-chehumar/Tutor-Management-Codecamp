@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Table, Tag, Button, Row, Col } from 'antd'
+import { Table, Tag, Button, Row, Col, Input, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -9,23 +9,23 @@ import LinkDetail from '../../components/ListTable/LinkDetail'
 import color from '../../styles/color'
 
 const ButtonGroup = styled.div`
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem
 
   button {
-    margin-right: 0.5rem;
+    margin-right: 0.5rem
   }
 `
 
 const TableList = styled(Table)`
-  background-color: ${color.white};
-  border: 1px solid ${color.shadow};
+  background-color: ${color.white}
+  border: 1px solid ${color.shadow}
 
   // .ant-table-thead > tr > th {
-  //   background-color: ${color.gray} !important;
+  //   background-color: ${color.gray} !important
   // }
 
   .ant-pagination {
-    margin-right: 1rem !important;
+    margin-right: 1rem !important
   }
 `
 
@@ -46,13 +46,13 @@ class Staff extends Component {
   }
 
   handleSearch = (selectedKeys, confirm) => () => {
-    confirm();
-    this.setState({ searchText: selectedKeys[0] });
+    confirm()
+    this.setState({ searchText: selectedKeys[0] })
   }
 
   handleReset = clearFilters => () => {
-    clearFilters();
-    this.setState({ searchText: '' });
+    clearFilters()
+    this.setState({ searchText: '' })
   }
 
   handleChange = (pagination, filters, sorter) => {
@@ -87,22 +87,60 @@ class Staff extends Component {
       title: 'Name',
       dataIndex: 'firstname',
       key: 'firstname',
+      filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+        <div className="custom-filter-dropdown">
+          <Input
+            ref={ele => this.searchInput = ele}
+            placeholder="Search name"
+            value={selectedKeys[0]}
+            onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+            onPressEnter={this.handleSearch(selectedKeys, confirm)}
+          />
+          <Button type="primary" onClick={this.handleSearch(selectedKeys, confirm)}>Search</Button>
+          <Button onClick={this.handleReset(clearFilters)}>Reset</Button>
+        </div>
+      ),
+      filterIcon: filtered => <Icon type="search" style={{ color: filtered ? '#108ee9' : '#aaa' }} />,
+      onFilter: (value, record) => record.firstname.toLowerCase().includes(value.toLowerCase()),
+      onFilterDropdownVisibleChange: (visible) => {
+        if (visible) {
+          setTimeout(() => {
+            this.searchInput.focus()
+          })
+        }
+      },
       sorter: (a, b) =>  {
         a = a.firstname || ''
         b = b.firstname || ''
         return a.localeCompare(b)
       },
       sortOrder: sortedInfo.columnKey === 'firstname' && sortedInfo.order,
-      render: (text, record) => (
-        <div>
+      render: (text, record) => {
+        console.log('text: ',record)
+        const { searchText } = this.state
+        return searchText ? 
+        (
           <LinkDetail
+            linkPath = {'customers/' + record.staffId}
+            imagePath = {record.imagePath}
+            imageDefault = {'https://res.cloudinary.com/dbzxmgk2h/image/upload/v1540544187/003-worker-1.png'}
+            title = {
+              <span>
+                {text.split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i')).map((fragment, i) => (
+                  fragment.toLowerCase() === searchText.toLowerCase()
+                    ? <b key={i} className="highlight">{fragment}</b> : `${fragment} ${record.lastname}` // eslint-disable-line
+                ))}
+              </span>
+            }
+          />
+        )
+        : <LinkDetail
             linkPath = {'staff/' + record.staffId}
             imagePath = {record.imagePath}
             imageDefault = {'https://res.cloudinary.com/dbzxmgk2h/image/upload/v1540528677/002-worker-3.png'}
             title = {`${record.firstname} ${record.lastname}`}
           />
-        </div>
-      )
+      }
     }, {
       title: 'Role',
       filters: [
@@ -140,11 +178,11 @@ class Staff extends Component {
 
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
         this.setState({rowSelection: selectedRows})
       },
       getCheckboxProps: record => ({
-        name: record.name,
+        name: record.firstname,
       })
     }
 
