@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Row, Col, Divider, Tag, Icon, Divinder } from 'antd'
+import Geocode from 'react-geocode'
 
 import {fetchData} from '../../utils/request'
 import AvaiDateTimeTable from '../../components/AvailDateTimeTable/AvailDateTimeTable'
@@ -15,15 +16,27 @@ class StaffDetail extends Component {
   }
 
   async componentDidMount() {
-    this.setState({ staffDetail :  await fetchData('staff/' + this.props.match.params.id) })
-    console.log(this.props.match.params.id)
+    const staff = await fetchData('staff/' + this.props.match.params.id)
+    Geocode.setApiKey("AIzaSyBfDtONM2UXrCITy6OMl2O03SjE92BvwFs")
+    Geocode.fromLatLng(staff[0].lat, staff[0].lng).then(
+      response => {
+        const address = response.results[0].formatted_address
+        staff[0].address = address
+        console.log(staff)
+        this.setState({ staffDetail : staff})
+      },
+      error => {
+        console.error(error)
+      }
+    )
+    // console.log(this.props.match.params.id)
   }
 
   render() {
     const { staffDetail } = this.state
     console.log(staffDetail)
 
-    return (
+    return (staffDetail.length > 0 ?
       staffDetail.map(s =>
         <div style={{ backgroundColor: '#fff', padding: '2rem', border: `1px solid ${color.shadow}` }} key={s.key}>
           <Row gutter={16}>
@@ -89,7 +102,7 @@ class StaffDetail extends Component {
           </Row>
         </div>
       )
-    )
+    : <div>Loading</div>)
   }
 }
 

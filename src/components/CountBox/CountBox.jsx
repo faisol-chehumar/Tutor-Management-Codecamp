@@ -22,7 +22,7 @@ const CountBox = ({avatar, title, count, captions}) => (
   <Card>
     <Row>
     <Col span={6}>
-    {console.log(avatar)}
+    {/* {console.log(avatar)} */}
       <Avatar style={{ backgroundColor: color.tone }} size="large" icon={avatar} />
     </Col>
     <Col span={16}>
