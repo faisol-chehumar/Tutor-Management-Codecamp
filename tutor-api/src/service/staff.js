@@ -1,15 +1,17 @@
-const { staff, staffRoles, roles, staffAvailDaytime } = require('../repository')
+const { staff, staffRoles, roles, staffAvailDaytime, staffRegistrations } = require('../repository')
 const {AppError, helper} = require('../util/')
 
 async function list(options) {
-  const [ staffList, staffRoleList, roleList, staffAvailDaytimeList ] = await Promise.all([ 
+  const [ staffList, staffRoleList, roleList, staffAvailDaytimeList, staffRegistrationsList ] = await Promise.all([ 
     staff.get(options),
     staffRoles.get(),
     roles.get(),
-    staffAvailDaytime.get()
+    staffAvailDaytime.get(),
+    staffRegistrations.get()
   ])
 
   console.log(staffAvailDaytimeList)
+  console.log(staffRegistrationsList)
 
   const roleTitle = helper.mappedValue(roleList, ['roleId', 'title'])
   // const weekDay = {
@@ -21,6 +23,8 @@ async function list(options) {
   //   5: 'Friday',
   //   6: 'Saturday',
   // }
+
+  // console.log('staffRegistrations', staffRegistrations)
 
   return staffList
     .map(staff => {
@@ -37,6 +41,16 @@ async function list(options) {
               'mandayRate': staffRole.mandayRate
             }
           }),
+        'registrations': staffRegistrationsList
+          .filter(staffRegis => {
+            return staff.staffId === staffRegis.staffId
+          })
+          .map(staffRegis => {
+            return {
+              'id': staffRegis.staffRegistrationId,
+              'role': roleTitle[staffRegis.roleId]
+            }
+        }),
         'availDayTime' : staffAvailDaytimeList
           .filter(staffAvailDaytime => {
             return staff.staffId === staffAvailDaytime.staffId
@@ -53,15 +67,10 @@ async function list(options) {
 }
 
 async function create(staffData) {
-  // const day = {
-  //   'Sunday' : 0,
-  //   'Monday' : 1,
-  //   'Tuesday' : 2,
-  //   'Wednesday' : 3,
-  //   'Thuesday' : 4,
-  //   'Friday' : 5,
-  //   'Saturday' : 6,
-  // }
+  const roles = {
+    'tch' : 1,
+    'ta' : 2
+  }
 
   if(await isDuplicate(staffData.email)) {
     throw new AppError('Email is already use', 400)
@@ -74,18 +83,26 @@ async function create(staffData) {
 
 
   for (const day in staffData.availableTime) {
-    staffData.availableTime
-    console.log({
-      staffId: result.insertId,
-      day: day,
-      timeCode: staffData.availableTime[day].time,
-      statusCode: staffData.availableTime[day].availStatus
-    })
+    // staffData.availableTime
+    // console.log({
+    //   staffId: result.insertId,
+    //   day: day,
+    //   timeCode: staffData.availableTime[day].time,
+    //   statusCode: staffData.availableTime[day].availStatus
+    // })
     await staffAvailDaytime.insert({
       staffId: result.insertId,
       day: day,
       timeCode: staffData.availableTime[day].time,
       statusCode: staffData.availableTime[day].availStatus
+    })
+  }
+
+  for (const role in staffData.roleSetting) {
+    await staffRoles.insert({
+      staffId: result.insertId,
+      roleId: roles[role],
+      mandayRate: staffData.roleSetting[role].value
     })
   }
 
@@ -118,7 +135,11 @@ async function remove(id) {
   if(result.length <= 0) {
     throw new AppError('Staff not found', 404)
   }
+
+  
   await staffRoles.remove(id)
+  await staffAvailDaytime.remove(id)
+  await staffRegistrations.removeByStaffId(id)
   await staff.remove(id)
 }
 
