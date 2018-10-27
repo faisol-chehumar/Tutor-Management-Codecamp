@@ -53,7 +53,7 @@ class DayTimeSelect extends Component {
       <CheckboxGroup style={{ width: '100%' }} onChange={this.onChange}>
         {
           Object.keys(daysCheckList).map(day => (
-            <Row key={day}>
+            <Row key={day} style={{ marginBottom: '1rem' }}>
               <Col span={4}>
                 <Checkbox
                   onClick={e => this.setState({

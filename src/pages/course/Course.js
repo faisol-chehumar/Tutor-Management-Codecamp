@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCourses } from '../../actions/coursesActions'
-import { Col, Button, Row, Divider, Table } from 'antd'
+import { Col, Button, Row, Table } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Moment from 'react-moment'
+
+import actions from '../../actions/index'
 import LinkDetail from '../../components/ListTable/LinkDetail'
+import color from '../../styles/color'
+
+const { fetchCourses, fetchStaff, fetchLocations, fetchCustomers } = actions
 
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
@@ -15,9 +19,38 @@ const ButtonGroup = styled.div`
   }
 `
 
+const TableList = styled(Table)`
+  background-color: ${color.white}
+  border: 1px solid ${color.shadow}
+
+  // .ant-table-thead > tr > th {
+  //   background-color: ${color.gray} !important
+  // }
+
+  .ant-pagination {
+    margin-right: 1rem !important
+  }
+`
+
+
 class Course extends Component {
   state = {
-    sortedInfo: null
+    sortedInfo: null,
+    isLoad: false
+  }
+
+  async componentDidMount() {
+    try {
+      await Promise.all([
+        this.props.staffList.length === 0 && this.props.fetchStaff(),
+        this.props.coursesList.length === 0 && this.props.fetchCourses(),
+        this.props.locationsList.length === 0 && this.props.fetchLocations(),
+        this.props.customersList.length === 0 && this.props.fetchCustomers(),
+      ])
+      await this.setState({isLoad: true})
+    } catch (error) {
+      console.error('Fetch error', error)
+    }
   }
 
   handleChange = (pagination, filters, sorter) => {
@@ -27,14 +60,18 @@ class Course extends Component {
     })
   }
 
-  componentDidMount() {
-    this.props.fetchCourses()
+  handleDelete = (id) => {
+    console.log('Delete Course')
+    // try {
+    //   this.props.deleteStaff(id)
+    // } catch (error) {
+    //   console.error('Delete error', error)
+    // }
   }
   
   render() {
-    let { sortedInfo } = this.state
+    let { sortedInfo, isLoad } = this.state
     let { coursesList } = this.props
-    // console.log(coursesList)
     
     sortedInfo = sortedInfo || {}
     
@@ -74,9 +111,7 @@ class Course extends Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <a href="" onClick={ e => console.log('Make edit feature!')}>Edit</a>
-          <Divider type="vertical" />
-          <a href="" onClick={ e => console.log('Make delete feature!')}>Delete</a>
+          <Button icon="delete" onClick={ e => this.handleDelete(record.courseId)}>Delete</Button>
         </span>
       )
     }]
@@ -91,19 +126,18 @@ class Course extends Component {
       })
     }
     // console.log(this.props.coursesList)
-    return (
+    return (!isLoad ? <div>Loading</div> :
       <div>
         <h1>COURSES BOARD</h1>
         <Row>
           <Col span={12}>
             <ButtonGroup>
               <Link to="courses/create"><Button icon="plus-circle">Add courses</Button></Link>
-              <Button icon="minus-circle">Send Email</Button>
-              <Button icon="minus-circle">Delete All</Button>
+              <Button icon="minus-circle">Bulk Delete</Button>
             </ButtonGroup>
           </Col>
         </Row>
-        <Table
+        <TableList
           rowKey={record => record.key}
           rowSelection={rowSelection}
           columns={columns}
@@ -116,13 +150,19 @@ class Course extends Component {
 }
 
 const mapStateToProps = state => ({
+  staffList: state.items.staff,
   coursesList: state.items.courses,
+  locationsList: state.items.locations,
+  customersList: state.items.customers,
   loading: state.items.loading,
   error: state.items.error
 })
 
 const mapDispatchToProps = {
-  fetchCourses
+  fetchStaff,
+  fetchCourses,
+  fetchLocations,
+  fetchCustomers
 }
 
 export default connect(

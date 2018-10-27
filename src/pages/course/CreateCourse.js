@@ -6,27 +6,35 @@ import { Redirect } from 'react-router'
 import actions from '../../actions/index'
 import { postData } from '../../utils/request'
 import sendEmail from '../../utils/email'
+import color from '../../styles/color'
 
 const { fetchStaff, fetchLocations, fetchCustomers } = actions
 
 class CreateCourse extends Component {
   state = {
     title: 'Courses',
+    hasData: this.props.staffList.length > 0 
+      && this.props.locationList.length > 0
+      && this.props.customerList.length > 0
+      && true,
     formData: [
       {
         title: 'Course Cover',
         decorator: 'imagePath',
-        type: 'IMG_UPLOAD'
+        type: 'IMG_UPLOAD',
+        col: 24
       }, {
         title: 'Course title',
         decorator: 'title',
         required: true,
-        type: 'INPUT'
+        type: 'INPUT',
+        col: 12
       }, {
         title: 'Course Description',
         decorator: 'description',
         required: false,
-        type: 'TEXT_AREA'
+        type: 'TEXT_AREA',
+        col: 24
       }, {
         title: 'Class Locations',
         decorator: 'locationId',
@@ -98,19 +106,7 @@ class CreateCourse extends Component {
     fireRedirect: false
   }
 
-  componentDidMount() {
-    if(this.props.staffList) {
-      console.log('Fecth Staff')
-      this.props.fetchStaff()
-    }
-    if(this.props.locationList.length <= 0) {
-      console.log('Fecth Locations')
-      this.props.fetchLocations()
-    }
-    if(this.props.customerList.length <= 0) {
-      console.log('Fecth customer')
-      this.props.fetchCustomers()
-    }
+  async componentDidMount() {
   }
 
   submitHandle = async (payload) => {
@@ -138,10 +134,12 @@ class CreateCourse extends Component {
   }
   
   render() {
-    const { title, formData, fireRedirect } = this.state
-
+    const { title, formData, fireRedirect, hasData } = this.state
+    console.log(hasData)
+    console.log(this.props.staffList)
     return (
-      <div>
+      !hasData ? (<Redirect to={'/courses'}/>) :
+      <div style={{ backgroundColor: color.white, border: `1px solid ${color.shadow}`, padding: '2rem' }}>
         <CreateForm
           formTitle={title}
           formData={formData}
@@ -175,3 +173,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(CreateCourse)
+

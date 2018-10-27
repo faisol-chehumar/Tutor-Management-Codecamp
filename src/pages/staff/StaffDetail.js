@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Divider, Tag, Icon, Divinder } from 'antd'
+import { Row, Col, Divider, Tag, Icon } from 'antd'
 import Geocode from 'react-geocode'
 
 import {fetchData} from '../../utils/request'

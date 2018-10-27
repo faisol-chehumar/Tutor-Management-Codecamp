@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCustomers } from '../../actions/customersActions'
-import { Col, Button, Row, Divider, Table } from 'antd'
+import { Col, Button, Row, Table } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+
+import { fetchCustomers } from '../../actions/customersActions'
 import LinkDetail from '../../components/ListTable/LinkDetail'
+import color from '../../styles/color'
 
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
@@ -14,6 +16,18 @@ const ButtonGroup = styled.div`
   }
 `
 
+const TableList = styled(Table)`
+  background-color: ${color.white}
+  border: 1px solid ${color.shadow}
+
+  // .ant-table-thead > tr > th {
+  //   background-color: ${color.gray} !important
+  // }
+
+  .ant-pagination {
+    margin-right: 1rem !important
+  }
+`
 
 class Course extends Component {
   state = {
@@ -27,8 +41,12 @@ class Course extends Component {
     })
   }
 
-  componentDidMount() {
-    this.props.fetchCustomers()
+  async componentDidMount() {
+    try {
+      this.props.customersList.length === 0 && await this.props.fetchCustomers()
+    } catch (error) {
+      console.error('Fetch error', error)
+    }
   }
   
   render() {
@@ -79,10 +97,6 @@ class Course extends Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <a href="" onClick={ e => console.log('Make send email feature!')}>Send Email</a>
-          <Divider type="vertical" />
-          <a href="" onClick={ e => console.log('Make edit feature!')}>Edit</a>
-          <Divider type="vertical" />
           <a href="" onClick={ e => console.log('Make delete feature!')}>Delete</a>
         </span>
       )
@@ -110,7 +124,7 @@ class Course extends Component {
             </ButtonGroup>
           </Col>
         </Row>
-        <Table
+        <TableList
           rowKey={record => record.key}
           rowSelection={rowSelection}
           columns={columns}

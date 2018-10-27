@@ -1,16 +1,31 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {  fetchLocations } from '../../actions/locationsActions'
 import { Table, Divider, Button, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+
+import {  fetchLocations } from '../../actions/locationsActions'
 import LinkDetail from '../../components/ListTable/LinkDetail'
+import color from '../../styles/color'
 
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
 
   button {
     margin-right: 0.5rem;
+  }
+`
+
+const TableList = styled(Table)`
+  background-color: ${color.white}
+  border: 1px solid ${color.shadow}
+
+  // .ant-table-thead > tr > th {
+  //   background-color: ${color.gray} !important
+  // }
+
+  .ant-pagination {
+    margin-right: 1rem !important
   }
 `
 
@@ -97,7 +112,7 @@ class Location extends Component {
             </ButtonGroup>
           </Col>
         </Row>
-        <Table
+        <TableList
           rowKey={record => record.key}
           rowSelection={rowSelection}
           columns={columns}

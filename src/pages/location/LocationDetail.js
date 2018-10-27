@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchLocations } from '../../actions/locationsActions'
-import MapContainer from '../../components/GoogleMap/MapContainer'
+
 
 import ImageView from '../../components/PageView/ImageView'
 import { Row, Col } from 'antd'
+import color from '../../styles/color'
+import { fetchLocations } from '../../actions/locationsActions'
+import MapContainer from '../../components/GoogleMap/MapContainer'
 // const uuidv1 = require('uuid/v1')
 
 class LocationDetail extends Component {
@@ -17,7 +19,7 @@ class LocationDetail extends Component {
     console.log('locationList>>>>>>>', locationList)
     return (
       locationList.map(s =>
-        <div key={s.key}>
+        <div style={{ backgroundColor: '#fff', padding: '2rem', border: `1px solid ${color.shadow}` }} key={s.key}>
           <Row gutter={16}>
             <Col span={6}>
               <ImageView

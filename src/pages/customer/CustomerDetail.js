@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+import { Row, Col, Divider } from 'antd'
+// import Geocode from 'react-geocode'
+
 import { fetchData } from '../../utils/request'
 import ImageView from '../../components/PageView/ImageView'
-import { Row, Col } from 'antd'
+import color from '../../styles/color'
+import GoogleMapSearch from '../../components/GoogleMap/GoogleMapSearch'
 
 class CustomerDetail extends Component {
   state = {
@@ -9,8 +13,12 @@ class CustomerDetail extends Component {
   }
 
   async componentDidMount() {
-    this.setState({ customerDetail :  await fetchData('customers/' + this.props.match.params.id) })
-    console.log(this.props.match.params.id)
+    try {
+      this.setState({ customerDetail :  await fetchData('customers/' + this.props.match.params.id) })
+      console.log(this.props.match.params.id)
+    } catch (error) {
+      console.error('Fetch error', error)
+    }
   }
 
   render() {
@@ -19,7 +27,7 @@ class CustomerDetail extends Component {
 
     return (
       customerDetail.map(s =>
-        <div key={s.key}>
+        <div style={{ backgroundColor: '#fff', padding: '2rem', border: `1px solid ${color.shadow}` }} key={s.key}>
           <Row gutter={16}>
             <Col span={6}>
               <ImageView
@@ -39,6 +47,12 @@ class CustomerDetail extends Component {
                 <p><b>Adress Title:</b> {s.addressTitle}</p>
                 <p><b>Adress:</b> {s.address}</p>
               </address>
+            </Col>
+
+            <Col span={24}>
+            <Divider orientation="left"><h3>Staff Address</h3></Divider>
+              {console.log(s)}
+              <GoogleMapSearch lat={s.lat} lng={s.lng} search={false} />
             </Col>
           </Row>
         </div>

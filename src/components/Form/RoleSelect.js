@@ -52,7 +52,7 @@ class RoleSelect extends Component {
 				{
 					Object.keys(roleChecked).map(role => (
 						<Row key={role}>
-							<Col span={4}>
+							<Col span={4} style={{ marginBottom: '2rem' }}>
 								<Checkbox
 									value={role}
 									onClick={e => this.setState({
