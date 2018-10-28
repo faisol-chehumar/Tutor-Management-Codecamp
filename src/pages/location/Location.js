@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Table, Divider, Button, Row, Col } from 'antd'
+import { Table, Button, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -34,6 +34,14 @@ class Location extends Component {
     sortedInfo: null
   }
 
+  async componentDidMount() {
+    try {
+      this.props.locationList.length === 0 && await this.props.fetchLocations() 
+    } catch (error) {
+      console.error('Fetch error', error)
+    }
+  }
+
   handleChange = (pagination, filters, sorter) => {
     console.log('Various parameters', pagination, filters, sorter)
     this.setState({
@@ -41,8 +49,9 @@ class Location extends Component {
     })
   }
 
-  componentDidMount() {
-    this.props.fetchLocations()
+
+  handleDelete = (id) => {
+    console.log('Delete location')
   }
   
   render() {
@@ -81,11 +90,7 @@ class Location extends Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <a href="/">Invite</a>
-          <Divider type="vertical" />
-          <a href="/">Edit</a>
-          <Divider type="vertical" />
-          <a href="/">Delete</a>
+          <Button icon="delete" onClick={ e => this.handleDelete(record.locationId)}>Delete</Button>
         </span>
       )
     }]
@@ -107,8 +112,7 @@ class Location extends Component {
           <Col span={12}>
             <ButtonGroup>
             <Link to="locations/create"><Button icon="plus-circle">Add Location</Button></Link>
-              <Button icon="minus-circle">Send Email</Button>
-              <Button icon="minus-circle">Delete All</Button>
+              <Button icon="minus-circle">Bulk Delete</Button>
             </ButtonGroup>
           </Col>
         </Row>

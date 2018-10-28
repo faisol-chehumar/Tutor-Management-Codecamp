@@ -5,6 +5,7 @@ import { Redirect } from 'react-router'
 
 import { postData } from '../../utils/request'
 import CreateForm from '../../components/Form/CreateForm'
+import color from '../../styles/color'
 
 class CreateLocation extends Component {
   state = {
@@ -13,7 +14,7 @@ class CreateLocation extends Component {
       {
         title: 'Customer Cover',
         decorator: 'imagePath',
-        type: 'IMG_UPLOAD'
+        type: 'IMG_UPLOAD',
       }, {
         title: 'Address Title',
         decorator: 'addressTitle',
@@ -28,15 +29,16 @@ class CreateLocation extends Component {
         title: 'Map Address',
         decorator: 'mapValue',
         required: false,
+        search: true,
         type: 'MAP_INPUT'
-      }, {
-        title: 'Telephone',
-        decorator: 'tel',
-        required: false,
-        type: 'INPUT'
       }, {
         title: 'Contact',
         decorator: 'contac',
+        required: false,
+        type: 'INPUT'
+      }, {
+        title: 'Telephone',
+        decorator: 'tel',
         required: false,
         type: 'INPUT'
       }, {
@@ -56,16 +58,14 @@ class CreateLocation extends Component {
 
   submitHandle = async (payload) => {
     
-    const result = await postData('customers', {
+    const result = await postData('locations', {
       ...payload,
-      activedStatus: 1,
       lat: payload.mapValue.lat,
       lng: payload.mapValue.lng
     })
 
     console.log({
       ...payload,
-      activedStatus: 1,
       lat: payload.mapValue.lat,
       lng: payload.mapValue.lng
     })
@@ -78,7 +78,7 @@ class CreateLocation extends Component {
     const { title, formData, fireRedirect } = this.state
 
     return (
-      <div>
+      <div style={{ backgroundColor: color.white, border: `1px solid ${color.shadow}`, padding: '2rem' }}>
         <CreateForm
           formTitle={title}
           formData={formData}
@@ -87,7 +87,7 @@ class CreateLocation extends Component {
           }}
         />
         {fireRedirect && (
-          <Redirect to={'/customers'}/>
+          <Redirect to={'/locations'}/>
         )}
       </div>
     )

@@ -1,24 +1,30 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-
+import { Row, Col, Divider } from 'antd'
 
 import ImageView from '../../components/PageView/ImageView'
-import { Row, Col } from 'antd'
 import color from '../../styles/color'
-import { fetchLocations } from '../../actions/locationsActions'
-import MapContainer from '../../components/GoogleMap/MapContainer'
+import { fetchData } from '../../utils/request'
+import GoogleMapSearch from '../../components/GoogleMap/GoogleMapSearch'
+
 // const uuidv1 = require('uuid/v1')
 
 class LocationDetail extends Component {
-  componentDidMount() {
-    this.props.fetchLocations(this.props.match.params.id)
+  state = {
+    locationDetail : []
+  }
+
+  async componentDidMount() {
+    // this.props.fetchLocations(this.props.match.params.id)
+    const location = await fetchData('locations/' + this.props.match.params.id)
+    await this.setState({ locationDetail : location})
     console.log(this.props.match.params.id)
   }
   render() {
-    const { locationList } = this.props
-    console.log('locationList>>>>>>>', locationList)
+    const { locationDetail } = this.state
+    // const { locationList } = this.props
+    // console.log('locationList>>>>>>>', locationList)
     return (
-      locationList.map(s =>
+      locationDetail.map(s =>
         <div style={{ backgroundColor: '#fff', padding: '2rem', border: `1px solid ${color.shadow}` }} key={s.key}>
           <Row gutter={16}>
             <Col span={6}>
@@ -32,8 +38,8 @@ class LocationDetail extends Component {
             <Col span={18} >
               <h1>{`${s.addressTitle}`}</h1>
               <p><b>Contact: </b> {s.contact}</p>
-              <p><b>roomSize: </b> {s.roomSize}</p>
-              <p><b>Tel: </b> {s.tel}</p>
+              <p><b>Telephone: </b> {s.tel}</p>
+              <p><b>Room Size: </b> {s.roomSize}</p>
               <p><b>Note: </b> {s.note}</p>
               <address>
                 <p><b>Adress Title:</b> {s.addressTitle}</p>
@@ -42,7 +48,11 @@ class LocationDetail extends Component {
             </Col>
           </Row>
           <Row>
-            <MapContainer />
+            <Col span={24}>
+            <Divider orientation="left"><h3>Staff Address</h3></Divider>
+            {console.log(s)}
+              <GoogleMapSearch lat={s.lat} lng={s.lng} search={false} />
+            </Col>
           </Row>
         </div>
 
@@ -51,16 +61,18 @@ class LocationDetail extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  locationList: state.items.locations,
-  loading: state.items.loading,
-  error: state.items.error
-})
+export default LocationDetail
+// const mapStateToProps = state => ({
+//   locationList: state.items.locations,
+//   loading: state.items.loading,
+//   error: state.items.error
+// })
 
-const mapDispatchToProps = {
-  fetchLocations
-}
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LocationDetail)
+// const mapDispatchToProps = {
+//   fetchLocations
+// }
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(LocationDetail)

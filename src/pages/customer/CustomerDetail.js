@@ -32,20 +32,19 @@ class CustomerDetail extends Component {
             <Col span={6}>
               <ImageView
                 title={`${s.firstname} ${s.lastname}`}
-                description={'www.instagram.com'}
                 imagePath={s.imagePath}
                 imageDefault={'https://res.cloudinary.com/dbzxmgk2h/image/upload/v1540544187/003-worker-1.png'}
               />
             </Col>
             <Col span={18} >
               <h1>{`${s.firstname} ${s.lastname}`}</h1>
-              <p><b>Email: </b> {s.email}</p>
-              <p><b>Tel: </b> {s.tel === null && 'N/A'}</p>
-              <p><b>Child Age: </b> {s.childAge}</p>
-              <p><b>Actived Status: </b> {s.activedStatus}</p>
+              <p><b>Email: </b> {s.email && 'N/A'}</p>
+              <p><b>Tel: </b> {s.tel && 'N/A'}</p>
+              <p><b>Child Age: </b> {s.childAge && 'N/A'}</p>
+              <p><b>Actived Status: </b> {s.activedStatus === 1 ? 'Actived' : 'Inactive'}</p>
               <address>
-                <p><b>Adress Title:</b> {s.addressTitle}</p>
-                <p><b>Adress:</b> {s.address}</p>
+                <p><b>Adress Title:</b> {s.addressTitle && 'N/A'}</p>
+                <p><b>Adress:</b> {s.address && 'N/A'}</p>
               </address>
             </Col>
 
