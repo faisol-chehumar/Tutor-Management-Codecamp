@@ -84,7 +84,7 @@ class AddForm extends React.Component {
                           this.props.form.setFields({
                             imagePath: {
                               value: imagePath,
-                              errors: [new Error('forbid ha')],
+                              // errors: [new Error('forbid ha')],
                             },
                           })
                         }} /> : null

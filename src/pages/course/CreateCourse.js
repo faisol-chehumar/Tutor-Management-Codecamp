@@ -22,19 +22,16 @@ class CreateCourse extends Component {
         title: 'Course Cover',
         decorator: 'imagePath',
         type: 'IMG_UPLOAD',
-        col: 24
       }, {
         title: 'Course title',
         decorator: 'title',
         required: true,
         type: 'INPUT',
-        col: 12
       }, {
         title: 'Course Description',
         decorator: 'description',
         required: false,
         type: 'TEXT_AREA',
-        col: 24
       }, {
         title: 'Class Locations',
         decorator: 'locationId',
