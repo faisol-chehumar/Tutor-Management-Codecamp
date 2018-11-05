@@ -31,7 +31,6 @@ class CreateStaff extends Component {
       }, {
         title: 'Email',
         decorator: 'email',
-        // email: true,
         required: true,
         type: 'INPUT',
         col: 12
@@ -72,15 +71,17 @@ class CreateStaff extends Component {
   }
 
   submitHandle = async (payload) => {
-    
-    const result = await postData('staff', {
-      ...payload,
-      lat: payload.mapValue.lat,
-      lng: payload.mapValue.lng,
-    })
+    try {
+      await postData('staff', {
+        ...payload,
+        lat: payload.mapValue.lat,
+        lng: payload.mapValue.lng,
+      })
 
-    console.log(result)
-    this.setState({fireRedirect: true})
+      this.setState({fireRedirect: true})      
+    } catch (error) {
+      console.error(error)
+    }
   }
   
   render() {
