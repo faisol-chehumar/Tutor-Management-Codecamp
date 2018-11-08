@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { Row, Col, Card, Divider } from 'antd'
 import styled from 'styled-components'
 
-import FullCalendar from '../components/FullCalendar/FullCalendar'
-import CountBoxList from '../components/CountBox/CountBoxList'
-import ListContent from '../components/List/ListContent'
-import actions from '../actions/index'
-import color from '../styles/color'
+import FullCalendar from '../../components/FullCalendar/FullCalendar'
+import CountBoxList from '../../components/CountBox/CountBoxList'
+import ListContent from '../../components/List/ListContent'
+import actions from '../../actions/index'
+import color from '../../styles/color'
 
 const { fetchStaff, fetchCourses, fetchLocations, fetchCustomers } = actions
 

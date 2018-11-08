@@ -1,4 +1,8 @@
-import { FETCH_CUSTOMERS_BEGIN, FETCH_CUSTOMERS_SUCCESS, FETCH_CUSTOMERS_FAILURE  } from "../constants/action-types"
+import { 
+  FETCH_CUSTOMERS_BEGIN,
+  FETCH_CUSTOMERS_SUCCESS,
+  FETCH_CUSTOMERS_FAILURE
+} from "../constants/action-types"
 import { fetchData } from '../utils/request'
 
 export const fetchCustomersBegin = () => ({
@@ -16,20 +20,18 @@ export const fetchCustomersError = error => ({
 })
 
 export const fetchCustomers = (id=null) => {
-  // console.log(id)
   return dispatch => {
     dispatch(fetchCustomersBegin())
-    // console.log()
     return id 
     ? fetchData('customers/' + id)
       .then(result => {
-        console.log(result)
+        // console.log(result)
         dispatch(fetchCustomersSuccess(result))
         return result
       })
     : fetchData('customers')
       .then(result => {
-        console.log(result)
+        // console.log(result)
         dispatch(fetchCustomersSuccess(result))
         return result
       })
