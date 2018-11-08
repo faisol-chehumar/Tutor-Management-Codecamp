@@ -6,19 +6,23 @@ An web application for admin to manage Course, Staff and Client.
 
 ## Features
 
-+ Click on marker or on the place in the menu list to see information.
-+ Filter the list and see one place or select all.
-+ Links to Wikipedia articles.
-+ The usual Google maps functions.
++ Basic CRUD.
++ Display data in table list.
++ Show courses schedule.
++ Search, filter, sorted data on table.
++ Send automatic email to staff when create a new course.
++ Show summaries data in dashboard page.
 
 ## Tech
 
-+ React
-+ JavaScript
-+ create-react-app
++ React, Redux
++ Ant design, Zurb ink
++ NodeJs, Koa2, MySQL
 + Google maps API
-+ Wikipedia API
-+ Responsive design
-+ Accessibility
-+ Service Worker
-+ Fetch() and error handling
++ Full-Calendar Library
++ Docker, Google Cloud, Cloudinary
+
+## Demo project
++ http://35.240.164.119:4000/
+
+[Example image](https://res.cloudinary.com/dbzxmgk2h/image/upload/v1541670166/tutor-management-sys.jpg)
