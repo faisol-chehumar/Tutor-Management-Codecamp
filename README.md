@@ -25,4 +25,4 @@ An web application for admin to manage Course, Staff and Client.
 ## Demo project
 + http://35.240.164.119:4000/
 
-[Example image](https://res.cloudinary.com/dbzxmgk2h/image/upload/v1541670166/tutor-management-sys.jpg)
+![desktop_ex](https://res.cloudinary.com/dbzxmgk2h/image/upload/v1541670166/tutor-management-sys.jpg)
