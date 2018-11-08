@@ -20,7 +20,7 @@ const TimeSelect = (props) => {
     <Select
       disabled={props.selectDisabled}
       defaultValue="time,am"
-      style={{ width: 120 }}
+      style={{ width: 120, marginRight: 10 }}
       onChange={timeSelectHandle.bind(props)}
     >
       <Option value={"time,am"}>Morning</Option>

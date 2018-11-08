@@ -7,7 +7,7 @@ const LinkDetail = ({ linkPath, imagePath, title, imageDefault }) => (
 		<Avatar
 				style={{ marginRight: 5 }}
 				size="large"
-				src={imagePath === null || imagePath === '' || imagePath === undefined
+				src={imagePath === null || imagePath === '' || imagePath === undefined || imagePath === 'www.google.com'
 						? imageDefault 
 						: imagePath}
 		/>

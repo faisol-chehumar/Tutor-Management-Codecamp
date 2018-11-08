@@ -45,14 +45,19 @@ const get = async ({
 //   const condition = [id, offset, limit].filter(elm => elm !== null)
 //   const query = `
 //     SELECT
-//       Customer_id AS CustomerId,
+//       customer_id AS customerId,
 //       firstname,
 //       lastname,
 //       email,
 //       tel,
-//       map_marker_id AS mapMarkerId
+//       actived_status AS activedStatus,
+//       child_age AS childAge,
+//       address_title AS addressTitle,
+//       lat,
+//       lng,
+//       image_path AS imagePath
 //     FROM
-//       Customer
+//       customers
 //   `
 //   const whereId = `WHERE Customer_id = ?`
 
@@ -71,6 +76,31 @@ const get = async ({
 //     console.error(error)
 //   }
 // }
+
+const getById = async (customerId) => {
+  try {
+    const result = await pool.query(`
+      SELECT         
+        customer_id AS customerId,
+        firstname,
+        lastname,
+        email,
+        tel,
+        actived_status AS activedStatus,
+        child_age AS childAge,
+        address_title AS addressTitle,
+        lat,
+        lng,
+        image_path AS imagePath
+      FROM customers
+      WHERE  customer_id = ?
+      `, [customerId])
+    return result[0]
+  } catch (err) {
+    console.log(err.message)
+    return
+  }
+}
 
 // const getByEmail = async ({
 //   email = null,
@@ -162,6 +192,7 @@ const remove = async ({id=null}={}) => {
 
 module.exports = {
   get,
+  getById,
   insert,
   remove
 }

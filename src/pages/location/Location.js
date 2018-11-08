@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {  fetchLocations } from '../../actions/locationsActions'
-import { Table, Divider, Button, Row, Col } from 'antd'
+import { Table, Button, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+
+import {  fetchLocations } from '../../actions/locationsActions'
 import LinkDetail from '../../components/ListTable/LinkDetail'
+import color from '../../styles/color'
 
 const ButtonGroup = styled.div`
   margin-bottom: 1.5rem;
@@ -14,9 +16,30 @@ const ButtonGroup = styled.div`
   }
 `
 
+const TableList = styled(Table)`
+  background-color: ${color.white}
+  border: 1px solid ${color.shadow}
+
+  // .ant-table-thead > tr > th {
+  //   background-color: ${color.gray} !important
+  // }
+
+  .ant-pagination {
+    margin-right: 1rem !important
+  }
+`
+
 class Location extends Component {
   state = {
     sortedInfo: null
+  }
+
+  async componentDidMount() {
+    try {
+      this.props.locationList.length === 0 && await this.props.fetchLocations() 
+    } catch (error) {
+      console.error('Fetch error', error)
+    }
   }
 
   handleChange = (pagination, filters, sorter) => {
@@ -26,8 +49,9 @@ class Location extends Component {
     })
   }
 
-  componentDidMount() {
-    this.props.fetchLocations()
+
+  handleDelete = (id) => {
+    console.log('Delete location')
   }
   
   render() {
@@ -48,10 +72,10 @@ class Location extends Component {
 
         <div>
           <LinkDetail
-          linkPath = {'locations/' + record.locationId}
-          imagePath = {record.imagePath}
-          imageDefault = {'https://image.flaticon.com/icons/svg/235/235861.svg'}
-          title = {`${record.addressTitle} ${record.addressTitle}`}
+            linkPath = {'locations/' + record.locationId}
+            imagePath = {record.imagePath}
+            imageDefault = {'https://res.cloudinary.com/dbzxmgk2h/image/upload/v1540543818/001-building.png'}
+            title = {`${record.addressTitle} ${record.addressTitle}`}
           />
         </div>
       )
@@ -66,11 +90,7 @@ class Location extends Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <a href="/">Invite</a>
-          <Divider type="vertical" />
-          <a href="/">Edit</a>
-          <Divider type="vertical" />
-          <a href="/">Delete</a>
+          <Button icon="delete" onClick={ e => this.handleDelete(record.locationId)}>Delete</Button>
         </span>
       )
     }]
@@ -92,12 +112,11 @@ class Location extends Component {
           <Col span={12}>
             <ButtonGroup>
             <Link to="locations/create"><Button icon="plus-circle">Add Location</Button></Link>
-              <Button icon="minus-circle">Send Email</Button>
-              <Button icon="minus-circle">Delete All</Button>
+              <Button icon="minus-circle">Bulk Delete</Button>
             </ButtonGroup>
           </Col>
         </Row>
-        <Table
+        <TableList
           rowKey={record => record.key}
           rowSelection={rowSelection}
           columns={columns}

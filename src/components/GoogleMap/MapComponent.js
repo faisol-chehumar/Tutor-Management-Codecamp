@@ -35,7 +35,7 @@ const MapComponent = compose(
             },
             onPositionChanged: () => {
                 const position = refs.marker.getPosition();
-                console.log(position.toString());
+                console.log(position.toString())
             }
         })
     },
@@ -44,9 +44,10 @@ const MapComponent = compose(
   withGoogleMap
 )((props) =>
   <div>
-    {/* <LocationSearchInput /> */}
+    {/* {console.log(props.onPositionChanged)} */}
     {console.log(props.lat, props.lng)}
     <GoogleMap
+      // onPositionChanged={props.onPositionChanged}
       center={{ lat: props.lat, lng: props.lng }}
       defaultZoom={15}
       defaultCenter={{ lat: 13.7563309, lng: 100.50176510000006 }}

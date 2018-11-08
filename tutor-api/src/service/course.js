@@ -1,50 +1,66 @@
-const { courses, coursesEnrolments, coursesSchedule, locations, staffRegistrations } = require('../repository')
+const { courses, customers, staff, coursesEnrolments, coursesSchedule, locations, staffRegistrations } = require('../repository')
 const { AppError } = require('../util')
 
 async function list(options) {
-  const [coursesList, coursesEnrolmentList, coursesScheduleList, locationList, staffRegistrationList] = await Promise.all([
+  const [coursesList, coursesEnrolmentList, coursesScheduleList, locationList, staffRegistrationList, customersList, staffList] = await Promise.all([
     courses.get(options),
     coursesEnrolments.get(),
     coursesSchedule.get(),
     locations.get(),
-    staffRegistrations.get()
+    staffRegistrations.get(),
+    customers.get(),
+    staff.get()
   ])
+
+  console.log('staffList')
+  console.log(staffList)
 
   return coursesList
   .map(course => {
     return {
       ...course,
       'coursesEnrolment': coursesEnrolmentList
-      .filter(coursesEnrolment => {
-        return course.courseId === coursesEnrolment.courseId
-      })
+        .filter(coursesEnrolment => {
+          return course.courseId === coursesEnrolment.courseId
+        })
+        .map(coursesEnrolment => customersList
+          .filter(customer => customer.customerId === coursesEnrolment.customerId)
+        )
     }
   })
   .map(course => {
     return {
       ...course,
       'coursesSchedule': coursesScheduleList
-      .filter(coursesSchedule => {
-        return course.courseId === coursesSchedule.courseId
-      })
+        .filter(coursesSchedule => {
+          return course.courseId === coursesSchedule.courseId
+        }
+      )
     }
   })
   .map(course => {
     return {
       ...course,
       'location': locationList
-      .filter(location => {
-        return course.locationId === location.locationId
-      })
+        .filter(location => {
+          return course.locationId === location.locationId
+        })
     }
   })
   .map(course => {
     return {
       ...course,
       'staffRegistration': staffRegistrationList
-      .filter(staffRegistration => {
-        return course.courseId === staffRegistration.courseId
-      })
+        .filter(staffRegistration => {
+          return course.courseId === staffRegistration.courseId
+        })
+        .map(staffRegistration => {
+          const [staffData] = staffList.filter(staff => staff.staffId === staffRegistration.staffId)
+          return {
+            ...staffData,
+            regisRole: staffRegistration.roleId
+          }
+        })
     }
   })
 }

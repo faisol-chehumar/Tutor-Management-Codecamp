@@ -66,3 +66,5 @@ export const deleteData = async (title, id) => {
     console.error(error)
   }
 }
+
+

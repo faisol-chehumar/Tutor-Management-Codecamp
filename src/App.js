@@ -1,18 +1,68 @@
 import React, { Component } from 'react'
-import { Layout, Icon, Avatar, Badge, Divider, Input } from 'antd'
-import './App.css'
+import { Layout, Icon, Badge, Avatar, Input } from 'antd'
 import styled from 'styled-components'
 
 import Main from './pages/Main'
 import SideMenu from './components/SideMenu/SideMenu'
 import color from './styles/color'
+import './App.css'
 
 const { Header, Content } = Layout
 const Search = Input.Search
 
-
 const ContentLayout = styled(Layout)`
   background-color: ${color.base}
+  margin-left: 80px
+  transition: margin-left 0.1s
+
+  &.extended {
+    margin-left: 200px
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  body {
+    color: ${color.black}
+  }
+
+  a {
+    color: ${color.hilight}
+  }
+
+  .ant-card {
+    border-radius: 8px !important
+  }
+`
+
+const HeaderContainer = styled(Header)`
+  border-bottom: 1px solid ${color.shadow}
+  background: #fff
+  padding: 0
+`
+
+const SearchContainer = styled(Search)`
+  width: 60%
+
+  .ant-btn-primary {
+    background-color: ${color.hilight}
+    border-color: ${color.shadow}
+    padding-left: 2rem
+    padding-right: 2rem
+  }
+`
+
+const BadgeContainer = styled.div`
+  display: inline-block
+  float: right
+
+  .anticon {
+    font-size: 1.5rem
+  }
+
+  .anticon,
+  .ant-badge-count,
+  .ant-badge-dot {
+    margin-right: 1.5rem
+  }
 `
 
 class App extends Component {
@@ -31,43 +81,38 @@ class App extends Component {
 
     return (
         <Layout className="App">
-          <SideMenu
-            style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}
-            collapsed={collapsed}
-          />
-          <ContentLayout>
-            <Header
-              style={{ background: '#fff', padding: 0 }}>
+          <SideMenu collapsed={collapsed} />
+          <ContentLayout className={this.state.collapsed ? null : 'extended'}>
+            <HeaderContainer>
               <Icon
                 className="trigger"
                 type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                 onClick={this.toggle}
               />
-              <Search
-                style={{ width: 800 }}
+              <SearchContainer
                 placeholder="input search text"
                 enterButton="Search"
                 size="large"
                 onSearch={value => console.log(value)}
               />
-              <div style={{display: 'inline', float: 'right'}}>
-                <Badge style={{ marginRight: '1rem', backgroundColor: '#f0d000' }} count={1}>
-                  <Avatar style={{ backgroundColor: '#003e79' }} shape="square" icon="bell" />
-                </Badge>
-                <Divider type="vertical" />
-                <Badge style={{ marginRight: '1rem' }} count={1}>
-                  <Avatar style={{ backgroundColor: '#003e79' }} shape="square" icon="mail" />
-                </Badge>
-                <Divider type="vertical" />
-                <span style={{ marginRight: '1rem' }}>
-                  <Avatar
-                    style={{ border: '1px solid #eee' }}
-                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                  />
-                  <b style={{ marginLeft: '0.5rem' }}>ADMIN</b>
-                </span>
-              </div>
-            </Header>
+
+                <BadgeContainer>
+                  <Badge style={{ backgroundColor: '#f0d000' }} count={1}>
+                    <Icon twoToneColor={color.primary} type="bell" theme="twoTone" />
+                  </Badge>
+                  <Badge count={1}>
+                    <Icon twoToneColor={color.primary} type="mail" theme="twoTone" />
+                  </Badge>
+                  <span style={{ marginRight: '3rem' }}>
+                    <Avatar
+                      style={{ border: '1px solid #eee' }}
+                      src="https://eabiawak.com/wp-content/uploads/2017/07/photo.png"
+                    />
+                    <b style={{ marginLeft: '0.5rem' }}>ADMIN</b>
+                  </span>
+                </BadgeContainer>
+
+            </HeaderContainer>
             <Content
               style={{
                 margin: '24px 16px',
@@ -81,26 +126,5 @@ class App extends Component {
     )
   }
 }
-
-// const mapStateToProps = state => ({
-//   staffList: state.items.staff,
-//   coursesList: state.items.courses,
-//   locationsList: state.items.locations,
-//   customersList: state.items.customers,
-//   loading: state.items.loading,
-//   error: state.items.error
-// })
-
-// const mapDispatchToProps = {
-//   fetchStaff,
-//   fetchCourses,
-//   fetchLocations,
-//   fetchCustomers
-// }
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(App)
 
 export default App

@@ -9,10 +9,6 @@ async function list(options) {
 }
 
 async function create(locationData) {
-  if(await isDuplicate(locationData.email)) {
-    throw new AppError('Email is already use', 400)
-  }
-  
   // const mapMarkerId = await mapMarkers.insert(locationsData)
   const result = await locations.insert(locationData)
 
